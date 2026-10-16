@@ -1,0 +1,4 @@
+dist/
+README.md
+build.sh
+__pycache__/
