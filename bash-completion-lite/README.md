@@ -24,6 +24,7 @@
 | `nft` | 常用操作、对象、协议族、已有表/链/集合、部分规则关键字 |
 | `scp` | 常用选项、SSH 配置中的 Host 别名、本地路径 |
 | `docker` | 常用子命令/选项、本机容器/镜像/网络/卷名，`cp` 两端的本地/容器路径，部分二级子命令 |
+| `docker-compose` | 独立命令的常用子命令/选项、Compose/环境文件路径、项目目录、服务名和 profile |
 | `lsof` | 常用选项、PID、用户、协议/端口示例、TCP 状态、路径 |
 | `sed` | 常用 GNU 选项、脚本文件和输入文件路径 |
 | `awk` | 通用短选项 `-F`、`-v`、`-f`、`-W`，文件路径 |
@@ -58,6 +59,18 @@
   不支持含换行的文件名，不判断指向目录的符号链接，超大目录仍可能产生较多输出。
 - `scp` 不查询远程路径，不解析 SSH `Include`、通配 Host 或哈希 known_hosts。
   SSH 别名来自 `~/.ssh/config` 和 `/etc/ssh/ssh_config`。
+- `docker-compose.bash` 仅注册带横线的独立命令 `docker-compose`，不改动
+  `docker compose` 或其他 Docker 补全。服务名通过
+  `docker-compose [已有全局参数] config --services` 获取，profile 通过
+  `config --profiles` 获取，不查询 Docker daemon、不执行 `up` / `exec`。
+  保留重复的 `-f`、`--env-file`、项目名/目录、profile 等全局参数；支持含空格
+  的文件路径及 `--file=路径`、`-f路径`。`exec` / `run` 补全的是 **Compose 服务名**，
+  不是容器 ID，输入服务名后不再补全容器内的命令。
+  动态查询需要安装 `docker-compose` 和支持 `-k` 的 `timeout`，限时 2 秒，
+  额外 1 秒后强制结束客户端；配置缺失/错误、缺少环境变量或版本不支持时静默返回。
+  不读取标准输入作为配置，不对显式 URL 或 `-f -` 查询；本地配置仍由 Compose
+  自己解析，包括它所引用的其他文件。不自行解析 YAML，不做变量或命令替换。
+  静态候选兼顾常见 Compose V1 / V2 standalone，旧版本未必支持所有选项或 profile 查询。
 - `nslookup` 不发起 DNS 查询；目前不补全交互式提示符中的命令。
 - `tar` 支持 `-f`、`--file=路径`、`-C`、`--directory=目录` 等参数补全。
   不读取归档内容、不执行压缩程序；解包/列出时的成员名不从归档中查询，

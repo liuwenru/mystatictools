@@ -80,8 +80,24 @@ timeout()
     shift 3
     "$@"
 }
+docker-compose()
+{
+    [ "${COMPOSE_TEST_FAIL:-}" != yes ] || return 1
+    if [ -n "${COMPOSE_TEST_FILE:-}" ]; then
+        [ "$1" = -f ] && [ "$2" = "$COMPOSE_TEST_FILE" ] || return 1
+        shift 2
+    fi
+    if [ -n "${COMPOSE_TEST_ARGS:-}" ]; then
+        [ "$*" = "$COMPOSE_TEST_ARGS" ] || return 1
+    fi
+    case " ${*: -2} " in
+        ' config --services ') printf '%s\n' web worker db ;;
+        ' config --profiles ') printf '%s\n' development debug production ;;
+        *) return 1 ;;
+    esac
+}
 
-for command in find grep systemctl journalctl rg nslookup iptables nft scp docker lsof sed awk xargs tar; do
+for command in find grep systemctl journalctl rg nslookup iptables nft scp docker docker-compose lsof sed awk xargs tar; do
     complete -p "$command" >/dev/null
 done
 check -name _mini_find_completion find -na
@@ -143,6 +159,38 @@ check pax _mini_tar_completion tar --format = pa
 check gnu _mini_tar_completion tar -H gn
 check shell _mini_tar_completion tar --quoting-style sh
 check bash _mini_tar_completion tar -I bas
+check up _mini_docker_compose_completion docker-compose u
+check --build _mini_docker_compose_completion docker-compose up --bu
+check --follow _mini_docker_compose_completion docker-compose logs --fo
+check --no-TTY _mini_docker_compose_completion docker-compose exec --no
+check auto _mini_docker_compose_completion docker-compose --ansi a
+check auto _mini_docker_compose_completion docker-compose --ansi=a
+check always _mini_docker_compose_completion docker-compose pull --policy a
+check web _mini_docker_compose_completion docker-compose up w
+check worker _mini_docker_compose_completion docker-compose logs wo
+check db _mini_docker_compose_completion docker-compose exec d
+check web _mini_docker_compose_completion docker-compose exec --user root w
+check web _mini_docker_compose_completion docker-compose run --name temporary w
+check web _mini_docker_compose_completion docker-compose run -v /tmp:/tmp w
+check web _mini_docker_compose_completion docker-compose up --exit-code-from w
+check production _mini_docker_compose_completion docker-compose --profile pro
+COMPOSE_TEST_ARGS='-f compose.yml -f override.yml -p demo config --services' check web _mini_docker_compose_completion docker-compose -f compose.yml -f override.yml -p demo up w
+COMPOSE_TEST_ARGS='--file=compose.yml --project-name=demo config --services' check web _mini_docker_compose_completion docker-compose --file=compose.yml --project-name=demo up w
+COMPOSE_TEST_ARGS='--project-directory . --env-file .env --profile debug config --services' check web _mini_docker_compose_completion docker-compose --project-directory . --env-file .env --profile debug up w
+COMPOSE_TEST_FILE='project with spaces/compose.yml' TEST_COMP_LINE='docker-compose -f "project with spaces/compose.yml" up w' check web _mini_docker_compose_completion docker-compose -f 'project with spaces/compose.yml' up w
+COMPOSE_TEST_FILE='project with spaces/compose.yml' TEST_COMP_LINE='docker-compose -f project\ with\ spaces/compose.yml up w' check web _mini_docker_compose_completion docker-compose -f 'project\ with\ spaces/compose.yml' up w
+for line in 'docker-compose exec web ' 'docker-compose run --rm web ' 'docker-compose -f - up ' 'docker-compose -f https://example.invalid/compose.yml up '; do
+    COMP_LINE="$line"; COMP_POINT=${#line}
+    _mini_docker_compose_completion || true
+    [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
+    checks=$((checks + 1))
+done
+COMPOSE_TEST_FAIL=yes
+COMP_LINE='docker-compose up '; COMP_POINT=${#COMP_LINE}
+_mini_docker_compose_completion || true
+[ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
+checks=$((checks + 1))
+unset COMPOSE_TEST_FAIL
 
 check a1b2c3d4e5f6: _mini_docker_completion docker cp a1
 TEST_COMP_LINE='docker cp a1b2c3d4e5f6:/ro' check /root/ _mini_docker_completion docker cp a1b2c3d4e5f6 : /ro
@@ -183,6 +231,10 @@ _mini_docker_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
 checks=$((checks + 1))
 check completions/docker.bash _mini_docker_completion docker cp completions/dock
+COMP_LINE='docker-compose up '; COMP_POINT=${#COMP_LINE}
+_mini_docker_compose_completion || true
+[ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
+checks=$((checks + 1))
 unset -f command
 
 COMP_WORDS=(docker exec -it a1b2c3d4e5f6 ''); COMP_CWORD=4
@@ -229,9 +281,14 @@ check "--file=$temporary/file with spaces" _mini_tar_completion tar "--file=$tem
 check "$temporary/file with spaces" _mini_tar_completion tar -cf archive.tar -- "$temporary/file"
 check "$temporary/file with spaces" _mini_tar_completion tar -cfarchive.tar "$temporary/file"
 check "$temporary/file with spaces" _mini_tar_completion tar -T "$temporary/file"
+check "$temporary/file with spaces" _mini_docker_compose_completion docker-compose -f "$temporary/file"
+check "$temporary/file with spaces" _mini_docker_compose_completion docker-compose "--file=$temporary/file"
+check "-f$temporary/file with spaces" _mini_docker_compose_completion docker-compose "-f$temporary/file"
+check "$temporary/file with spaces" _mini_docker_compose_completion docker-compose --env-file "$temporary/file"
 mkdir -p "$temporary/home/.ssh"
 check "$temporary/home" _mini_tar_completion tar -C "$temporary/ho"
 check "--directory=$temporary/home" _mini_tar_completion tar "--directory=$temporary/ho"
+check "$temporary/home" _mini_docker_compose_completion docker-compose --project-directory "$temporary/ho"
 COMP_WORDS=(tar -C "$temporary/file"); COMP_CWORD=2
 _mini_tar_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
