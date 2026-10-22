@@ -80,7 +80,7 @@ COPY --from=extras /out/sources/ /out/sources/
 COPY extras.json fetch-extras.py enhancements-test.lua /out/sources/build/
 COPY enhancements-test.lua /build/
 RUN /out/nvim/bin/nvim --headless -u NONE -i NONE \
-      '+packadd conform.nvim' '+packadd indent-blankline.nvim' '+packadd mini.align' \
+      '+packadd conform.nvim' '+packadd indent-blankline.nvim' '+packadd mini.align' '+packadd onedark.nvim' \
       '+helptags ALL' '+qa!'
 # Relocate the complete tree and hide system terminfo. Test only isolated state.
 RUN --network=none mv /out/nvim /out/nvim-relocated \

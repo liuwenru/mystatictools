@@ -80,9 +80,26 @@ nvim/share/nvim/runtime/pack/offline/opt/nvim-tree.lua/
 
 ### 高亮、缩进线、格式化和对齐
 
-使用随包示例配置时，启用 Neovim 内置 **habamax** 配色，以及 Nginx、Shell、JSON、
+使用随包示例配置时，启用随包内置的 **OneDark 1.0.3** 配色（`navarasu/onedark.nvim`，
+`dark` 风格），以及 Nginx、Shell、JSON、
 YAML、XML、Python、Java properties 的内置文件类型和传统语法高亮。
 无对应 Tree-sitter 解析器的语言不会尝试下载或加载 `.so`。
+
+主题是纯 Lua，放在 `nvim/share/nvim/runtime/pack/offline/opt/onedark.nvim/`，
+无需联网、插件管理器或动态库；版本与 SHA-256 固定在 `extras.json`，源码和许可证随包保留。
+它随 runtime 分发，不是编译进 Neovim ELF；不会自动覆盖个人配置。
+已有自己的配置时，在 `init.lua` 中加入：
+
+```lua
+vim.opt.termguicolors = true
+vim.cmd('packadd onedark.nvim')
+require('onedark').setup({style = 'dark'})
+require('onedark').load()
+```
+
+可将 `style` 改为 `darker`、`cool`、`deep`、`warm`、`warmer` 或 `light`。
+临时回到原配色可执行 `:colorscheme habamax`；恢复执行 `:colorscheme onedark`。
+真彩色效果取决于实际终端及 tmux/SSH 链路，主题本身不要求 Nerd Font 或 Tree-sitter。
 
 随附 `indent-blankline.nvim 3.10.1` 显示缩进参考线（`│`），关闭需要 Tree-sitter
 的作用域功能；无需 Nerd Font。线条只是显示辅助，不改变实际空白。
@@ -210,16 +227,20 @@ Docker 导出前在断网的测试步骤中强制执行功能检查，失败不�
 6. 使用随包示例配置，在隔离临时目录实际调用 nvim-tree 完成目录浏览、新建、打开编辑、
    重命名、复制、删除和关闭文件树；此测试也在 scratch 中执行，不借助外部文件管理命令。
 7. 各格式实际输入输出、错误输入原文保留、XML 外部实体不展开、Nginx 重新缩进、properties
-   原文保留和 mini.align 列对齐；在 scratch 中直接调用随包静态程序，不需要 shell。
+    原文保留和 mini.align 列对齐；在 scratch 中直接调用随包静态程序，不需要 shell。
+8. OneDark 加载、`dark` 调色板、传统语法/Tree-sitter/文件树/缩进线高亮组，以及切换主题后
+   重新加载；同样纳入断网和 scratch 测试，不能代替实际终端的视觉确认。
 
 构建与测试是否原生执行取决于执行主机：在 x86_64 主机上构建 arm64 使用模拟器，
 在 aarch64 主机上构建 arm64 为原生执行；模拟器测试不能代替真实 ARM 机器测试。
 自动测试不等于验证了所有实体终端：真彩色显示、鼠标手感、SSH/堡垒机链路、
 桌面剪贴板落地和具体第三方插件仍需在实际客户端试用。
 
-本轮交付的 aarch64 产物已在 `192.168.182.150`（原生 aarch64）重新构建，
+2026-10-22 已完成包含 OneDark 1.0.3 的双架构发布包构建：x86_64 在本机原生构建，
+aarch64 在 `192.168.182.150` 原生构建，两端均使用默认 builder。
 上述 Docker 断网功能测试、无系统 terminfo 的 PTY/tmux 测试及 scratch 测试均已通过，
-不只依赖模拟器测试结果。
+包括 OneDark、文件树和格式化回归，不依赖模拟器测试结果。
+`dist/` 中两种架构的运行包和源码包均已更新；实际客户端颜色显示仍需视觉确认。
 
 ## Reference Documentation
 
@@ -235,6 +256,7 @@ Docker 导出前在断网的测试步骤中强制执行功能检查，失败不�
 - [conform.nvim 文档](https://github.com/stevearc/conform.nvim/tree/v9.1.0)
 - [缩进参考线](https://github.com/lukas-reineke/indent-blankline.nvim/tree/v3.10.1)
 - [mini.align](https://github.com/nvim-mini/mini.align/tree/v0.18.0)
+- [OneDark 固定版本及配置说明](https://github.com/navarasu/onedark.nvim/tree/v1.0.3)
 - [shfmt](https://github.com/mvdan/sh/releases/tag/v3.14.1)、[yamlfmt](https://github.com/google/yamlfmt/releases/tag/v0.21.0)
 - [jq](https://github.com/jqlang/jq/releases/tag/jq-1.8.2)、[Ruff](https://github.com/astral-sh/ruff/releases/tag/0.17.1)
 - [libxml2 源码](https://download.gnome.org/sources/libxml2/2.15/)、[xmllint 手册](https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html)

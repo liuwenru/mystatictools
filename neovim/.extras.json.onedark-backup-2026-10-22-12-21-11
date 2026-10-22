@@ -1,0 +1,16 @@
+[
+  {"name":"jq","version":"1.8.2","kind":"source","url":"https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-1.8.2.tar.gz","sha256":"71b8d6e8f5fe81f6c6d0d110e3892251f6ce76ed095abd315e26e6e1193af3af"},
+  {"name":"libxml2","version":"2.15.4","kind":"source","url":"https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz","sha256":"98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821"},
+  {"name":"shfmt","version":"3.14.1","kind":"source","url":"https://codeload.github.com/mvdan/sh/tar.gz/refs/tags/v3.14.1","sha256":"ec4bdb88ab6c95686be3a4eeb4ad77d2b49d33d2ed7b0a65035cd52d2d87c443"},
+  {"name":"yamlfmt","version":"0.21.0","kind":"source","url":"https://codeload.github.com/google/yamlfmt/tar.gz/refs/tags/v0.21.0","sha256":"9ec915d70e527a94171eaaf6b785d1423222b5b82e7633f80dcc6b66e6a655aa"},
+  {"name":"ruff","version":"0.17.1","kind":"source","url":"https://codeload.github.com/astral-sh/ruff/tar.gz/refs/tags/0.17.1","sha256":"3ba68fddb615f905e854f694a2859fd6532e8522141975bbbdbed71fc2112cc8"},
+  {"name":"indent-blankline.nvim","version":"3.10.1","kind":"plugin","url":"https://codeload.github.com/lukas-reineke/indent-blankline.nvim/tar.gz/refs/tags/v3.10.1","sha256":"bedb67c2700027ec7e98146edfc2068413cad7e8f22a1ceab6e6c0c22f9f8380"},
+  {"name":"conform.nvim","version":"9.1.0","kind":"plugin","url":"https://codeload.github.com/stevearc/conform.nvim/tar.gz/refs/tags/v9.1.0","sha256":"77c4fa1f44d6ab9767842d0d42e877939e20b2295280677ba5a65410fa865890"},
+  {"name":"mini.align","version":"0.18.0","kind":"plugin","url":"https://codeload.github.com/nvim-mini/mini.align/tar.gz/refs/tags/v0.18.0","sha256":"204ad202f7979b2a25308175eb8141b6a7a79f53537288728f19072b92c988a2"},
+  {"name":"shfmt","kind":"binary","arch":"amd64","url":"https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_linux_amd64","sha256":"76e77641faa025814b77f153b29796b8e6fa2fca03e0c76a691608b86c7ea7bf"},
+  {"name":"shfmt","kind":"binary","arch":"arm64","url":"https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_linux_arm64","sha256":"5f2db09dae91fca848f7adbdd014632e921a383863a2ad7e0450ad3aba0c6489"},
+  {"name":"yamlfmt","kind":"binary-tar","arch":"amd64","url":"https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_x86_64.tar.gz","sha256":"1f300d9257b232bb3b541d7fb1b0e6b3c121bcbab381c86cd38cb8722be8a566"},
+  {"name":"yamlfmt","kind":"binary-tar","arch":"arm64","url":"https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_arm64.tar.gz","sha256":"5b2689c963b177271330c5ce8ca7396751107e5a826be46f03d2cb9b6f0c7784"},
+  {"name":"ruff","kind":"binary-tar","arch":"amd64","url":"https://github.com/astral-sh/ruff/releases/download/0.17.1/ruff-x86_64-unknown-linux-musl.tar.gz","sha256":"2d9878b5e6a3d0dedadbfc01a64bfe54e72f560adbfd235937cd29e1fc9238e3"},
+  {"name":"ruff","kind":"binary-tar","arch":"arm64","url":"https://github.com/astral-sh/ruff/releases/download/0.17.1/ruff-aarch64-unknown-linux-musl.tar.gz","sha256":"255404ccf2f7950ff6aad8858321a6f416fe2a840ae4e37dfb4c21cb8774f325"}
+]

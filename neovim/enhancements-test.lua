@@ -1,6 +1,17 @@
 -- Same tests run with no shell, Python, Node, shared libraries or network in scratch.
 assert(package.loaded.ibl and package.loaded.conform and MiniAlign)
-assert(vim.g.colors_name == 'habamax')
+assert(package.loaded.onedark and vim.g.colors_name == 'onedark')
+assert(vim.g.onedark_config.style == 'dark' and vim.o.termguicolors)
+local palette = require('onedark.palette').dark
+assert(vim.api.nvim_get_hl(0, {name = 'Normal', link = false}).bg == tonumber(palette.bg0:sub(2), 16))
+for _, group in ipairs({'Comment', 'String', '@keyword', 'NvimTreeNormal', 'IblIndent'}) do
+  assert(next(vim.api.nvim_get_hl(0, {name = group, link = false})), group .. ': missing highlight')
+end
+-- Switching away and back must reapply the bundled theme without downloads.
+vim.cmd('colorscheme habamax')
+require('onedark').load()
+assert(vim.g.colors_name == 'onedark')
+print('PASS OneDark dark palette, syntax/plugin highlights and theme reload')
 assert(vim.g.clipboard == nil and vim.o.clipboard == '' and vim.o.mouse == '')
 assert(vim.g.termfeatures.osc52 == false)
 local conform = require('conform')
