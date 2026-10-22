@@ -1,0 +1,45 @@
+-- 可选配置，不自动覆盖用户配置；不联网安装任何插件。
+-- 本地目录浏览使用 nvim-tree；此配置不启用 netrw 的远程文件功能。
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.number = true
+vim.opt.mouse = 'a'
+vim.opt.termguicolors = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+-- 传统语法高亮可用；官方自带的 Tree-sitter 解析器也已静态内嵌。
+vim.cmd('syntax enable')
+-- 显式复制到本地终端剪贴板：选中后 <leader>y（默认 leader 是反斜杠）。
+-- 不查询远端剪贴板；粘贴请用本地终端粘贴/括号粘贴。
+vim.g.clipboard = {
+  name = 'OSC 52 copy / local paste',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = function() return {vim.fn.getreg('0', 1, true), vim.fn.getregtype('0')} end,
+    ['*'] = function() return {vim.fn.getreg('0', 1, true), vim.fn.getregtype('0')} end,
+  },
+}
+vim.keymap.set({'n', 'x'}, '<leader>y', '"+y', {desc = '复制到本地终端（OSC 52）'})
+
+-- 放在 runtime 的原生 opt package 中，移动安装目录后仍可发现。
+vim.cmd('packadd nvim-tree.lua')
+require('nvim-tree').setup({
+  disable_netrw = true,
+  git = {enable = false},
+  diagnostics = {enable = false},
+  renderer = {
+    icons = {
+      show = {
+        file = false, folder = false, folder_arrow = false,
+        git = false, modified = false, hidden = false, diagnostics = false, bookmarks = false,
+      },
+    },
+  },
+})
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', {desc = '开关文件树'})

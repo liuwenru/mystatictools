@@ -1,0 +1,48 @@
+local function check()
+  vim.fn.mkdir(vim.env.TEST_ROOT, 'p')
+  assert(vim.fn.has('nvim-0.12') == 1)
+  assert(vim.fn.filereadable(vim.env.VIMRUNTIME .. '/doc/help.txt') == 1, vim.env.VIMRUNTIME)
+  vim.cmd('filetype plugin indent on')
+  vim.cmd('syntax enable')
+  local path = vim.env.TEST_ROOT .. '/edit.lua'
+  vim.cmd.edit(path)
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, {'local message = "中文编辑"', 'return message'})
+  vim.cmd('write')
+  assert(vim.fn.readfile(path)[1]:find('中文编辑', 1, true))
+  assert(vim.bo.filetype == 'lua')
+  -- Lua API edits in one script share an undo block; start a fresh history.
+  vim.cmd('let &undolevels = &undolevels')
+  vim.cmd('normal! gg0cwchanged')
+  vim.cmd('undo')
+  assert(vim.api.nvim_get_current_line():find('local', 1, true))
+  vim.cmd('vsplit')
+  assert(#vim.api.nvim_list_wins() == 2)
+  vim.cmd('only')
+  vim.fn.mkdir(vim.env.TEST_ROOT .. '/site/pack/offline/start/test/plugin', 'p')
+  vim.fn.writefile({'vim.g.offline_lua_plugin = 42'}, vim.env.TEST_ROOT .. '/site/pack/offline/start/test/plugin/test.lua')
+  vim.fn.writefile({'let g:offline_vim_plugin = 43'}, vim.env.TEST_ROOT .. '/site/pack/offline/start/test/plugin/test.vim')
+  vim.opt.packpath:prepend(vim.env.TEST_ROOT .. '/site')
+  vim.cmd('packloadall')
+  assert(vim.g.offline_lua_plugin == 42 and vim.g.offline_vim_plugin == 43)
+  assert(require('lpeg').match(require('lpeg').P('hello'), 'hello') == 6)
+  assert(require('vim.ui.clipboard.osc52').copy)
+  for _, lang in ipairs({'c', 'lua', 'vim', 'vimdoc', 'query', 'markdown', 'markdown_inline'}) do
+    assert(vim.treesitter.language.add(lang))
+  end
+  local tree = vim.treesitter.get_string_parser('local value = 42', 'lua'):parse()[1]
+  assert(not tree:root():has_error())
+  if not vim.env.NVIM_NO_SHELL then
+    assert(vim.system({'/bin/sh', '-c', 'printf job-ok'}):wait().stdout == 'job-ok')
+    vim.cmd('enew!')
+    local channel = vim.fn.jobstart({'/bin/sh', '-c', 'printf terminal-ok'}, {term = true})
+    assert(channel > 0)
+    assert(vim.fn.jobwait({channel}, 5000)[1] == 0)
+  end
+  vim.fn.writefile({'headless PASS'}, vim.env.TEST_ROOT .. '/headless.ok')
+end
+local ok, err = pcall(check)
+if not ok then
+  io.stderr:write(tostring(err) .. '\n')
+  vim.cmd('cquit 1')
+end
+vim.cmd('qa!')

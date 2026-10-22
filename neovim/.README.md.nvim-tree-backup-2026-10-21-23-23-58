@@ -1,0 +1,169 @@
+# Neovim 0.12.6 静态离线版
+
+采用官方 `STATIC_BUILD=ON` 路线，Alpine 3.22 + musl，目标为 Linux
+x86_64 和 aarch64。二进制静态链接，但**需要随附的完整 runtime**。
+不需要目标系统安装 glibc/musl 共享库、LuaJIT、libuv 或 terminfo。
+
+## 构建与交付
+
+在本目录执行，需要 Docker、默认 buildx；跨架构需要已有可用的 binfmt/QEMU。
+脚本不创建 builder，不安装模拟器，不修改宿主系统。
+
+```sh
+sh ./build.sh           # 两种架构
+sh ./build.sh amd64
+sh ./build.sh aarch64
+sh ./build.sh all --progress plain --build-arg BUILD_JOBS=4
+```
+
+有原生 ARM 主机时，优先在 ARM 主机直接构建，避免模拟器开销。共享目录环境可从当前机器执行：
+
+```sh
+ssh root@192.168.182.150 \
+  'cd /root/workspace/mystatictools/neovim && sh ./build.sh aarch64 --progress plain'
+```
+
+共享的 `dist/aarch64` 不要同时被另一台机器的构建写入。
+
+产物：
+
+```text
+dist/nvim-linux-x86_64.tar.gz
+dist/nvim-linux-aarch64.tar.gz
+dist/nvim-sources-x86_64.tar.gz   # 对应源码、依赖归档和构建适配，运行时不需要
+dist/nvim-sources-aarch64.tar.gz
+dist/x86_64/nvim/bin/nvim
+dist/x86_64/nvim/share/nvim/runtime/
+dist/aarch64/nvim/bin/nvim
+dist/aarch64/nvim/share/nvim/runtime/
+```
+
+源码版本和 SHA-256 固定在 Dockerfile；依赖版本和 SHA-256 采用该版源码
+`cmake.deps/deps.txt`，`fetch-deps.py` 下载时重试并校验，CMake 再次校验。
+Alpine 构建工具随 3.22 仓库更新，并非所有构建工具都锁定到不可变版本。
+
+## 离线使用
+
+将对应架构的压缩包完整复制到目标机，解压到任意可写目录：
+
+```sh
+tar -xzf nvim-linux-x86_64.tar.gz
+./nvim/bin/nvim --version
+./nvim/bin/nvim your-file.conf
+# 可选离线配置，先试用，不覆盖已有配置
+./nvim/bin/nvim -u ./nvim/examples/init.lua your-file.conf
+```
+
+`bin/nvim` 相对定位 `../share/nvim/runtime`；不要单独移动二进制。
+若机器已有其他 Vim/Neovim，确认没有遗留的 `VIM` / `VIMRUNTIME` 指向旧版本。
+推荐 `LANG=C.UTF-8`。本包不自动更改 PATH、不覆盖 `~/.config/nvim`。
+
+保留文件编辑、撤销/重做、搜索替换、分屏、标签、宏、正则、UTF-8、传统语法高亮、
+文件类型/缩进、帮助文档、netrw，以及 LuaJIT、LPeg、Vimscript、作业/终端、RPC、LSP 客户端代码。
+不附带语言服务器，也不自动下载插件；未通过编译选项硬删 LSP。
+
+## 插件支持与静态边界
+
+支持离线复制的纯 Vimscript、纯 Lua 插件。推荐直接使用原生 package 目录：
+
+```text
+~/.local/share/nvim/site/pack/offline/start/插件名/plugin/...
+~/.local/share/nvim/site/pack/offline/start/插件名/lua/...
+~/.local/share/nvim/site/pack/offline/opt/按需插件/...
+```
+
+`start` 自动加载；`opt` 使用 `:packadd 插件名`。插件需要的所有依赖也要提前复制，
+不要在纯内网配置中保留插件管理器的自动安装/更新、首次启动下载逻辑。
+
+**静态 musl 不支持 `dlopen()` 加载 `.so`。** 因此：
+
+- 支持内置 LuaJIT、LPeg、luv；其他需要动态 Lua C 模块、FFI 加载外部共享库的插件不保证可用。
+- 默认的官方 Tree-sitter 解析器 C、Lua、Vim、Vimdoc、Query、Markdown、Markdown inline
+  通过本仓库 `static-parsers.py` 静态内嵌；Lua/Markdown/帮助文档不会因加载 `.so` 而失效。
+- 这是对官方源码的本地适配：依赖构建改为静态 archive，主程序链接 archive，
+  解析器加载器为这 7 种语言显式选择内嵌实现。没有伪造 `.so` 或终端别名。
+- 不支持直接添加第三方 Tree-sitter `.so`；若需更多语言的 Tree-sitter，需要扩展静态构建并重新验证。
+  其他语言仍可使用随附的传统 syntax/indent。
+- Python/Node/Ruby/Perl provider、外部格式化程序、git、rg、fd、diff、shell 等不是静态二进制的一部分。
+  依赖它们的插件需另行部署；netrw 的远程/压缩文件操作也可能调用外部命令。
+- 内置 `:terminal` 和 job 功能要求目标机有可执行 shell/命令、Linux PTY（`/dev/pts`），
+  不代表附带一个 shell。RPC socket、配置/状态、交换/撤销文件也需要目录权限。
+- 不启用 Wasmtime；沿用官方默认关闭的翻译构建选项，保留英文帮助及错误消息。
+
+## 与 tmux 配合
+
+Neovim 自带终端 fallback，保留 unibilium 对系统 terminfo 的正常查询。
+没有系统 terminfo 时，也可识别 `screen-256color` 和 `tmux-256color`，无需把 TERM 硬改为 xterm。
+与本仓库 `tmux/` 静态版本一起使用时，两者各自处理终端定义，不共享内嵌数据库。
+
+建议的 `~/.tmux.conf`（按需手动合并）：
+
+```tmux
+set -g default-terminal tmux-256color
+set -g mouse on
+set -s escape-time 10
+set -s set-clipboard on
+# 仅当外层终端确实支持 RGB 时启用；按实际客户端 TERM 调整匹配范围
+set -as terminal-features ',xterm*:RGB'
+```
+
+如果同一 tmux 会话中其他程序依赖系统 terminfo，而目标机没有 tmux-256color 定义，
+可保留仓库 tmux 的默认 screen-256color。不要对任意终端伪造 TERM。
+修改已有服务端配置不会自动替换已有窗格的环境；建议新建独立测试服务端：
+
+```sh
+tmux -L nvim-offline -f ./your-test-tmux.conf new-session
+```
+
+示例 Neovim 配置启用真彩色和鼠标。tmux 前缀键仍由 tmux 接管；不强制重映射
+`Ctrl+h/j/k/l`，避免破坏编辑和终端应用的原有操作。Neovim 终端模式用
+`Ctrl+\\`、`Ctrl+n` 回普通模式。
+
+### 跨 SSH 复制：OSC 52
+
+示例配置使用 Neovim 内置 OSC 52，不需要远端安装 xclip/xsel、Python 或 Node。
+可视选择后按 `\y`，或普通模式 `\yy` 复制一行；默认 leader 是反斜杠。
+需要本地终端允许 OSC 52 写剪贴板，tmux 允许应用设置剪贴板。
+此方式通过 tmux 自身的 OSC 52 转发，不要求无条件开启 `allow-passthrough`。
+终端/堡垒机若禁止或截断 OSC 52，需要在客户端调整策略，不能靠静态编译解决。
+
+不向本地终端请求读剪贴板（一些终端会拒绝或长时间等待）。示例 `+`/`*` 粘贴回退到
+Neovim 本地 yank 寄存器，不代表读取了桌面剪贴板；从桌面粘贴请使用终端的粘贴快捷键，
+Neovim 支持 bracketed paste。`set-clipboard on` 允许窗格应用改剪贴板，只在可信会话启用。
+
+## 验证范围
+
+Docker 导出前在断网的测试步骤中强制执行功能检查，失败不导出：
+
+1. `file`、`readelf -l/-d`：无动态解释器、无 NEEDED；打印版本和 ELF 架构。
+2. 完整目录移动后启动，不手工设置 VIMRUNTIME，检查帮助 runtime 的定位。
+3. headless：中文读写、撤销、分屏、filetype/syntax、原生 package 中的 Lua/Vimscript
+   插件、LPeg、七种内置解析器加载及 Lua 实际解析、子进程和 PTY terminal job。
+4. 隐藏系统 terminfo 后，在真实 PTY 中分别使用 xterm-256color、screen-256color、
+   tmux-256color、linux，验证直接启动及隔离 tmux 会话内的输入/保存/退出。
+   测试 tmux 单独使用构建期数据库，不让 Neovim 读取该数据库。
+5. 在 scratch 根文件系统中断网重复编辑、插件和解析器测试；该环境没有系统共享库、
+   shell、解释器或 terminfo，因此不运行依赖外部 shell 的 job/terminal 子测试。
+
+构建与测试是否原生执行取决于执行主机：在 x86_64 主机上构建 arm64 使用模拟器，
+在 aarch64 主机上构建 arm64 为原生执行；模拟器测试不能代替真实 ARM 机器测试。
+自动测试不等于验证了所有实体终端：真彩色显示、鼠标手感、SSH/堡垒机链路、
+桌面剪贴板落地和具体第三方插件仍需在实际客户端试用。
+
+本轮交付的 aarch64 产物已在 `192.168.182.150`（原生 aarch64）重新构建，
+上述 Docker 断网功能测试、无系统 terminfo 的 PTY/tmux 测试及 scratch 测试均已通过，
+不只依赖模拟器测试结果。
+
+## Reference Documentation
+
+- [官方静态构建说明](https://neovim.io/doc/build/#build-static-binary-linux)
+- [0.12.6 官方发布页](https://github.com/neovim/neovim/releases/tag/v0.12.6)
+- [该版本构建说明](https://github.com/neovim/neovim/blob/v0.12.6/BUILD.md)
+- [固定依赖和校验值](https://github.com/neovim/neovim/blob/v0.12.6/cmake.deps/deps.txt)
+- [终端说明](https://neovim.io/doc/user/term.html)
+- [剪贴板 provider 与 OSC 52](https://neovim.io/doc/user/provider.html#clipboard-osc52)
+- [原生离线 packages](https://neovim.io/doc/user/pack.html)
+
+分发包保留 Neovim LICENSE 和依赖顶层许可文件；同时导出匹配版本的源码包，
+包含原始 Neovim 源码、固定依赖归档及构建脚本。需要再分发时，请同时提供对应源码包，
+遵守依赖许可（尤其静态链接的 unibilium LGPL 对修改、重新链接等权利的要求）。
