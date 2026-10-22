@@ -6,6 +6,29 @@ x86_64 和 aarch64。二进制静态链接，但**需要随附的完整 runtime*
 
 ## 构建与交付
 
+### 目录结构
+
+```text
+build.sh              # 构建打包入口
+pushfdoc.sh           # 发布入口
+Dockerfile            # 静态构建、离线测试和产物导出
+init-offline.lua      # 随运行包交付的示例配置，安装为 nvim/examples/init.lua
+extras.json           # 附加工具与插件的版本和校验值
+fetch-deps.py         # 下载 Neovim 构建依赖
+fetch-extras.py       # 下载附加工具与插件
+static-parsers.py     # 静态解析器构建适配
+bundle-sources.py     # 收集源码和许可证
+test/                 # headless、PTY/tmux、文件树及增强功能测试
+dist/                 # 分架构产物、运行包和源码包
+```
+
+测试脚本在构建容器中位于 `/build/test/`，scratch 测试中位于 `/tests/`；
+`/test/` 仅存放 scratch 测试运行时生成的临时状态。
+源码包保留 `sources/build/test/` 目录，与仓库布局一致，便于解压后重新构建。
+测试脚本不随最终运行包交付；`init-offline.lua` 保留在项目外层。
+
+### 执行构建
+
 在本目录执行，需要 Docker、默认 buildx；跨架构需要已有可用的 binfmt/QEMU。
 脚本不创建 builder，不安装模拟器，不修改宿主系统。
 

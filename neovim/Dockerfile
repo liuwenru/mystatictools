@@ -56,7 +56,7 @@ RUN cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release \
     && ! readelf -d /out/nvim/bin/nvim | grep -q '(NEEDED)' \
     && /out/nvim/bin/nvim --version | tee /out/nvim/BUILD-VERSION.txt \
     && /out/nvim/bin/nvim --version | grep -F "NVIM v${NVIM_VERSION}"
-COPY smoke-test.lua smoke-test.py nvim-tree-test.lua /build/
+COPY test/ /build/test/
 COPY init-offline.lua /out/nvim/examples/init.lua
 COPY bundle-sources.py /build/bundle-sources.py
 RUN python3 /build/bundle-sources.py
@@ -74,11 +74,11 @@ RUN curl -fL --retry 4 --retry-all-errors \
     && printf '%s\nSHA256 %s\n' "${NVIM_TREE_VERSION}" "${NVIM_TREE_SHA256}" > /out/nvim/NVIM-TREE-VERSION.txt \
     && /out/nvim/bin/nvim --headless -u NONE -i NONE \
          '+helptags /out/nvim/share/nvim/runtime/pack/offline/opt/nvim-tree.lua/doc' '+qa!'
-COPY Dockerfile build.sh fetch-deps.py static-parsers.py bundle-sources.py smoke-test.lua smoke-test.py nvim-tree-test.lua init-offline.lua README.md /out/sources/build/
+COPY Dockerfile build.sh fetch-deps.py static-parsers.py bundle-sources.py init-offline.lua README.md /out/sources/build/
+COPY test/ /out/sources/build/test/
 COPY --from=extras /out/nvim/ /out/nvim/
 COPY --from=extras /out/sources/ /out/sources/
-COPY extras.json fetch-extras.py enhancements-test.lua /out/sources/build/
-COPY enhancements-test.lua /build/
+COPY extras.json fetch-extras.py /out/sources/build/
 RUN /out/nvim/bin/nvim --headless -u NONE -i NONE \
       '+packadd conform.nvim' '+packadd indent-blankline.nvim' '+packadd mini.align' '+packadd onedark.nvim' \
       '+helptags ALL' '+qa!'
@@ -86,15 +86,15 @@ RUN /out/nvim/bin/nvim --headless -u NONE -i NONE \
 RUN --network=none mv /out/nvim /out/nvim-relocated \
     && cp -a /etc/terminfo /build/test-terminfo \
     && rm -rf /etc/terminfo /lib/terminfo /usr/share/terminfo \
-    && python3 /build/smoke-test.py /out/nvim-relocated/bin/nvim \
+    && python3 /build/test/smoke-test.py /out/nvim-relocated/bin/nvim \
     && mv /out/nvim-relocated /out/nvim
 FROM scratch AS minimal-test
 COPY --from=builder /out/nvim /nvim
-COPY smoke-test.lua nvim-tree-test.lua enhancements-test.lua /
+COPY test/*.lua /tests/
 ENV HOME=/test XDG_CONFIG_HOME=/test/config XDG_DATA_HOME=/test/data \
     XDG_STATE_HOME=/test/state XDG_CACHE_HOME=/test/cache \
     TEST_ROOT=/test NVIM_NO_SHELL=1 LANG=C.UTF-8
-RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "-l", "/smoke-test.lua"]
+RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "-l", "/tests/smoke-test.lua"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "+lua if vim.fn.filereadable('/test/headless.ok') ~= 1 then vim.cmd('cquit 1') end", "+qa!"]
 FROM scratch AS artifact
 COPY --from=minimal-test /nvim /nvim
