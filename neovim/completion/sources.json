@@ -1,0 +1,1650 @@
+[
+  {
+    "group": "opencode",
+    "file": "opencode.json",
+    "url": "https://opencode.ai/config.json",
+    "ref": "snapshot",
+    "format": "schema",
+    "sha256": "2c5da655b5b1b558e71ead3da0dda301aa035b1ac531766e1a0cabc4dcf7ca4a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "compose",
+    "file": "compose.json",
+    "url": "https://raw.githubusercontent.com/compose-spec/compose-spec/3a4a6995e4a971f6173dff9130cb3e38e6738651/schema/compose-spec.json",
+    "ref": "3a4a6995e4a971f6173dff9130cb3e38e6738651",
+    "format": "schema",
+    "sha256": "d549057ebc2925f39f62799eab0db7b9e2c18b35b6c00595199116da3ed10e64",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/ngx_core_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/ngx_core_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "098e6c5069460d7508d5aa4e133f074f636cef699794eefcf6c5400583da6bbb",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_core_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_core_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "abff0499c57bbf05aaf5af9f479b10c4beaefc0e55ae4be5484fc0ee99a37408",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_proxy_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_proxy_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "462da5ceff40a49af708c42aa583dd81bc220e906ded0980a5d9556d2a24f88f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_upstream_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_upstream_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "0955576db8c2cafa8385214f0862e3751d6518efca3ccdcfc5e59557f2f0eaca",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_ssl_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_ssl_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "f287b1babdbd0d3c4682dcd61a500cf0903f7faf6e97bdaaf810af0e9cfc8a41",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_rewrite_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_rewrite_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "ede9aef872429ee076ac85b5d1f266970a57435606c18766eda1df8b4d6b4f97",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_headers_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_headers_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "551e793a5ca7098b4d44d8ccf5483d9445e248ec19af90cbbfee40a9c0504215",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_log_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_log_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "bff21ad3d8bf4688f507e8cf3a62cf0fc2ea7097c84c697e9a0d36d7e7ee88f0",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_gzip_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_gzip_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "e9fe92f7ace2c162f2af7e1f96cf7baeb14e62e68bf4519fbc63582490ba47be",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_access_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_access_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "f31379b1f4c4b92771f0c529ed6c3a0bfe35b0b5a0b76d7e5841edcaaab8d2ef",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_realip_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_realip_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "c1a9bfa7b43e6d7439a807620be414cc8b4889a49441c7c1cb46a29a2254578f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_map_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_map_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "19b6815643b209a6e698ace54eeac1742439b58525f510e649117c0b0f9653c3",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_limit_req_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_limit_req_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "0416a7c20944f7e5fd095011230d626acf77a53b5b295680dbf458f70cab34f6",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_limit_conn_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_limit_conn_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "db2b53acbfa2a3eb18fd48920095671d3b8d572b1e6ecd5044175a933e759ecb",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_index_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_index_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "19c72e75eb6b22706b606c68a11524efeb7ca8893e01f01767822ecea3b91dd5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_autoindex_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_autoindex_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "2acad9db2927a556ff5f5a5d5c8f4638f42dad8a8de607de8655ab5dfcb76e8d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_auth_basic_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_auth_basic_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "1f3b3bd0ff48306b5c604bc41b68ff2a41137656007c433ee925cbc00bde7ea1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_auth_request_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_auth_request_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "db152598a6a45ea3d387e2634647573d08226393458346070f4334b5610e11ec",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_fastcgi_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_fastcgi_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "5fb157d0988104c99e44127b30093b9e454aeabc8d631fe7fc00e3c062be19c1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/http/ngx_http_v2_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/http/ngx_http_v2_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "7af6650a24bfbf116de6aebab952ef01ff5b87d9844fa7009631d4d4ad5802f5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_core_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_core_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "104877017cad575900c8eacc5c2609ffa2e4c1832b1a9e656a614f0f007bfe5d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_proxy_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_proxy_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "3d638baae7a5b3a23a66ea14c4fe52700fe26380524bc0ccca529a186cd5f5f2",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_upstream_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_upstream_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "46307400604b895e3f3b9cea2af778afb699a90b2eb791d73bf24468d162ea42",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_ssl_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_ssl_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "e5e6bc055a813d4ce033adfee3a36ae6a47bd08cbe32a4547e5e6a72928771e1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_log_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_log_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "d6cff609dc5e03df317165dcefe2b5c33d71c11adea101984dad604d95920c46",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_map_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_map_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "10de11c47b9c587e3e458bac5b06541e548ccda65b97068e05f848970e71d79e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_access_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_access_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "86eeac1b116189c8e3fdd54786c227e011147cca57b0380cf05b0935b3cb3692",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_realip_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_realip_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "8bab999f374e16f1af16cb071cef6ccfed94b1f8bf87ab99e8300520fe13a05e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "nginx",
+    "file": "nginx/stream/ngx_stream_limit_conn_module.xml",
+    "format": "nginx",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/xml/en/docs/stream/ngx_stream_limit_conn_module.xml",
+    "ref": "159f0a30769786ac6802f09cfd3302a39e31fc70",
+    "sha256": "ecfb4a2567fadfbe420de0e079c57fe06a19f0466e658ee7654287a8232ef725",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "systemd-service",
+    "file": "systemd/systemd.unit.xml",
+    "format": "systemd",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/man/systemd.unit.xml",
+    "ref": "v262.1",
+    "sha256": "eb9479bea50ccb0e7643836ec083e8ef68bdf9ef2b26f31839939168f82714c6",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "systemd-service",
+    "file": "systemd/systemd.service.xml",
+    "format": "systemd",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/man/systemd.service.xml",
+    "ref": "v262.1",
+    "sha256": "97646bea7b1452f89c8e70d85cc4e1e2c857d430e9200808d78e91a45dd4ff0b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "systemd-service",
+    "file": "systemd/systemd.exec.xml",
+    "format": "systemd",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/man/systemd.exec.xml",
+    "ref": "v262.1",
+    "sha256": "6df624131d550cc57a6ea9b6aece75e49f0caccdbcc0749c74f14f2df7c0ca84",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "systemd-service",
+    "file": "systemd/systemd.kill.xml",
+    "format": "systemd",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/man/systemd.kill.xml",
+    "ref": "v262.1",
+    "sha256": "448322830dbbd02c64cca99941ba92705afe9648241fc917db7a8d6ae7910e72",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "systemd-service",
+    "file": "systemd/systemd.resource-control.xml",
+    "format": "systemd",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/man/systemd.resource-control.xml",
+    "ref": "v262.1",
+    "sha256": "d57641df40e45811403de91e55059b6a8f7506c6812a85cbe9c6ba22900587d8",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "nginx-LICENSE",
+    "url": "https://raw.githubusercontent.com/nginx/nginx.org/159f0a30769786ac6802f09cfd3302a39e31fc70/text/LICENSE",
+    "ref": "see URL",
+    "format": "license",
+    "sha256": "84d5d5e86a65567c8310a6798ed9110c665f715b586905cdbe28f857511ae261",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "compose-LICENSE",
+    "url": "https://raw.githubusercontent.com/compose-spec/compose-spec/3a4a6995e4a971f6173dff9130cb3e38e6738651/LICENSE",
+    "ref": "see URL",
+    "format": "license",
+    "sha256": "df2620afda09a96364f47f951a8574f9031d51ddebc80b44f1df93c7f54f8224",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "systemd-LGPL-2.1",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v262.1/LICENSE.LGPL2.1",
+    "ref": "see URL",
+    "format": "license",
+    "sha256": "6d9bb3b7fc818a8facc4cc296060a0883fef8710d6498f86165335846e82ee9d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "opencode-LICENSE",
+    "url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/LICENSE",
+    "ref": "see URL",
+    "format": "license",
+    "sha256": "625f0f619133f89bbbb2abe37369613dfa1885eba1e50d02170deb62bb42cb6b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/server.xml",
+    "format": "tomcat",
+    "component": "Server",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/server.xml",
+    "sha256": "bca93f5016b876bf697816aed93ffbe6b1f38f3fb96fe2f4cf4f9fd8d96134f9",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/service.xml",
+    "format": "tomcat",
+    "component": "Service",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/service.xml",
+    "sha256": "ac3c09b2dc958b051aadefe00ef43f7df5786b3a8e3be8e5b5ded70a965e2c63",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/executor.xml",
+    "format": "tomcat",
+    "component": "Executor",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/executor.xml",
+    "sha256": "8cd4b48f78a3b7f975435fdc482f9a19d500043e758e23fc3b0740af87084c3d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/http.xml",
+    "format": "tomcat",
+    "component": "Connector",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/http.xml",
+    "sha256": "7cffda1e011bf188b0591b85401c0ce09e466c71bb04a0bcde05c9ce579b2409",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/http2.xml",
+    "format": "tomcat",
+    "component": "UpgradeProtocol",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/http2.xml",
+    "sha256": "def5506a5b2c0608d8b08775b322eb32fa98dbfd7a0c86b4b6ad6c36296dff44",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/ajp.xml",
+    "format": "tomcat",
+    "component": "Connector",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/ajp.xml",
+    "sha256": "0333b6a47462b4896abc3d9d2f61bf7f065052417fd32631615f2be042d0bfa0",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/engine.xml",
+    "format": "tomcat",
+    "component": "Engine",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/engine.xml",
+    "sha256": "545e509e840daa039edd76a56f09b6500748466374fd575624e7e839d2dfbab5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/host.xml",
+    "format": "tomcat",
+    "component": "Host",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/host.xml",
+    "sha256": "ea8a4176cd25b0a91010a0d730f6d71f64aa40133cc73edcc03f1e30e6320719",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/context.xml",
+    "format": "tomcat",
+    "component": "Context",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/context.xml",
+    "sha256": "5e1916e98dd7b5b05ab8169d976bf57478572b2ee00d66a9138937ad9f4732b2",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/realm.xml",
+    "format": "tomcat",
+    "component": "Realm",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/realm.xml",
+    "sha256": "26956a6ea5c95e2cad09ecf4d5d9935a11b6da4ec240b4afa2017a8599e239e4",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/valve.xml",
+    "format": "tomcat",
+    "component": "Valve",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/valve.xml",
+    "sha256": "109940b7feb463e1514c497e1b3c4e027a09f75bc339fe4142958d2ebcbefa4d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/listeners.xml",
+    "format": "tomcat",
+    "component": "Listener",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/listeners.xml",
+    "sha256": "dd91dac45e47c5e3d2eeaa3a5eaa13b262ea7084c3c3e31f9effff49c123c72a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/globalresources.xml",
+    "format": "tomcat",
+    "component": "GlobalNamingResources",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/globalresources.xml",
+    "sha256": "8ff71e6fcd053ffb0e758795f34a86c87cc8a8127d36049fbe98309cdd692eb5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/manager.xml",
+    "format": "tomcat",
+    "component": "Manager",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/manager.xml",
+    "sha256": "81025e0bd9795a413a2bec829de0613499829fdfb46bf228a29c7da50085ae7e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/sessionidgenerator.xml",
+    "format": "tomcat",
+    "component": "SessionIdGenerator",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/sessionidgenerator.xml",
+    "sha256": "66d808b1ce88d43d476d28ac5495520a2008e93772b5227fe0e03d4b39c45081",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/9.0.123/cookie-processor.xml",
+    "format": "tomcat",
+    "component": "CookieProcessor",
+    "ref": "9.0.123",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/9.0.123/webapps/docs/config/cookie-processor.xml",
+    "sha256": "e890fe387df59b4e5fac7c2f3d656f137bbaf90f1ccf29a5b3950e8b5902e5c2",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/server.xml",
+    "format": "tomcat",
+    "component": "Server",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/server.xml",
+    "sha256": "bca93f5016b876bf697816aed93ffbe6b1f38f3fb96fe2f4cf4f9fd8d96134f9",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/service.xml",
+    "format": "tomcat",
+    "component": "Service",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/service.xml",
+    "sha256": "ac3c09b2dc958b051aadefe00ef43f7df5786b3a8e3be8e5b5ded70a965e2c63",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/executor.xml",
+    "format": "tomcat",
+    "component": "Executor",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/executor.xml",
+    "sha256": "8cd4b48f78a3b7f975435fdc482f9a19d500043e758e23fc3b0740af87084c3d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/http.xml",
+    "format": "tomcat",
+    "component": "Connector",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/http.xml",
+    "sha256": "cc6ed1228ca08f541f2b541bd7b8007d95356149f1374b3b8b2a668d91cf533c",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/http2.xml",
+    "format": "tomcat",
+    "component": "UpgradeProtocol",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/http2.xml",
+    "sha256": "6f8f353b37303f8f03ebd99a5e1ce0a8cdeefe752a826dd9aa29debb483c6f05",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/ajp.xml",
+    "format": "tomcat",
+    "component": "Connector",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/ajp.xml",
+    "sha256": "8780c46088720648bef99c2566a9e7af42c13e22549ef23a5cd2e68ba7fe01a9",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/engine.xml",
+    "format": "tomcat",
+    "component": "Engine",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/engine.xml",
+    "sha256": "664a2552618b432119c6deb15e16e38841042ec37aa81bf6e3490b0b9f738c8f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/host.xml",
+    "format": "tomcat",
+    "component": "Host",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/host.xml",
+    "sha256": "26101b2a8749d6dfd905f5efd895b402a65dbed2ea92916a4232e830b1869302",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/context.xml",
+    "format": "tomcat",
+    "component": "Context",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/context.xml",
+    "sha256": "c08fcf04be0c17a89faab035c219ba9ce86b4e5de01279879dcc7cfcf35af465",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/realm.xml",
+    "format": "tomcat",
+    "component": "Realm",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/realm.xml",
+    "sha256": "3d67840ad2a68d42f07805722b3e4a326a27e5ca2ec68de9859a743988f9a119",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/valve.xml",
+    "format": "tomcat",
+    "component": "Valve",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/valve.xml",
+    "sha256": "bdeee2f5b705b60866ecfb158d50a97c66b80061f3cc608bdffd85b9b1ada736",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/listeners.xml",
+    "format": "tomcat",
+    "component": "Listener",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/listeners.xml",
+    "sha256": "93f0223baba335fa39a8f35b3d94dfa567498fcfe7643abb75631d1f7c35cef8",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/globalresources.xml",
+    "format": "tomcat",
+    "component": "GlobalNamingResources",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/globalresources.xml",
+    "sha256": "8ff71e6fcd053ffb0e758795f34a86c87cc8a8127d36049fbe98309cdd692eb5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/manager.xml",
+    "format": "tomcat",
+    "component": "Manager",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/manager.xml",
+    "sha256": "605d20cb9693b11e0d5e3586d4881412b85dd058f97415a8b5b0e739f03dd50d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/sessionidgenerator.xml",
+    "format": "tomcat",
+    "component": "SessionIdGenerator",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/sessionidgenerator.xml",
+    "sha256": "66d808b1ce88d43d476d28ac5495520a2008e93772b5227fe0e03d4b39c45081",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "tomcat",
+    "file": "tomcat/10.1.61/cookie-processor.xml",
+    "format": "tomcat",
+    "component": "CookieProcessor",
+    "ref": "10.1.61",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/webapps/docs/config/cookie-processor.xml",
+    "sha256": "c07230c594b76202ad22f37622ddbfc85ad1da24bbf3289c2b3a10da2b2ca7aa",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "redis",
+    "file": "redis/redis.conf",
+    "format": "redis",
+    "ref": "8.10.2",
+    "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf",
+    "sha256": "5ae0cda89cc3ab7a399280f92ee840a476a8a230249a1b8a138e589ecf522345",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "redis",
+    "file": "redis/src/config.c",
+    "format": "redis-registry",
+    "ref": "8.10.2",
+    "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/src/config.c",
+    "sha256": "a600d92c78d1c9afb4fc89ffbc2c5307fc6b4c3ae588a93273071b9b5e3050c4",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "tomcat-LICENSE",
+    "format": "license",
+    "ref": "see URL",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/LICENSE",
+    "sha256": "89913555c281e3d82ad9c4eff4184396c791379dd412117faeb1c23dd4770e21",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "tomcat-NOTICE",
+    "format": "license",
+    "ref": "see URL",
+    "url": "https://raw.githubusercontent.com/apache/tomcat/10.1.61/NOTICE",
+    "sha256": "5d47adae503db6be0b3a1823bff4420e29bcb0a63e43c254a58fa0320a310e83",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "redis-LICENSE",
+    "format": "license",
+    "ref": "see URL",
+    "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/LICENSE.txt",
+    "sha256": "4a0e416b9537688f30dfe69ddaceb2ca64d96b7df02a0a6760d376890ddc4e40",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "redis-CONTRIBUTIONS",
+    "format": "license",
+    "ref": "8.10.2",
+    "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/REDISCONTRIBUTIONS.txt",
+    "sha256": "aa6a56234e5ca27f09010693d1c31ca83988d7a0dc80fb253603e052d1d7f0d1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "dockerd-cli",
+    "file": "dockerd/dockerd-help.txt",
+    "format": "dockerd-help",
+    "url": "local:/usr/bin/dockerd --help",
+    "ref": "27.3.1 (41ca978)",
+    "sha256": "7fc95d847e4167d642c8cd1b10a5379a5a5795b1d313a0e01acfac7be2cdaa4b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "dockerd-cli",
+    "file": "dockerd/dockerd-version.txt",
+    "format": "dockerd-version",
+    "url": "local:/usr/bin/dockerd --version",
+    "ref": "27.3.1 (41ca978)",
+    "sha256": "cbd65a927e2261f88b2dc5711adf2bbff012e0a12621ee9d921461dc47dc6bd9",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/daemon/config/config.go",
+    "format": "dockerd-go",
+    "package": "config",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go",
+    "sha256": "534f2beec946753d51c43774ed0884af711960a4de2722c2128d1b8e5020a39d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/daemon/config/config_linux.go",
+    "format": "dockerd-go",
+    "package": "config",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go",
+    "sha256": "f257522742386950b83dbddcc7816bd776e3cb2481fb2848a111e74e2f11fd5c",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/daemon/config/builder.go",
+    "format": "dockerd-go",
+    "package": "config",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go",
+    "sha256": "ec3f48b4a93815b5d8400fc1116d36ba05279ee02075f5f5e5d50afe6086fa08",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/registry/config.go",
+    "format": "dockerd-go",
+    "package": "registry",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/registry/config.go",
+    "sha256": "92b884c683890f0f48dc670ec83d139b3f54b199f4d027be839a9732523f73a4",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/opts/address_pools.go",
+    "format": "dockerd-go",
+    "package": "opts",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/opts/address_pools.go",
+    "sha256": "3bbd5183666ea525ee25754bd6ee6f41904909f12338225aa13c84430e6e3b1a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/api/types/system/runtime.go",
+    "format": "dockerd-go",
+    "package": "system",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go",
+    "sha256": "7f849ad02b027ab6d26ad459aae7ad7635098897a051aab509be6f90314843e1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/api/types/container/hostconfig.go",
+    "format": "dockerd-go",
+    "package": "container",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/container/hostconfig.go",
+    "sha256": "4194a6d98c117a3e61ae159d00f945273ba9cf329ed991000691d91c6b424701",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/vendor/github.com/docker/go-units/ulimit.go",
+    "format": "dockerd-go",
+    "package": "units",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/ulimit.go",
+    "sha256": "aa71f061bf12bd811db15e80ca732bbb9add820f30773f2491abf4a480be37d8",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/cmd/dockerd/config.go",
+    "format": "dockerd-go",
+    "package": "dockerd",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/cmd/dockerd/config.go",
+    "sha256": "9d64a8488925b3138fb2a02c78ad9ffd827bb22231a654139191db0a819f547d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/cmd/dockerd/config_unix.go",
+    "format": "dockerd-go",
+    "package": "dockerd",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/cmd/dockerd/config_unix.go",
+    "sha256": "0709cb3c079bfa1b901f02106b56137b259540c6f689d14c6b244bfadcb3184d",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "moby-LICENSE",
+    "format": "license",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/LICENSE",
+    "sha256": "7c87873291f289713ac5df48b1f2010eb6963752bbd6b530416ab99fc37914a8",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "docker-go-units-LICENSE",
+    "format": "license",
+    "ref": "v27.3.1 vendor snapshot",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/LICENSE",
+    "sha256": "ba3065d2f4b11bb42a0f7b708b021d1c28fa45d097b3eab3e7db9ab4745040d1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "docker-daemon",
+    "file": "dockerd/libnetwork/ipamutils/utils.go",
+    "format": "dockerd-go",
+    "package": "ipamutils",
+    "ref": "v27.3.1",
+    "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/libnetwork/ipamutils/utils.go",
+    "retrieved": "2026-10-24",
+    "sha256": "66fffb43db9e9337501b6d6da335ab164dd6abee1dadee0be1a373c228419606"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/accept.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Accept",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept/index.md",
+    "sha256": "c5bc655d320a5036c7d0b2482408f465aa36e250a7a21d4f10f710b5d476454f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/accept-encoding.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Accept-Encoding",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-encoding/index.md",
+    "sha256": "04c26b7e1f922e949390e0827b0e14494581ce44e4491497d5108d136c3ceedd",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/accept-language.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Accept-Language",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-language/index.md",
+    "sha256": "dcced61a2cef62a210fa9e8b7ba59497ca85ed23631a883e956ba0bf51c25b4a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/accept-ranges.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Accept-Ranges",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-ranges/index.md",
+    "sha256": "d3f0d1c057bb1e1b233d1bfbf81bc5d31c369288fa501378d3f5aec0c5b60665",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/age.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Age",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/age/index.md",
+    "sha256": "4690e8064f6c29b0c0ad80150b74a47c9abdb22b6834095e3883e3ea77eb027f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/allow.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Allow",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/allow/index.md",
+    "sha256": "b7ef24a00292009f97c202c50659b0785d06fa017a9392e467f0dc2ab585d90c",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/authorization.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Authorization",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/authorization/index.md",
+    "sha256": "4265dd3afec6a66b0c0b2f127be97d6e20d1caf7fd019f4616e14bab31e1ee1f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/cache-control.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Cache-Control",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "sha256": "f896383cf09679fb21c68b920695e3f3c89b8aed66ddb0019b4defc06cdf7c70",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/connection.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Connection",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/connection/index.md",
+    "sha256": "e00f8812b4ab00de5af789a643f1dd503d3445ea7664f98f2db9c06508bb6059",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-disposition.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Disposition",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-disposition/index.md",
+    "sha256": "63d894537641d4067a56d9f83ec6f675c2365d6251add1611edd3868f3412f99",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-encoding.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Encoding",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-encoding/index.md",
+    "sha256": "9cb2501aa73538466d9d31375d37e2ff240b224054e311b52bcfa8c1689c5c34",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-language.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Language",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-language/index.md",
+    "sha256": "3f6b0b94f9de4d217572d98cf2fcbb066f1e49309b30c161e14804f6793ba553",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-length.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Length",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-length/index.md",
+    "sha256": "38b66b832b732fb41c22a3f53034b649f4e4d92fe7702d8c84343259f8ea6888",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-location.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Location",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-location/index.md",
+    "sha256": "ebf01bfdeff0bbf82b1a1c044541d212ed8620426af95f71b025417071b4fbf5",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-range.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Range",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-range/index.md",
+    "sha256": "55fd01db0debc54c7a0c53428fd0853a775fc81f38eb370d15f77e80907363df",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-security-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Security-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-security-policy/index.md",
+    "sha256": "cf7e7e0d669c47beb63054c814b3ef963e853973f183e96bd58f782e00c74061",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-security-policy-report-only.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Security-Policy-Report-Only",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-security-policy-report-only/index.md",
+    "sha256": "0eb533aea9223a82b11c13c345725ce0d402c420498dd3b4d379e954ed75f072",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/content-type.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Content-Type",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-type/index.md",
+    "sha256": "a945b3ed1f2c90b31effe666ad200161f2bf32372026bf045dcfefc680074f4e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/cookie.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Cookie",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cookie/index.md",
+    "sha256": "ff8bfff90617f4fd0b5f58c7f9dbd0bf3dd8fc74f9ebc90f72f8b1b8e0281cab",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/date.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Date",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/date/index.md",
+    "sha256": "8be54c286de6d151c9b8474970e2860b363eb0d8ad3c5533a02a56d600365c78",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/etag.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "ETag",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/etag/index.md",
+    "sha256": "41113bc7a56d057f41eedeb349287b1813b77d322d82e52a99b6abebf8bdc87b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/expect.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Expect",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/expect/index.md",
+    "sha256": "02753a0e3dac3d5b2af3b2b8c94597f5e48058a5a70d652fc39d7bce6eb48562",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/expires.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Expires",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/expires/index.md",
+    "sha256": "134878fdcdd5d0193ee05dcb2a826d17df78bc1c8e734ab1c78deff5743e21ee",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/forwarded.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Forwarded",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/forwarded/index.md",
+    "sha256": "bd4ef5772f2e63949b088f1f58ad937aa1ea3aa757ff311a3d93fac58e094c66",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/host.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Host",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/host/index.md",
+    "sha256": "ab89e97440728f37b396e66577a50ec7adb913bd2eac3d640c3cfff0864a2a4f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/if-match.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "If-Match",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-match/index.md",
+    "sha256": "13685189feb7df47f9c764c07e6513a6a40aeb6ba976b29bb077f4b5c7e7d493",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/if-modified-since.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "If-Modified-Since",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-modified-since/index.md",
+    "sha256": "699078c2f8e5802b852c9903739b50bc1e51edda7f719db61feffbb97fb71734",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/if-none-match.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "If-None-Match",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-none-match/index.md",
+    "sha256": "48691500c0b926ea8f05c2e27b882a8b1472c9d5fe8e10cc9711b831417670cb",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/if-range.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "If-Range",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-range/index.md",
+    "sha256": "f06e15347ac529fe310daec7133e9ccb70e632e1539ba6ab47354e833516ed4c",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/if-unmodified-since.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "If-Unmodified-Since",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-unmodified-since/index.md",
+    "sha256": "9973466dba0a1a29202f58b5fb9063d6f8cceb6f9976d0ca78f03c75ca3741c3",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/keep-alive.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Keep-Alive",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/keep-alive/index.md",
+    "sha256": "da71d274e5410f4b9facc2d815b9f0acef7128e88f5410c946178f8b82c47044",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/last-modified.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Last-Modified",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/last-modified/index.md",
+    "sha256": "b82c2542ac016aa1f04b98df89812beede33d11ebc4ffd866c401fa1b6e5d74b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/link.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Link",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/link/index.md",
+    "sha256": "e6624f552784fee8606a1d5f84a12a47e0b9819c6364bab6e69390cf78975b87",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/location.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Location",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/location/index.md",
+    "sha256": "d25f67da22d90c934d9defb7f92649a773309e4c51237931eef26e3bb7f41919",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/origin.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Origin",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/origin/index.md",
+    "sha256": "1ef5e37631d25bd8480ac4ff0eb95c5af23019be846a74a1014ad338ba8661f6",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/permissions-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Permissions-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/permissions-policy/index.md",
+    "sha256": "ba8f3d13c0fff1689e69c9be4d9081d8e03f738364d3bdcd66721a90afaf27f4",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/proxy-authenticate.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Proxy-Authenticate",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/proxy-authenticate/index.md",
+    "sha256": "1291fd6722c26bc221e14e3cb97c9d9aa6a0e9810187f15140478dc3b5bd8ed9",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/proxy-authorization.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Proxy-Authorization",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/proxy-authorization/index.md",
+    "sha256": "63a7b7647208093aa5f2d19c21d6588562ddb08d11662ebbec92e520e1d2eecf",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/range.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Range",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/range/index.md",
+    "sha256": "8b3ae62da81da4e3db852e968cb538927826799de219280ab9dab8b8eae4c917",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/referer.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Referer",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/referer/index.md",
+    "sha256": "df4ef44f07e7d45599199183ccacb9ca9553b871e3878e993962447397c8958a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/referrer-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Referrer-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "sha256": "0ff817795f8fd056378dc8550e871bf4cf6a59fb30ef920958fac6c841425707",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/retry-after.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Retry-After",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/retry-after/index.md",
+    "sha256": "df9f9d9a117cd380ace345297e79910a7a3da3924502d376c8a5ec3cd5921325",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/server.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Server",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/server/index.md",
+    "sha256": "fd092de25615c3ce5dd5fdf85fec14409b7b10b0e49aa6267155a586177a7c62",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/set-cookie.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Set-Cookie",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/set-cookie/index.md",
+    "sha256": "eb6d8f2ec0be81745c75f4d0fa0a768ffb989b9d30aecf14c0c007c5a0b1f58a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/strict-transport-security.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Strict-Transport-Security",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/strict-transport-security/index.md",
+    "sha256": "3d21fc61a42646397918871c054ca31197417186ac966bc25957395df22d6b4a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/te.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "TE",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/te/index.md",
+    "sha256": "8bda7d021af0d1585fb13604a8448ec09e4fccf5d105e2fed936f33d7bd012af",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/trailer.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Trailer",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/trailer/index.md",
+    "sha256": "9904bedffcfe79c7c4e70a6ae614f8146eaab0c6527b87a49ef491d8d3eda9f1",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/transfer-encoding.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Transfer-Encoding",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/transfer-encoding/index.md",
+    "sha256": "f28f662f40b343cd49a045c4125d1da373b96ce586a0c8e0eaf7bf6346e577f6",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/upgrade.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Upgrade",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/upgrade/index.md",
+    "sha256": "8041f089bbcc594363bcc98ee486c14dddc947b58e376738d175f9b66f7ae497",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/user-agent.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "User-Agent",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/user-agent/index.md",
+    "sha256": "b08d850f0debd4f24233192dad09c8a32f0dce87a3e3491f5af91509bd9341bd",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/vary.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Vary",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/vary/index.md",
+    "sha256": "25d2de4c18b1bebfbe223031acce2e162a5ebb27b4661b64a018e240d751222a",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/via.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Via",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/via/index.md",
+    "sha256": "4923ba7e43e4e34a960c4492cb95347543edfdd9ef46297c13a7c14b898f59c3",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/www-authenticate.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "WWW-Authenticate",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/www-authenticate/index.md",
+    "sha256": "2b151eb7d024abf13883caa0ed6e540f094c9875934394b83c516daf7ef9e00b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/x-content-type-options.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "X-Content-Type-Options",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-content-type-options/index.md",
+    "sha256": "9437e3341df5481394e46b2bdf0dd9543df3a3dbfc5fdfc741e5314068efe303",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/x-forwarded-for.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "X-Forwarded-For",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-for/index.md",
+    "sha256": "078920f3d80b608b21ed27aa903910411cfa35495a9f72fef78f43977f06da35",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/x-forwarded-host.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "X-Forwarded-Host",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-host/index.md",
+    "sha256": "1be4eb03ffba31e147d6c0f3585365bf1d5cb801ded002e0a1f05fdc42e8f94f",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/x-forwarded-proto.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "X-Forwarded-Proto",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-proto/index.md",
+    "sha256": "f1fae89c364b7c8e5998f66ea9b5d291761c96f619369b2ffaeb8508b2579164",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/x-frame-options.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "X-Frame-Options",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-frame-options/index.md",
+    "sha256": "a785c6c79e76051d88e375e25f3330cecd85e5ac74566ad62f8b4616a76279b8",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-allow-credentials.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Allow-Credentials",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-credentials/index.md",
+    "sha256": "6c0a0e7f8768f46ca7840f9c8b6a6ac8451f782fbc24ab3c1ce8c6543ad7ec51",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-allow-headers.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Allow-Headers",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-headers/index.md",
+    "sha256": "051c6888435669992285af797a93faf31370e710b175f6f8e836c339badedf8e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-allow-methods.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Allow-Methods",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-methods/index.md",
+    "sha256": "22d4641db44680c621c1087558008930ca0da5fd687bccf9d710a4da84547f2c",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-allow-origin.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Allow-Origin",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-origin/index.md",
+    "sha256": "a2223d5f03698218742d2320b39f14200fb76f5e3b13c6da54712f95fdccf220",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-expose-headers.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Expose-Headers",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-expose-headers/index.md",
+    "sha256": "680e501451b6cd32c1a4b4e5e681b04599a5a5b9cde0df420ce05a9de2120b45",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-max-age.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Max-Age",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-max-age/index.md",
+    "sha256": "c07307fa4f5046c0c43e26e164717d830e17e3e9505375b20d9037904da4f9af",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-request-headers.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Request-Headers",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-request-headers/index.md",
+    "sha256": "4b09c76da4f6bb3fafa33b39f697ec587fb207c5149cc1ecfe18d2491e8802ba",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/access-control-request-method.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Access-Control-Request-Method",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-request-method/index.md",
+    "sha256": "abb4f381ed37516ed76d86903ed46dffe07057657d31c1a34e9583d11499319b",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/timing-allow-origin.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Timing-Allow-Origin",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/timing-allow-origin/index.md",
+    "sha256": "cdf21adb8973b9f5af58bae06308856f7a877c2f0f8d84977c4bbfd4bf702091",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/cross-origin-embedder-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Cross-Origin-Embedder-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-embedder-policy/index.md",
+    "sha256": "2dfedd8af4994590856996fd4d1dd2e05d119955d64cdf74c97cff843fda7585",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/cross-origin-opener-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Cross-Origin-Opener-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-opener-policy/index.md",
+    "sha256": "46f6241e2dd35c9579b7db87813b3f2ec0b2170a44cde34dae6bfd58b13240af",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/cross-origin-resource-policy.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Cross-Origin-Resource-Policy",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-resource-policy/index.md",
+    "sha256": "4ac0125a6d285f89ff77d9aa4b1f605dfa14803bc6aec24980fe2481c72f06dc",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/sec-websocket-accept.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Sec-WebSocket-Accept",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-accept/index.md",
+    "sha256": "38d6212fa82b7164a978c683bba1c58b0d68324a87fb27b635a084be13b4f0c2",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/sec-websocket-extensions.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Sec-WebSocket-Extensions",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-extensions/index.md",
+    "sha256": "69d5d88cb1073c92de9042a6378f2b00e7935de91d70fa7f27b94ac48802d4e2",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/sec-websocket-key.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Sec-WebSocket-Key",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-key/index.md",
+    "sha256": "bd9db050161fcc7863c42454a195dc8abee020fd452c2e24d009e2b7d395668e",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/sec-websocket-protocol.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Sec-WebSocket-Protocol",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-protocol/index.md",
+    "sha256": "6d68d2fd3367e46943e430b4825551a229d48a868c602c7d038a166370ade147",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/sec-websocket-version.md",
+    "format": "mdn-header",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "header": "Sec-WebSocket-Version",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-version/index.md",
+    "sha256": "2cfb848b5208d3ea606150643be368acfcd55c71f8a2f6dbb9ea85b7725598a7",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "http-headers",
+    "file": "mdn-headers/index.md",
+    "format": "mdn-header-index",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/index.md",
+    "sha256": "b7ec2eda9f4281e245a7e8243e1834e4ae824b526d7edcdd318e3eb18b3a31d0",
+    "retrieved": "2026-10-24"
+  },
+  {
+    "group": "license",
+    "file": "mdn-content-LICENSE.md",
+    "format": "license",
+    "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+    "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/LICENSE.md",
+    "sha256": "97a45d9a5c27c90ad7f058b20a870f11a24717f0eb4585f141948d25b74c4d89",
+    "retrieved": "2026-10-24"
+  }
+]

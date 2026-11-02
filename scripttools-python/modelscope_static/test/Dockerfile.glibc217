@@ -1,0 +1,14 @@
+# Test only: deliberately no system Python, CA bundle, shell, curl or libgcc.
+# The base supplies only glibc 2.17 runtime libraries (native amd64/arm64).
+FROM centos:centos7.9.2009@sha256:be65f488b7764ad3638f236b7b515b3678369a5124c47b8d32916d6487418ea4 AS runtime
+FROM scratch
+COPY --from=runtime /lib64/ld-*.so /lib64/libc-*.so /lib64/libdl-*.so /lib64/libm-*.so /lib64/libpthread-*.so /lib64/librt-*.so /lib64/libutil-*.so /lib64/libnss_dns-*.so /lib64/libnss_files-*.so /lib64/libresolv-*.so /lib64/
+COPY --from=runtime /lib64/ld-linux* /lib64/libc.so.6 /lib64/libdl.so.2 /lib64/libm.so.6 /lib64/libpthread.so.0 /lib64/librt.so.1 /lib64/libutil.so.1 /lib64/libnss_dns.so.2 /lib64/libnss_files.so.2 /lib64/libresolv.so.2 /lib64/
+# The AArch64 GNU ABI requests /lib/ld-linux-aarch64.so.1, not /lib64/.
+COPY --from=runtime /lib64/ld-*.so /lib64/ld-linux* /lib/
+COPY test/nsswitch.conf /etc/nsswitch.conf
+ARG TOOL_ARCH=amd64
+COPY dist/linux-${TOOL_ARCH}/modelscope /modelscope
+ENV HOME=/tmp LANG=C.UTF-8
+USER 65534:65534
+ENTRYPOINT ["/modelscope"]

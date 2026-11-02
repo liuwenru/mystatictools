@@ -1,0 +1,2348 @@
+{
+  "notice": "Extracted/reformatted from the cited upstream sources; not a validator. See ../licenses/.",
+  "sources": [
+    {
+      "group": "opencode",
+      "file": "opencode.json",
+      "url": "https://opencode.ai/config.json",
+      "ref": "snapshot",
+      "format": "schema",
+      "sha256": "2c5da655b5b1b558e71ead3da0dda301aa035b1ac531766e1a0cabc4dcf7ca4a",
+      "retrieved": "2026-10-24"
+    }
+  ],
+  "omitted_recursive_refs": [],
+  "entries": [
+    {
+      "word": "$schema",
+      "context": "$",
+      "description": "JSON schema reference for configuration validation",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "action",
+      "context": "agents.*.permissions[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "action",
+      "context": "experimental.policies[]",
+      "description": "string",
+      "values": [
+        "provider.use",
+        "tool.use",
+        "integration.use"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "action",
+      "context": "permissions[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "action",
+      "context": "policies[]",
+      "description": "string",
+      "values": [
+        "provider.use",
+        "tool.use",
+        "integration.use"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "agent",
+      "context": "commands.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "agents",
+      "context": "$",
+      "description": "Named built-in agent overrides and custom agent definitions",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "auth_server_metadata_url",
+      "context": "mcp.servers.*.oauth",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "auto",
+      "context": "compaction",
+      "description": "Enable automatic compaction when context is full (default: true)",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "auto_resize",
+      "context": "media.image",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "background_compaction",
+      "context": "experimental",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "body",
+      "context": "agents.*.request",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "body",
+      "context": "providers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "body",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "body",
+      "context": "providers.*.models.*.variants[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "branch",
+      "context": "references.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "budget",
+      "context": "providers.*.models.*.capabilities.reasoning",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "buffer",
+      "context": "compaction",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cache",
+      "context": "providers.*.models.*.cost",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cache",
+      "context": "providers.*.models.*.cost[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cacheFormat",
+      "context": "providers.*.compatibility",
+      "description": "string",
+      "values": [
+        "anthropic",
+        "alibaba"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cacheFormat",
+      "context": "providers.*.models.*.compatibility",
+      "description": "string",
+      "values": [
+        "anthropic",
+        "alibaba"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "callback_port",
+      "context": "mcp.servers.*.oauth",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "canonical",
+      "context": "providers.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "capabilities",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "catalog",
+      "context": "mcp.servers.*.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "catalog",
+      "context": "mcp.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "chunkTimeout",
+      "context": "providers.*.settings",
+      "description": "boolean / number",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "client_id",
+      "context": "mcp.servers.*.oauth",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "client_secret",
+      "context": "mcp.servers.*.oauth",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "codemode",
+      "context": "mcp.servers.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "color",
+      "context": "agents.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "command",
+      "context": "formatter.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "command",
+      "context": "lsp.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "command",
+      "context": "mcp.servers.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "commands",
+      "context": "$",
+      "description": "Named slash command definitions",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compaction",
+      "context": "$",
+      "description": "Conversation compaction behavior",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compaction",
+      "context": "providers.*.models.*.settings",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compaction",
+      "context": "providers.*.models.*.variants[].settings",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compaction",
+      "context": "providers.*.settings",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compatibility",
+      "context": "providers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "compatibility",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "context",
+      "context": "providers.*.models.*.limit",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cost",
+      "context": "providers.*.models.*",
+      "description": "array / object",
+      "values": [],
+      "type": [
+        "array",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "cwd",
+      "context": "mcp.servers.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "default_agent",
+      "context": "$",
+      "description": "Default primary agent to use when no session agent is selected",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "description",
+      "context": "agents.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "description",
+      "context": "commands.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "description",
+      "context": "references.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "directory",
+      "context": "worktree",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "disabled",
+      "context": "agents.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "disabled",
+      "context": "formatter.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "disabled",
+      "context": "lsp.*",
+      "description": "boolean",
+      "values": [
+        "true"
+      ],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "disabled",
+      "context": "mcp.servers.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "disabled",
+      "context": "providers.*.models.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "duration",
+      "context": "warming",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "effect",
+      "context": "agents.*.permissions[]",
+      "description": "string",
+      "values": [
+        "allow",
+        "deny",
+        "ask"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "effect",
+      "context": "experimental.policies[]",
+      "description": "string",
+      "values": [
+        "allow",
+        "deny"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "effect",
+      "context": "permissions[]",
+      "description": "string",
+      "values": [
+        "allow",
+        "deny",
+        "ask"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "effect",
+      "context": "policies[]",
+      "description": "string",
+      "values": [
+        "allow",
+        "deny"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "effort",
+      "context": "providers.*.models.*.capabilities.reasoning",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "encoding",
+      "context": "providers.*.models.*.settings",
+      "description": "string",
+      "values": [
+        "zstd",
+        "gzip",
+        "none"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "encoding",
+      "context": "providers.*.models.*.variants[].settings",
+      "description": "string",
+      "values": [
+        "zstd",
+        "gzip",
+        "none"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "encoding",
+      "context": "providers.*.settings",
+      "description": "string",
+      "values": [
+        "zstd",
+        "gzip",
+        "none"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "enterprise",
+      "context": "$",
+      "description": "Enterprise sharing service configuration",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "env",
+      "context": "lsp.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "env",
+      "context": "providers.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "environment",
+      "context": "formatter.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "environment",
+      "context": "mcp.servers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "execution",
+      "context": "mcp.servers.*.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "execution",
+      "context": "mcp.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "experimental",
+      "context": "$",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "extensions",
+      "context": "formatter.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "extensions",
+      "context": "lsp.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "family",
+      "context": "providers.*.models.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "formatter",
+      "context": "$",
+      "description": "Enable built-in formatters or configure formatter overrides",
+      "values": [],
+      "type": [
+        "boolean",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headerTimeout",
+      "context": "providers.*.settings",
+      "description": "boolean / number",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headers",
+      "context": "agents.*.request",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headers",
+      "context": "mcp.servers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headers",
+      "context": "providers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headers",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "headers",
+      "context": "providers.*.models.*.variants[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "hidden",
+      "context": "agents.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "hidden",
+      "context": "references.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "id",
+      "context": "providers.*.models.*.variants[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "ignore",
+      "context": "watcher",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "image",
+      "context": "media",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "initialization",
+      "context": "lsp.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "input",
+      "context": "providers.*.models.*.capabilities",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "input",
+      "context": "providers.*.models.*.cost",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "input",
+      "context": "providers.*.models.*.cost[]",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "input",
+      "context": "providers.*.models.*.limit",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "instructions",
+      "context": "$",
+      "description": "Additional paths or URLs supplying ambient instructions",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "interval",
+      "context": "warming",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "keep",
+      "context": "compaction",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "limit",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "location_idle_timeout",
+      "context": "experimental",
+      "description": "boolean / string",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "lsp",
+      "context": "$",
+      "description": "Enable built-in language servers or configure server overrides",
+      "values": [],
+      "type": [
+        "boolean",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max",
+      "context": "providers.*.models.*.capabilities.reasoning.budget",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "maxTokensField",
+      "context": "providers.*.compatibility",
+      "description": "string",
+      "values": [
+        "max_completion_tokens",
+        "max_tokens"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "maxTokensField",
+      "context": "providers.*.models.*.compatibility",
+      "description": "string",
+      "values": [
+        "max_completion_tokens",
+        "max_tokens"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max_base64_bytes",
+      "context": "media.image",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max_bytes",
+      "context": "tool_output",
+      "description": "Maximum bytes of tool output before it is truncated and saved to disk (default: 51200)",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max_height",
+      "context": "media.image",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max_lines",
+      "context": "tool_output",
+      "description": "Maximum lines of tool output before it is truncated and saved to disk (default: 2000)",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "max_width",
+      "context": "media.image",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "mcp",
+      "context": "$",
+      "description": "MCP server configuration",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "media",
+      "context": "$",
+      "description": "Media processing configuration",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "min",
+      "context": "providers.*.models.*.capabilities.reasoning.budget",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "mode",
+      "context": "agents.*",
+      "description": "string",
+      "values": [
+        "subagent",
+        "primary",
+        "all"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "$",
+      "description": "Default model to use when no session or agent model is selected",
+      "values": [],
+      "type": [
+        "object",
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "agents.*",
+      "description": "object / string",
+      "values": [],
+      "type": [
+        "object",
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "agents.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "commands.*",
+      "description": "object / string",
+      "values": [],
+      "type": [
+        "object",
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "commands.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "model",
+      "context": "model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "modelID",
+      "context": "providers.*.models.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "models",
+      "context": "providers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "name",
+      "context": "providers.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "name",
+      "context": "providers.*.models.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "oauth",
+      "context": "mcp.servers.*",
+      "description": "boolean / object",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "options",
+      "context": "plugins[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "output",
+      "context": "providers.*.models.*.capabilities",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "output",
+      "context": "providers.*.models.*.cost",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "output",
+      "context": "providers.*.models.*.cost[]",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "output",
+      "context": "providers.*.models.*.limit",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "package",
+      "context": "plugins[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "package",
+      "context": "providers.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "package",
+      "context": "providers.*.models.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "path",
+      "context": "references.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "permissions",
+      "context": "$",
+      "description": "Ordered tool permission rules applied to agent tool use",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "permissions",
+      "context": "agents.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "plugins",
+      "context": "$",
+      "description": "Ordered plugin enablement directives and external package declarations",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "policies",
+      "context": "$",
+      "description": "Ordered policies controlling access to providers, tools, and integrations",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "policies",
+      "context": "experimental",
+      "description": "Policy statements applied to supported resources, such as provider access",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "portable_shell_scanner",
+      "context": "experimental",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "prompt",
+      "context": "warming",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "protocol",
+      "context": "mcp.servers.*",
+      "description": "MCP protocol negotiation. \"legacy\" (default) opens with the initialize handshake and speaks protocol revisions up to 2025-11-25. \"auto\" probes for the 2026-07-28 revision and falls back to legacy when the server does not support it. \"2026-07-28\" requires that revision and fails otherwise.",
+      "values": [
+        "legacy",
+        "auto",
+        "2026-07-28"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "provider",
+      "context": "websearch",
+      "description": "Reuse a randomly selected provider until it is rate limited, then switch to another available provider.",
+      "values": [
+        "random"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "providerID",
+      "context": "agents.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "providerID",
+      "context": "commands.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "providerID",
+      "context": "model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "providers",
+      "context": "$",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "read",
+      "context": "providers.*.models.*.cost.cache",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "read",
+      "context": "providers.*.models.*.cost[].cache",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "reasoning",
+      "context": "providers.*.models.*.capabilities",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "reasoningField",
+      "context": "providers.*.compatibility",
+      "description": "string",
+      "values": [
+        "reasoning",
+        "reasoning_content",
+        "reasoning_text"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "reasoningField",
+      "context": "providers.*.models.*.compatibility",
+      "description": "string",
+      "values": [
+        "reasoning",
+        "reasoning_content",
+        "reasoning_text"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "redirect_uri",
+      "context": "mcp.servers.*.oauth",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "references",
+      "context": "$",
+      "description": "Named local directories or Git repositories available as external context",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "releaseDate",
+      "context": "providers.*.models.*",
+      "description": "Release date as YYYY-MM-DD or YYYY-MM",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "repository",
+      "context": "references.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "request",
+      "context": "agents.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireAssistantAfterTool",
+      "context": "providers.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireAssistantAfterTool",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireFinishReason",
+      "context": "providers.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireFinishReason",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireReasoning",
+      "context": "providers.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "requireReasoning",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "resource",
+      "context": "agents.*.permissions[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "resource",
+      "context": "experimental.policies[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "resource",
+      "context": "permissions[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "resource",
+      "context": "policies[]",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "scope",
+      "context": "mcp.servers.*.oauth",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "servers",
+      "context": "mcp",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "settings",
+      "context": "providers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "settings",
+      "context": "providers.*.models.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "settings",
+      "context": "providers.*.models.*.variants[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "share",
+      "context": "$",
+      "description": "Control whether sessions may be shared manually, automatically, or not at all",
+      "values": [
+        "manual",
+        "auto",
+        "disabled"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "shell",
+      "context": "$",
+      "description": "Default shell to use for terminal and shell tool execution",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "size",
+      "context": "providers.*.models.*.cost.tier",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "size",
+      "context": "providers.*.models.*.cost[].tier",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "skills",
+      "context": "$",
+      "description": "Additional paths or URLs to discover skills from",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "snapshots",
+      "context": "$",
+      "description": "Enable snapshots used for undo and revert behavior",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "startup",
+      "context": "mcp.servers.*.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "startup",
+      "context": "mcp.timeout",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "steps",
+      "context": "agents.*",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "streamUsage",
+      "context": "providers.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "streamUsage",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "subagent",
+      "context": "commands.*",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "subagent_depth",
+      "context": "experimental",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "subtask",
+      "context": "commands.*",
+      "description": "Deprecated alias for subagent.",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "supported",
+      "context": "providers.*.models.*.capabilities.reasoning",
+      "description": "boolean",
+      "values": [
+        "false",
+        "true"
+      ],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "supportsEffortUpdates",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "supportsPromptCacheKey",
+      "context": "providers.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "supportsPromptCacheKey",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "supportsThinkingBlockBinding",
+      "context": "providers.*.models.*.compatibility",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "system",
+      "context": "agents.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "temperature",
+      "context": "providers.*.models.*.capabilities",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "template",
+      "context": "commands.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "tier",
+      "context": "providers.*.models.*.cost",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "tier",
+      "context": "providers.*.models.*.cost[]",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "timeout",
+      "context": "mcp",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "timeout",
+      "context": "mcp.servers.*",
+      "description": "object",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "timeout",
+      "context": "providers.*.settings",
+      "description": "boolean / number",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "todo",
+      "context": "experimental",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "toggle",
+      "context": "providers.*.models.*.capabilities.reasoning",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "tokens",
+      "context": "compaction.keep",
+      "description": "integer",
+      "values": [],
+      "type": [
+        "integer"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "tool_output",
+      "context": "$",
+      "description": "Tool output truncation thresholds",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "tools",
+      "context": "providers.*.models.*.capabilities",
+      "description": "boolean",
+      "values": [],
+      "type": [
+        "boolean"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "transport",
+      "context": "providers.*.settings",
+      "description": "string",
+      "values": [
+        "http",
+        "websocket"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "mcp.servers.*",
+      "description": "string",
+      "values": [
+        "local",
+        "remote"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "providers.*.models.*.cost.tier",
+      "description": "string",
+      "values": [
+        "context"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "providers.*.models.*.cost[].tier",
+      "description": "string",
+      "values": [
+        "context"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "providers.*.models.*.settings.compaction",
+      "description": "string",
+      "values": [
+        "summary",
+        "native"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "providers.*.models.*.variants[].settings.compaction",
+      "description": "string",
+      "values": [
+        "summary",
+        "native"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "type",
+      "context": "providers.*.settings.compaction",
+      "description": "string",
+      "values": [
+        "summary",
+        "native"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "update",
+      "context": "$",
+      "description": "Disable updates, notify when one is available, or install updates automatically",
+      "values": [
+        "disable",
+        "notify",
+        "auto"
+      ],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "url",
+      "context": "enterprise",
+      "description": "Enterprise URL",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "url",
+      "context": "mcp.servers.*",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "username",
+      "context": "$",
+      "description": "Username displayed in conversations and used for telemetry identity",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "variant",
+      "context": "agents.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "variant",
+      "context": "commands.*.model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "variant",
+      "context": "model",
+      "description": "string",
+      "values": [],
+      "type": [
+        "string"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "variants",
+      "context": "providers.*.models.*",
+      "description": "array",
+      "values": [],
+      "type": [
+        "array"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "warming",
+      "context": "$",
+      "description": "Keep recently active sessions warm with transient model requests (default: false)",
+      "values": [],
+      "type": [
+        "boolean",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "watcher",
+      "context": "$",
+      "description": "Filesystem watcher configuration",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "websearch",
+      "context": "$",
+      "description": "Web search provider selection",
+      "values": [
+        "false"
+      ],
+      "type": [
+        "boolean",
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "worktree",
+      "context": "$",
+      "description": "Directory defaults for local worktree creation",
+      "values": [],
+      "type": [
+        "object"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "write",
+      "context": "providers.*.models.*.cost.cache",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    },
+    {
+      "word": "write",
+      "context": "providers.*.models.*.cost[].cache",
+      "description": "number",
+      "values": [],
+      "type": [
+        "number"
+      ],
+      "source": "https://opencode.ai/config.json"
+    }
+  ]
+}

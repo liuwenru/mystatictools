@@ -1,0 +1,21 @@
+[
+  { "word": "$schema", "description": "配置 Schema 地址；本词库运行时不读取远程 Schema" },
+  { "word": "model", "context": "$", "description": "默认模型，通常填写 provider/model" },
+  { "word": "default_agent", "description": "未显式选择时使用的主 agent" },
+  { "word": "providers", "description": "模型提供商和模型覆盖配置" },
+  { "word": "agents", "description": "内置 agent 覆盖及自定义 agent" },
+  { "word": "commands", "description": "命名的斜杠命令模板" },
+  { "word": "permissions", "description": "按顺序匹配工具操作的权限规则" },
+  { "word": "policies", "description": "提供商、工具与集成的访问策略" },
+  { "word": "mcp", "description": "MCP 服务、超时等配置" },
+  { "word": "servers", "context": "mcp", "description": "按名称定义本地或远程 MCP 服务" },
+  { "word": "plugins", "description": "插件包和本地插件的启用配置" },
+  { "word": "skills", "description": "附加技能目录或 URL 列表" },
+  { "word": "instructions", "description": "额外指令文件路径、glob 或 URL" },
+  { "word": "references", "description": "作为辅助上下文的本地目录或 Git 仓库" },
+  { "word": "formatter", "description": "内置或自定义格式化器配置" },
+  { "word": "lsp", "description": "内置语言服务器启用状态或自定义服务器配置" },
+  { "word": "compaction", "description": "上下文压缩与近期上下文保留策略" },
+  { "word": "snapshots", "description": "启用或关闭撤销所需的文件系统快照" },
+  { "word": "update", "description": "更新策略；项目级配置不生效", "values": ["disable", "notify", "auto"] }
+]

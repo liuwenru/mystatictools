@@ -1,0 +1,254 @@
+*offline.txt*  Neovim 静态离线包使用说明                         *offline*
+
+本页描述加载 examples/init.lua 后的功能，不是 Neovim 全部命令手册。
+命令不联网安装插件；查询帮助不格式化、不保存文件、不发送 HTTP 请求。
+
+常用入口                                                        *OfflineHelp*
+    :OfflineHelp                 总览
+    :OfflineHelp current         按当前文件推荐章节，未知类型回到总览
+    :OfflineHelp completion      补全、总开关、词库选择与补录
+    :OfflineHelp headers         HTTP Header 名称补全
+    :OfflineHelp nginx           Nginx 补全和格式化
+    :OfflineHelp format          手动格式化及注意事项
+    :OfflineHelp tree            文件树操作
+    :OfflineHelp theme           真彩色/256色/ANSI 模式
+    :OfflineHelp clipboard       终端复制粘贴、鼠标、OSC52
+    :OfflineHelp limits          静态版、离线依赖与限制
+
+命令参数支持 Tab 补全，菜单内用上/下键选择。已选候选时第一次 Enter 只确认，
+再按 Enter 才执行命令。也可用 :help offline 或 :help offline-completion。
+帮助在独立窗口打开；用 / 搜索，光标移到 |链接| 上按 Ctrl+] 跳转，Ctrl+t 返回。
+通过 OfflineHelp 打开的帮助中按 q 关闭窗口，原来的编辑内容不变。
+快捷键中的反斜线是默认 mapleader，个人配置改过 mapleader 时以个人设置为准。
+
+目录~
+    |offline-completion|   补全和总开关
+    |offline-headers|      HTTP Headers
+    |offline-nginx|        Nginx
+    |offline-format|       格式化和简单列对齐
+    |offline-tree|         文件树
+    |offline-theme|        颜色模式
+    |offline-clipboard|    复制粘贴
+    |offline-limits|       运行依赖与边界
+
+==============================================================================
+补全和开关                                              *offline-completion*
+
+自动补全默认开启，停止输入约 150 ms 后提示，不预选、不自动插入。
+    下 / 上 或 Ctrl+n/p  选择下一项 / 上一项
+    Enter 或 Ctrl+y     确认已选候选（Enter 不额外换行）
+    Ctrl+e               取消
+路径、当前文件单词、词库和可用 LSP 共同参与；不修改 Tab 的原有行为。
+正文无菜单时，上/下键正常移动，Enter 正常换行。菜单已打开但未选候选时，
+Enter 取消菜单后正常换行，不代替你选中第一项。
+
+冒号命令补全（例如 :OfflineHelp 后按 Tab）~
+    Tab                 保留原有的触发/循环补全行为
+    下 / 上             菜单中选择下一项 / 上一项
+    Enter               已选候选时只确认并关闭菜单，不执行命令；再按一次才执行
+    Ctrl+y / Ctrl+e     保留原生确认 / 取消补全
+
+没有命令候选菜单时，上/下键保留原有命令历史功能，Enter 正常执行命令。
+有菜单但未选中候选时，Enter 取消菜单后按原输入执行，请留意当前输入是否完整。
+Tab 只有一个匹配并已直接补齐、菜单已关闭时，也按无菜单处理，Enter 直接执行。
+支持原生命令弹出菜单和横向 wildmenu；不改 wildmode/wildoptions 默认设置。
+仅对冒号命令菜单接管方向键和 Enter，不改变 /、? 等搜索/输入提示的原生行为。
+
+1. 会话总开关                                         *OfflineCompletionAll*
+    :OfflineCompletionAll off       关闭全部补全
+    :OfflineCompletionAll on        恢复关闭前的补全设置
+    :OfflineCompletionAll toggle    切换
+    :OfflineCompletionAll           仅查看当前 on/off 状态
+
+off 作用于当前 Neovim 的所有已加载缓冲区，以及之后进入/打开的缓冲区：
+关闭自动弹窗、路径、当前文件单词、九类词库以及本包接入的 LSP 补全。
+插入模式 Ctrl+n、Ctrl+p、Ctrl+x 暂时无效，所以 Ctrl+x Ctrl+f/o/u 等手动
+补全入口也不可用；Ctrl+x 的其他前缀用途同样暂时不可用。
+普通模式 Ctrl+n/p、命令行 Tab/方向键/Enter 和帮助主题补全不受影响。
+正文中的上/下键和 Enter 退回正常移动/换行。
+
+on 还原缓冲区选项及原有插入模式按键；关闭期间新打开的文件恢复默认来源。
+不会将原先单独关闭的词库强制打开，不断开 LSP，诊断、悬浮说明和 gd 跳转仍保留。
+此开关不写个人配置，退出重启后恢复示例配置默认值。不要在 off 期间另行修改
+补全选项/按键或重新 source 配置，恢复时可能被之前的快照覆盖。
+只管理本包和原生补全入口，不负责另外安装的第三方补全插件或直接调用 complete() 的脚本。
+
+2. 只选择/关闭当前缓冲区词库                              *OfflineCompletion*
+    :OfflineCompletion off          仅关闭当前缓冲区的关键字词库
+    :OfflineCompletion auto         恢复按文件名/文件类型自动选择
+    :OfflineCompletion nginx        手动固定为某个词库，不改变文件类型
+
+这组命令不关闭路径、正文单词或 LSP；想全关必须用 OfflineCompletionAll off。
+总开关 off 时仍可调整当前词库选择，但不会因此弹出候选；总开关恢复后沿用该选择。
+
+词库名及自动触发位置~
+    opencode          opencode.json / opencode.jsonc
+    compose           compose.yaml/yml、docker-compose.yaml/yml 及常见后缀
+    nginx             nginx 文件类型，指令名位置
+    systemd-service   *.service、*.service.d/*.conf
+    tomcat            server.xml，元素名或属性名
+    redis             redis.conf，行首指令名
+    dockerd-cli       Shell 简单 dockerd 命令的选项名
+    docker-daemon     daemon.json，JSON 字段名
+    http-headers      HTTP/REST 头部和 Nginx 指定参数，见 |offline-headers|
+
+特殊文件名可手动选择，例如 :OfflineCompletion redis。
+Tomcat 不自动插入 XML 结构/属性值，不按当前标签过滤所有属性；Redis 不补客户端命令。
+dockerd CLI 以本机 27.3.1 帮助为基准，不解析复杂 Shell，不补选项值。
+daemon.json 以 Moby v27.3.1 Linux 为基准；hosts、log-opts、runtimes 等不能直接
+由 CLI 去掉 -- 得出。同一配置与启动参数重复可能导致 daemon 启动失败。
+OpenCode、Compose、Nginx、systemd 等也有固定资料版本，提示不保证目标版本支持。
+
+3. 手工补录与重载                                   *OfflineCompletionReload*
+编辑运行目录 nvim/completion/custom/<词库名>.json，不要直接修改 generated。
+例如向 http-headers.json 的数组中追加：
+>
+    { "word": "X-Team-Trace", "description": "团队自定义跟踪头" }
+<
+    :OfflineCompletionReload        清空词库缓存，下次补全重新读取
+
+同名 word 可覆盖说明，保留生成条目的类型/语法；加 context 只影响相同位置。
+{ "word": "X-Team-Trace", "disabled": true } 可隐藏某个词条。
+字段名称建议与生成词库保持相同书写形式；HTTP 的输入前缀匹配才忽略大小写。
+修改仓库的 custom 不会自动同步到已解压的安装包。
+词库格式错误会提示文件路径，并保留可用的生成词库；不会执行词库内容。
+
+路径与 LSP~
+输入 ./、../、/、~/ 提示路径，相对路径以当前文件所在目录为准，不改变工作目录。
+路径含空格/转义等复杂情况不保证识别；不会自动进行 Shell/JSON 转义。
+只扫描当前文件单词，不扫描其他缓冲区或 tags。
+LSP 服务器不随包提供，只有 PATH 中已有对应程序才启用；其依赖和联网行为需自行管理。
+有服务器时可用 gd 跳转、K 悬浮和 Ctrl+x Ctrl+o 手动补全（总开关 on 时）。
+确认 LSP 候选可能应用服务器提供的额外编辑，不等同于纯词库只插入名称。
+
+==============================================================================
+HTTP Headers                                               *offline-headers*
+
+74 个常用 Header，来自固定提交的 MDN 文档，附中文简释、语法和原文链接。
+名称前缀忽略大小写；原生补全可能保留已输入前缀的大小写。只插名称，不加冒号、值。
+包含认证、内容、缓存、CORS、安全、代理和 WebSocket；非标准 X-Forwarded-* 明确标注。
+不混入已筛除的废弃/实验性字段或 :authority/:method 等 HTTP/2 伪首部。
+
+.http / .rest 或 http 文件类型示例~
+>
+    GET https://example.invalid/api HTTP/1.1
+    content-t
+<
+在 content-t 位置提示 Content-Type。请求/状态行之后是头部，首个空行之后
+视为正文，不再提示 Header；### 行分隔下一次请求。不会实际执行这些请求。
+不解析客户端专有模板/脚本或全部 HTTP 语法；正文的 ### 行仍作为请求分隔。
+
+Nginx 示例~
+>
+    add_header content-t
+    proxy_set_header "x-forwarded-f
+<
+在第一个参数位置提示头名称，支持未闭合单/双引号，值和注释中不提示。
+支持 add_header、add_trailer、proxy_set_header、proxy_hide_header、proxy_pass_header。
+只识别当前行，不解析跨行指令或跨行字符串，详见 |offline-nginx|。
+普通文本中的单独名称片段可手动 :OfflineCompletion http-headers。
+
+语法是提示，不是可直接上线的安全配置：
+    - 带凭据的 CORS 响应不能用 Allow-Origin: *。
+    - X-Forwarded-* 只能按受信任代理边界处理，外部客户端可伪造。
+    - HTTP/2/3 禁止 Connection、Keep-Alive、Transfer-Encoding 等连接专用头。
+    - 浏览器脚本禁止设置某些头，不等于服务器端不能处理它们。
+MDN 内容与相应改编说明按 CC-BY-SA-2.5，署名和改动记录在 completion/licenses/。
+
+==============================================================================
+Nginx                                                        *offline-nginx*
+
+    :set filetype=nginx             自定义 .conf 手动指定高亮/文件类型
+    :OfflineCompletion auto         指令/Header 参数按位置自动切换
+    :OfflineCompletion nginx        固定只使用 Nginx 指令词库
+    :OfflineFormat                  手动格式化，不保存文件
+
+auto 在指令名位置提示 proxy_pass 等，在上述五种指令的头名称位置提示 Header。
+固定 nginx 模式不再自动切换 Header。并非所有 .conf 都自动当作 Nginx。
+词条包括模块、上下文和语法；没有按完整配置层级解析，不保证目标模块已编译/加载。
+格式化依赖 PATH 中的 python3；缺少时提示且不改正文，不回退到随意重新缩进。
+复杂正则、引号、转义、嵌入脚本需检查差异；格式化成功不能替代 nginx -t。
+帮助命令本身不会调用 nginx、连接服务或读取线上配置。
+
+==============================================================================
+手动格式化和对齐                                            *offline-format*
+
+    :OfflineFormat     或普通模式 \f，处理当前缓冲区，不保存
+
+    sh          shfmt，两空格缩进
+    json        jq，严格 JSON，不支持注释
+    jsonc       Biome，支持注释，保留键顺序，格式化会去掉尾逗号
+    yaml        yamlfmt
+    python      Ruff format，不需要 Python，不运行 lint 自动修复
+    xml         xmllint --nonet --format，不展开外部实体
+    nginx       nginxfmt.py，需要系统 python3
+    properties  不自动改写；简单键值可用 mini.align 手动对齐
+
+带注释但名称是 .json/.conf 的文件可 :set filetype=jsonc 后再格式化。
+只用随包工具及配置，不使用 LSP 格式化，不启用保存时格式化。
+失败保留正文，成功可用 u 撤销；重要配置仍需检查差异并由目标工具验证。
+XML 混合内容空白、JSON 重复键/数值等可能受格式化影响。
+
+简单列对齐：可视选择后 gA，按 s 输入分隔符（例如 =）并回车，再回车接受，Esc 取消。
+不将它当作 properties 解析器，转义、续行和特殊空白不要批量处理。
+
+==============================================================================
+文件树                                                        *offline-tree*
+
+普通模式 \e 或 :NvimTreeToggle 开关侧栏；不替换已有目录内容。
+    Enter    打开文件/展开目录
+    a        新建
+    r        重命名
+    c / p    复制/粘贴
+    d        删除（有确认，但无回收站，谨慎使用）
+    g?       查看 nvim-tree 自带快捷键帮助
+
+无需 Git、特殊字体或 Nerd Font；不启用 Git/诊断集成。
+示例配置禁用 netrw，文件树只处理本地文件，不提供 scp:// 或 sftp:// 浏览。
+
+==============================================================================
+颜色模式                                                     *offline-theme*
+
+    :OfflineColor                 轮换，等同普通模式 \c
+    :OfflineColor truecolor       OneDark dark，淡色缩进线
+    :OfflineColor 256             habamax，灰色缩进线
+    :OfflineColor ansi            vim，基础色，关闭缩进线
+
+切换后记在 stdpath('state')/offline-color，下次启动沿用；不改 TERM，不写个人配置。
+启动前设置 NVIM_OFFLINE_COLOR=ansi 或 256 可临时覆盖，不写入记录。
+恢复默认：:OfflineColor truecolor，或删除该文件。
+这不会让终端获得原本不支持的颜色；SSH/tmux 链路仍需正确配置。
+
+光标与当前行/列~
+    普通/插入模式光标为红色，可视模式改为红色下划线，不遮住选区末尾字符。
+    当前行有淡色底色；可视选区显示在其上。
+    当前列底色默认关闭，普通模式 \l 开关；开启后每次移动都重画整窗，SSH 下会变慢。
+    红色光标仅 truecolor 模式生效；256/ANSI 下沿用终端自身光标颜色。
+    关闭当前行底色：:set nocursorline
+
+==============================================================================
+复制粘贴、鼠标和 OSC52                                   *offline-clipboard*
+
+默认 y/p 使用内部寄存器，不强制写系统剪贴板，不自动发送 OSC52。
+跨 SSH 复制粘贴优先使用终端自己的选择、复制和粘贴；粘贴支持 bracketed paste。
+默认鼠标交给终端，普通模式 \m 切换 Neovim 鼠标；启用后选择行为由编辑器接管。
+需要系统剪贴板或 OSC52 时先核对终端、tmux 和安全策略，不能保证所有 SSH 客户端支持。
+不要因为复制未到桌面剪贴板就误认为文件内容没有写入。
+
+==============================================================================
+静态版与离线边界                                             *offline-limits*
+
+必须移动/复制完整 nvim/ 安装目录，不要只复制 bin/nvim。
+静态 ELF 不需要系统共享库，但仍需要 share/nvim/runtime、配置、插件、libexec 等资源。
+检查环境中是否残留指向旧版本的 VIM/VIMRUNTIME，推荐 LANG=C.UTF-8。
+不自动修改 PATH 或 ~/.config/nvim；-u NONE 不加载本包示例功能。
+
+不支持 dlopen 动态 .so 插件/解析器；纯 Lua/Vimscript 插件可离线复制，但依赖也要自备。
+LSP 服务端、Shell/终端命令和 Python 解释器不随包提供。
+只有 Nginx 格式化依赖外部 python3；其他随包格式化工具不因语言名称而需要解释器。
+不能由静态链接推断所有脚本、外部服务或浏览器能力都已支持。
+
+词库是离线提示，不是 Schema/配置/HTTP 语义验证器；不承诺目标版本全部兼容。
+本帮助只介绍使用，不自动构建、发布、启动/重启 Docker/Nginx 或其他服务。
+
+vim:tw=78:ts=8:noet:ft=help:norl:

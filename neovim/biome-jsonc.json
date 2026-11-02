@@ -1,0 +1,16 @@
+{
+  "vcs": { "enabled": false },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "formatWithErrors": false,
+    "useEditorconfig": false
+  },
+  "json": {
+    "parser": { "allowComments": true, "allowTrailingCommas": true },
+    "formatter": { "trailingCommas": "none", "expand": "always" }
+  },
+  "linter": { "enabled": false },
+  "assist": { "enabled": false }
+}

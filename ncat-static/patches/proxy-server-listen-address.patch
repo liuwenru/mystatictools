@@ -1,0 +1,15 @@
+ncat -l 127.0.0.1 3128 --proxy-type http 会忽略监听地址，总是监听 [::] 和 0.0.0.0（7.97 起即如此）：
+解析位置参数主机名的条件写成了 !o.proxytype，本意是连接模式下目标地址交给代理解析，
+但监听模式下这个参数是本机监听地址。-l 又不能和 -s 同用，代理服务端没有办法只监听本机地址。
+监听模式下照常解析该地址；连接模式（经代理连接目标）行为不变。
+--- a/ncat/ncat_main.c
++++ b/ncat/ncat_main.c
+@@ -896,7 +896,7 @@
+         /* resolve hostname only if o.proxytype == NULL
+          * targetss contains data already and you don't want remove them
+          */
+-        if( !o.proxytype
++        if( (!o.proxytype || o.listen)
+                 && (rc = resolve_multi(o.target, 0, targetaddrs, o.af)) != 0)
+ 
+             bye("Could not resolve hostname \"%s\": %s.", o.target, gai_strerror(rc));

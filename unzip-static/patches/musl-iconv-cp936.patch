@@ -1,0 +1,20 @@
+Description: map CP936 to GB18030 when iconv lacks the CP936 alias (musl)
+ musl iconv supports GBK/GB18030 but not the name CP936, which the locale
+ table uses for zh_CN/zh_SG and which users pass with -O CP936.
+ GB18030 is a superset of CP936, so decoding results are the same.
+Forwarded: not-needed
+---
+--- a/unix/unix.c	2026-10-31 17:35:16.854643173 +0800
++++ b/unix/unix.c	2026-10-31 17:35:16.859736164 +0800
+@@ -2034,7 +2034,10 @@
+     buf = NULL;
+     local_charset = nl_langinfo(CODESET);
+ 
+-    if((cd = iconv_open(local_charset, from_charset)) == (iconv_t)-1)
++    /* musl iconv has GBK/GB18030 but no CP936 alias; GB18030 is a superset of CP936. */
++    if((cd = iconv_open(local_charset, from_charset)) == (iconv_t)-1
++       && (strcasecmp(from_charset, "CP936") != 0
++           || (cd = iconv_open(local_charset, "GB18030")) == (iconv_t)-1))
+         return;
+ 
+     slen = strlen(string);

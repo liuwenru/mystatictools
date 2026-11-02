@@ -1,0 +1,1433 @@
+{
+  "notice": "Extracted/reformatted from the cited upstream sources; not a validator. See ../licenses/.",
+  "sources": [
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/accept.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Accept",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept/index.md",
+      "sha256": "c5bc655d320a5036c7d0b2482408f465aa36e250a7a21d4f10f710b5d476454f",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/accept-encoding.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Accept-Encoding",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-encoding/index.md",
+      "sha256": "04c26b7e1f922e949390e0827b0e14494581ce44e4491497d5108d136c3ceedd",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/accept-language.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Accept-Language",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-language/index.md",
+      "sha256": "dcced61a2cef62a210fa9e8b7ba59497ca85ed23631a883e956ba0bf51c25b4a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/accept-ranges.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Accept-Ranges",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/accept-ranges/index.md",
+      "sha256": "d3f0d1c057bb1e1b233d1bfbf81bc5d31c369288fa501378d3f5aec0c5b60665",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/age.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Age",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/age/index.md",
+      "sha256": "4690e8064f6c29b0c0ad80150b74a47c9abdb22b6834095e3883e3ea77eb027f",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/allow.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Allow",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/allow/index.md",
+      "sha256": "b7ef24a00292009f97c202c50659b0785d06fa017a9392e467f0dc2ab585d90c",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/authorization.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Authorization",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/authorization/index.md",
+      "sha256": "4265dd3afec6a66b0c0b2f127be97d6e20d1caf7fd019f4616e14bab31e1ee1f",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/cache-control.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Cache-Control",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cache-control/index.md",
+      "sha256": "f896383cf09679fb21c68b920695e3f3c89b8aed66ddb0019b4defc06cdf7c70",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/connection.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Connection",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/connection/index.md",
+      "sha256": "e00f8812b4ab00de5af789a643f1dd503d3445ea7664f98f2db9c06508bb6059",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-disposition.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Disposition",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-disposition/index.md",
+      "sha256": "63d894537641d4067a56d9f83ec6f675c2365d6251add1611edd3868f3412f99",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-encoding.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Encoding",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-encoding/index.md",
+      "sha256": "9cb2501aa73538466d9d31375d37e2ff240b224054e311b52bcfa8c1689c5c34",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-language.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Language",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-language/index.md",
+      "sha256": "3f6b0b94f9de4d217572d98cf2fcbb066f1e49309b30c161e14804f6793ba553",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-length.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Length",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-length/index.md",
+      "sha256": "38b66b832b732fb41c22a3f53034b649f4e4d92fe7702d8c84343259f8ea6888",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-location.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Location",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-location/index.md",
+      "sha256": "ebf01bfdeff0bbf82b1a1c044541d212ed8620426af95f71b025417071b4fbf5",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-range.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Range",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-range/index.md",
+      "sha256": "55fd01db0debc54c7a0c53428fd0853a775fc81f38eb370d15f77e80907363df",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-security-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Security-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-security-policy/index.md",
+      "sha256": "cf7e7e0d669c47beb63054c814b3ef963e853973f183e96bd58f782e00c74061",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-security-policy-report-only.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Security-Policy-Report-Only",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-security-policy-report-only/index.md",
+      "sha256": "0eb533aea9223a82b11c13c345725ce0d402c420498dd3b4d379e954ed75f072",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/content-type.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Content-Type",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/content-type/index.md",
+      "sha256": "a945b3ed1f2c90b31effe666ad200161f2bf32372026bf045dcfefc680074f4e",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/cookie.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Cookie",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cookie/index.md",
+      "sha256": "ff8bfff90617f4fd0b5f58c7f9dbd0bf3dd8fc74f9ebc90f72f8b1b8e0281cab",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/date.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Date",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/date/index.md",
+      "sha256": "8be54c286de6d151c9b8474970e2860b363eb0d8ad3c5533a02a56d600365c78",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/etag.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "ETag",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/etag/index.md",
+      "sha256": "41113bc7a56d057f41eedeb349287b1813b77d322d82e52a99b6abebf8bdc87b",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/expect.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Expect",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/expect/index.md",
+      "sha256": "02753a0e3dac3d5b2af3b2b8c94597f5e48058a5a70d652fc39d7bce6eb48562",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/expires.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Expires",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/expires/index.md",
+      "sha256": "134878fdcdd5d0193ee05dcb2a826d17df78bc1c8e734ab1c78deff5743e21ee",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/forwarded.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Forwarded",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/forwarded/index.md",
+      "sha256": "bd4ef5772f2e63949b088f1f58ad937aa1ea3aa757ff311a3d93fac58e094c66",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/host.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Host",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/host/index.md",
+      "sha256": "ab89e97440728f37b396e66577a50ec7adb913bd2eac3d640c3cfff0864a2a4f",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/if-match.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "If-Match",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-match/index.md",
+      "sha256": "13685189feb7df47f9c764c07e6513a6a40aeb6ba976b29bb077f4b5c7e7d493",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/if-modified-since.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "If-Modified-Since",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-modified-since/index.md",
+      "sha256": "699078c2f8e5802b852c9903739b50bc1e51edda7f719db61feffbb97fb71734",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/if-none-match.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "If-None-Match",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-none-match/index.md",
+      "sha256": "48691500c0b926ea8f05c2e27b882a8b1472c9d5fe8e10cc9711b831417670cb",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/if-range.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "If-Range",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-range/index.md",
+      "sha256": "f06e15347ac529fe310daec7133e9ccb70e632e1539ba6ab47354e833516ed4c",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/if-unmodified-since.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "If-Unmodified-Since",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/if-unmodified-since/index.md",
+      "sha256": "9973466dba0a1a29202f58b5fb9063d6f8cceb6f9976d0ca78f03c75ca3741c3",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/keep-alive.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Keep-Alive",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/keep-alive/index.md",
+      "sha256": "da71d274e5410f4b9facc2d815b9f0acef7128e88f5410c946178f8b82c47044",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/last-modified.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Last-Modified",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/last-modified/index.md",
+      "sha256": "b82c2542ac016aa1f04b98df89812beede33d11ebc4ffd866c401fa1b6e5d74b",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/link.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Link",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/link/index.md",
+      "sha256": "e6624f552784fee8606a1d5f84a12a47e0b9819c6364bab6e69390cf78975b87",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/location.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Location",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/location/index.md",
+      "sha256": "d25f67da22d90c934d9defb7f92649a773309e4c51237931eef26e3bb7f41919",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/origin.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Origin",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/origin/index.md",
+      "sha256": "1ef5e37631d25bd8480ac4ff0eb95c5af23019be846a74a1014ad338ba8661f6",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/permissions-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Permissions-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/permissions-policy/index.md",
+      "sha256": "ba8f3d13c0fff1689e69c9be4d9081d8e03f738364d3bdcd66721a90afaf27f4",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/proxy-authenticate.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Proxy-Authenticate",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/proxy-authenticate/index.md",
+      "sha256": "1291fd6722c26bc221e14e3cb97c9d9aa6a0e9810187f15140478dc3b5bd8ed9",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/proxy-authorization.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Proxy-Authorization",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/proxy-authorization/index.md",
+      "sha256": "63a7b7647208093aa5f2d19c21d6588562ddb08d11662ebbec92e520e1d2eecf",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/range.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Range",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/range/index.md",
+      "sha256": "8b3ae62da81da4e3db852e968cb538927826799de219280ab9dab8b8eae4c917",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/referer.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Referer",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/referer/index.md",
+      "sha256": "df4ef44f07e7d45599199183ccacb9ca9553b871e3878e993962447397c8958a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/referrer-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Referrer-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+      "sha256": "0ff817795f8fd056378dc8550e871bf4cf6a59fb30ef920958fac6c841425707",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/retry-after.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Retry-After",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/retry-after/index.md",
+      "sha256": "df9f9d9a117cd380ace345297e79910a7a3da3924502d376c8a5ec3cd5921325",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/server.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Server",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/server/index.md",
+      "sha256": "fd092de25615c3ce5dd5fdf85fec14409b7b10b0e49aa6267155a586177a7c62",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/set-cookie.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Set-Cookie",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/set-cookie/index.md",
+      "sha256": "eb6d8f2ec0be81745c75f4d0fa0a768ffb989b9d30aecf14c0c007c5a0b1f58a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/strict-transport-security.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Strict-Transport-Security",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/strict-transport-security/index.md",
+      "sha256": "3d21fc61a42646397918871c054ca31197417186ac966bc25957395df22d6b4a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/te.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "TE",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/te/index.md",
+      "sha256": "8bda7d021af0d1585fb13604a8448ec09e4fccf5d105e2fed936f33d7bd012af",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/trailer.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Trailer",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/trailer/index.md",
+      "sha256": "9904bedffcfe79c7c4e70a6ae614f8146eaab0c6527b87a49ef491d8d3eda9f1",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/transfer-encoding.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Transfer-Encoding",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/transfer-encoding/index.md",
+      "sha256": "f28f662f40b343cd49a045c4125d1da373b96ce586a0c8e0eaf7bf6346e577f6",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/upgrade.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Upgrade",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/upgrade/index.md",
+      "sha256": "8041f089bbcc594363bcc98ee486c14dddc947b58e376738d175f9b66f7ae497",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/user-agent.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "User-Agent",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/user-agent/index.md",
+      "sha256": "b08d850f0debd4f24233192dad09c8a32f0dce87a3e3491f5af91509bd9341bd",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/vary.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Vary",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/vary/index.md",
+      "sha256": "25d2de4c18b1bebfbe223031acce2e162a5ebb27b4661b64a018e240d751222a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/via.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Via",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/via/index.md",
+      "sha256": "4923ba7e43e4e34a960c4492cb95347543edfdd9ef46297c13a7c14b898f59c3",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/www-authenticate.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "WWW-Authenticate",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/www-authenticate/index.md",
+      "sha256": "2b151eb7d024abf13883caa0ed6e540f094c9875934394b83c516daf7ef9e00b",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/x-content-type-options.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "X-Content-Type-Options",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-content-type-options/index.md",
+      "sha256": "9437e3341df5481394e46b2bdf0dd9543df3a3dbfc5fdfc741e5314068efe303",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/x-forwarded-for.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "X-Forwarded-For",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-for/index.md",
+      "sha256": "078920f3d80b608b21ed27aa903910411cfa35495a9f72fef78f43977f06da35",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/x-forwarded-host.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "X-Forwarded-Host",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-host/index.md",
+      "sha256": "1be4eb03ffba31e147d6c0f3585365bf1d5cb801ded002e0a1f05fdc42e8f94f",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/x-forwarded-proto.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "X-Forwarded-Proto",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-forwarded-proto/index.md",
+      "sha256": "f1fae89c364b7c8e5998f66ea9b5d291761c96f619369b2ffaeb8508b2579164",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/x-frame-options.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "X-Frame-Options",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/x-frame-options/index.md",
+      "sha256": "a785c6c79e76051d88e375e25f3330cecd85e5ac74566ad62f8b4616a76279b8",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-allow-credentials.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Allow-Credentials",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-credentials/index.md",
+      "sha256": "6c0a0e7f8768f46ca7840f9c8b6a6ac8451f782fbc24ab3c1ce8c6543ad7ec51",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-allow-headers.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Allow-Headers",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-headers/index.md",
+      "sha256": "051c6888435669992285af797a93faf31370e710b175f6f8e836c339badedf8e",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-allow-methods.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Allow-Methods",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-methods/index.md",
+      "sha256": "22d4641db44680c621c1087558008930ca0da5fd687bccf9d710a4da84547f2c",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-allow-origin.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Allow-Origin",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-allow-origin/index.md",
+      "sha256": "a2223d5f03698218742d2320b39f14200fb76f5e3b13c6da54712f95fdccf220",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-expose-headers.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Expose-Headers",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-expose-headers/index.md",
+      "sha256": "680e501451b6cd32c1a4b4e5e681b04599a5a5b9cde0df420ce05a9de2120b45",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-max-age.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Max-Age",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-max-age/index.md",
+      "sha256": "c07307fa4f5046c0c43e26e164717d830e17e3e9505375b20d9037904da4f9af",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-request-headers.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Request-Headers",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-request-headers/index.md",
+      "sha256": "4b09c76da4f6bb3fafa33b39f697ec587fb207c5149cc1ecfe18d2491e8802ba",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/access-control-request-method.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Access-Control-Request-Method",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/access-control-request-method/index.md",
+      "sha256": "abb4f381ed37516ed76d86903ed46dffe07057657d31c1a34e9583d11499319b",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/timing-allow-origin.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Timing-Allow-Origin",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/timing-allow-origin/index.md",
+      "sha256": "cdf21adb8973b9f5af58bae06308856f7a877c2f0f8d84977c4bbfd4bf702091",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/cross-origin-embedder-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Cross-Origin-Embedder-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-embedder-policy/index.md",
+      "sha256": "2dfedd8af4994590856996fd4d1dd2e05d119955d64cdf74c97cff843fda7585",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/cross-origin-opener-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Cross-Origin-Opener-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-opener-policy/index.md",
+      "sha256": "46f6241e2dd35c9579b7db87813b3f2ec0b2170a44cde34dae6bfd58b13240af",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/cross-origin-resource-policy.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Cross-Origin-Resource-Policy",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/cross-origin-resource-policy/index.md",
+      "sha256": "4ac0125a6d285f89ff77d9aa4b1f605dfa14803bc6aec24980fe2481c72f06dc",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/sec-websocket-accept.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Sec-WebSocket-Accept",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-accept/index.md",
+      "sha256": "38d6212fa82b7164a978c683bba1c58b0d68324a87fb27b635a084be13b4f0c2",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/sec-websocket-extensions.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Sec-WebSocket-Extensions",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-extensions/index.md",
+      "sha256": "69d5d88cb1073c92de9042a6378f2b00e7935de91d70fa7f27b94ac48802d4e2",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/sec-websocket-key.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Sec-WebSocket-Key",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-key/index.md",
+      "sha256": "bd9db050161fcc7863c42454a195dc8abee020fd452c2e24d009e2b7d395668e",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/sec-websocket-protocol.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Sec-WebSocket-Protocol",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-protocol/index.md",
+      "sha256": "6d68d2fd3367e46943e430b4825551a229d48a868c602c7d038a166370ade147",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/sec-websocket-version.md",
+      "format": "mdn-header",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "header": "Sec-WebSocket-Version",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/sec-websocket-version/index.md",
+      "sha256": "2cfb848b5208d3ea606150643be368acfcd55c71f8a2f6dbb9ea85b7725598a7",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "http-headers",
+      "file": "mdn-headers/index.md",
+      "format": "mdn-header-index",
+      "ref": "bd5271a96d814ed6876e974186c465f1b3959e07",
+      "url": "https://raw.githubusercontent.com/mdn/content/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers/index.md",
+      "sha256": "b7ec2eda9f4281e245a7e8243e1834e4ae824b526d7edcdd318e3eb18b3a31d0",
+      "retrieved": "2026-10-24"
+    }
+  ],
+  "omitted_recursive_refs": [],
+  "entries": [
+    {
+      "word": "Accept",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Accept request and response header indicates which content types, expressed as MIME types, the sender is able to understand. In requests, the server uses content negotiation to select one of the proposals and informs the client of the choice with the Content-Type response header. In responses, it provides information about which content types the server can understand in messages to the requested resource, so that the content type can be used in subsequent requests to the resource.",
+      "syntax": "Accept: <media-type>/<MIME_subtype> | Accept: <media-type>/* | Accept: */* | Accept: text/html, application/xhtml+xml, application/xml;q=0.9, image/webp, */*;q=0.8",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept"
+    },
+    {
+      "word": "Accept-Encoding",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Accept-Encoding request and response header indicates the content encoding (usually a compression algorithm) that the sender can understand. In requests, the server uses content negotiation to select one of the encoding proposals from the client and informs the client of that choice with the Content-Encoding response header. In responses, it provides information about which content encodings the server can understand in messages to the requested resource, so that the encoding can be used in subsequent requests to the resource. For example, Accept-Encoding is included in a 415 Unsupported Media Type response if a request to a resource (e.g., PUT) used an unsupported encoding.",
+      "syntax": "Accept-Encoding: gzip | Accept-Encoding: compress | Accept-Encoding: deflate | Accept-Encoding: br | Accept-Encoding: zstd | Accept-Encoding: dcb",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Encoding"
+    },
+    {
+      "word": "Accept-Language",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Accept-Language request header indicates the natural language and locale that the client prefers. The server uses content negotiation to select one of the proposals and informs the client of the choice with the Content-Language response header. Browsers set required values for this header according to their active user interface language. Users can also configure additional preferred languages through browser settings.",
+      "syntax": "Accept-Language: <language> | Accept-Language: * | Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language"
+    },
+    {
+      "word": "Accept-Ranges",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Accept-Ranges response header is used by the server to advertise its support for range requests, allowing clients to request part or several parts of a resource. The value of this header indicates the unit that can be used to define a range.",
+      "syntax": "Accept-Ranges: <range-unit> | Accept-Ranges: none",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Ranges"
+    },
+    {
+      "word": "Access-Control-Allow-Credentials",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Allow-Credentials response header tells browsers whether the server allows credentials to be included in cross-origin HTTP requests.",
+      "syntax": "Access-Control-Allow-Credentials: true",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials"
+    },
+    {
+      "word": "Access-Control-Allow-Headers",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Allow-Headers response header is used in response to a preflight request to indicate the HTTP headers that can be used during the actual request. This header is required if the preflight request contains Access-Control-Request-Headers.",
+      "syntax": "Access-Control-Allow-Headers: <header-name> | Access-Control-Allow-Headers: <header-name>, <header-name> | Access-Control-Allow-Headers: *",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Headers"
+    },
+    {
+      "word": "Access-Control-Allow-Methods",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Allow-Methods response header specifies one or more HTTP request methods allowed when accessing a resource in response to a preflight request.",
+      "syntax": "Access-Control-Allow-Methods: <method>, <method>, … | Access-Control-Allow-Methods: *",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Methods"
+    },
+    {
+      "word": "Access-Control-Allow-Origin",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given origin.",
+      "syntax": "Access-Control-Allow-Origin: * | Access-Control-Allow-Origin: <origin> | Access-Control-Allow-Origin: null",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin"
+    },
+    {
+      "word": "Access-Control-Expose-Headers",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Expose-Headers response header allows a server to indicate which response headers should be made available to scripts running in the browser in response to a cross-origin request.",
+      "syntax": "Access-Control-Expose-Headers: [<header-name>[, <header-name>]*] | Access-Control-Expose-Headers: *",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers"
+    },
+    {
+      "word": "Access-Control-Max-Age",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Max-Age response header indicates how long the results of a preflight request (that is, the information contained in the Access-Control-Allow-Methods and Access-Control-Allow-Headers headers) can be cached.",
+      "syntax": "Access-Control-Max-Age: <delta-seconds>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Max-Age"
+    },
+    {
+      "word": "Access-Control-Request-Headers",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Request-Headers request header is used by browsers when issuing a preflight request to let the server know which HTTP headers the client might send when the actual request is made (such as with fetch() or XMLHttpRequest.setRequestHeader()). The complementary server-side header of Access-Control-Allow-Headers will answer this browser-side header.",
+      "syntax": "Access-Control-Request-Headers: <header-name>,<header-name>,…",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Request-Headers"
+    },
+    {
+      "word": "Access-Control-Request-Method",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Access-Control-Request-Method request header is used by browsers when issuing a preflight request to let the server know which HTTP method will be used when the actual request is made. This header is necessary because the preflight request is always an OPTIONS and doesn't use the same method as the actual request.",
+      "syntax": "Access-Control-Request-Method: <method>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Request-Method"
+    },
+    {
+      "word": "Age",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Age response header indicates the time in seconds for which an object was in a proxy cache.",
+      "syntax": "Age: <delta-seconds>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Age"
+    },
+    {
+      "word": "Allow",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Allow response header lists the set of request methods supported by a resource. This header must be sent if the server responds with a 405 Method Not Allowed status code to indicate which request methods can be used instead. An empty Allow value indicates that the resource allows no request methods, which might occur temporarily for a given resource.",
+      "syntax": "Allow: <http-methods>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Allow"
+    },
+    {
+      "word": "Authorization",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Authorization request header can be used to provide credentials that authenticate a user agent with a server, allowing access to protected resources.",
+      "syntax": "Authorization: <auth-scheme> <authorization-parameters> | Authorization: Basic <credentials> | Authorization: Digest username=<username>,",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Authorization"
+    },
+    {
+      "word": "Cache-Control",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Cache-Control header holds _directives_ (instructions) in both requests and responses that control caching in browsers and shared caches (e.g., Proxies, CDNs).",
+      "syntax": "Cache-Control: <directive>, <directive>, ...",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
+    },
+    {
+      "word": "Connection",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Connection header controls whether the network connection stays open after the current transaction finishes. If the value sent is keep-alive, the connection is persistent and not closed, allowing subsequent requests to the same server on the same connection.",
+      "syntax": "Connection: keep-alive | Connection: close",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Connection"
+    },
+    {
+      "word": "Content-Disposition",
+      "context": "Response header (for the main body),Request header, Response header (for a subpart of a multipart body)",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Disposition header indicates whether content should be displayed _inline_ in the browser as a web page or part of a web page or downloaded as an _attachment_ locally.",
+      "syntax": "Content-Disposition: inline | Content-Disposition: inline; filename=\"file name.jpg\" | Content-Disposition: inline; filename*=UTF-8''file%20name.jpg | Content-Disposition: attachment | Content-Disposition: attachment; filename=\"file name.jpg\" | Content-Disposition: attachment; filename*=UTF-8''file%20name.jpg",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Disposition"
+    },
+    {
+      "word": "Content-Encoding",
+      "context": "Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Encoding representation header lists the encodings and the order in which they have been applied to a resource. This lets the recipient know how to decode the data in order to obtain the original content format described in the Content-Type header. Content encoding is mainly used to compress content without losing information about the original media type.",
+      "syntax": "Content-Encoding: gzip | Content-Encoding: compress | Content-Encoding: deflate | Content-Encoding: br | Content-Encoding: zstd | Content-Encoding: dcb",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Encoding"
+    },
+    {
+      "word": "Content-Language",
+      "context": "Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Language representation header is used to describe the language(s) intended for the audience, so users can differentiate it according to their own preferred language.",
+      "syntax": "Content-Language: de-DE | Content-Language: en-US | Content-Language: de-DE, en-CA",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Language"
+    },
+    {
+      "word": "Content-Length",
+      "context": "Request header, Response header, Content header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Length header indicates the size, in bytes, of the message body sent to the recipient.",
+      "syntax": "Content-Length: <length>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Length"
+    },
+    {
+      "word": "Content-Location",
+      "context": "Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Location representation header indicates an alternate location for the returned data. Its main use is to indicate the URL of a resource transmitted as the result of content negotiation.",
+      "syntax": "Content-Location: <url>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Location"
+    },
+    {
+      "word": "Content-Range",
+      "context": "Response header, Content header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Range response header is used in range requests to indicate where the content of a response body belongs in relation to a complete resource.",
+      "syntax": "Content-Range: <unit> <range>/<size> | Content-Range: <unit> <range>/* | Content-Range: <unit> */<size>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Range"
+    },
+    {
+      "word": "Content-Security-Policy",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page. With a few exceptions, policies mostly involve specifying server origins and script endpoints. This helps guard against cross-site scripting attacks.",
+      "syntax": "Content-Security-Policy: <policy-directive>; <policy-directive>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy"
+    },
+    {
+      "word": "Content-Security-Policy-Report-Only",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Security-Policy-Report-Only response header helps to monitor Content Security Policy (CSP) violations and their effects without enforcing the security policies. This header allows you to test or repair violations before a specific Content-Security-Policy is applied and enforced.",
+      "syntax": "Content-Security-Policy-Report-Only: <policy-directive>; …; <policy-directive>; report-to <endpoint-name>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy-Report-Only"
+    },
+    {
+      "word": "Content-Type",
+      "context": "Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Content-Type representation header is used to indicate the original media type of a resource before any content encoding is applied.",
+      "syntax": "Content-Type: <media-type> | Content-Type: text/html; charset=utf-8 | Content-Type: multipart/form-data; boundary=ExampleBoundaryString",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Type"
+    },
+    {
+      "word": "Cookie",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Cookie request header contains stored HTTP cookies associated with the server (i.e., previously sent by the server with the Set-Cookie header or set in JavaScript using Document.cookie).",
+      "syntax": "Cookie: <cookie-list> | Cookie: name=value | Cookie: name=value; name2=value2; name3=value3",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cookie"
+    },
+    {
+      "word": "Cross-Origin-Embedder-Policy",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Cross-Origin-Embedder-Policy (COEP) response header configures the current document's policy for loading and embedding cross-origin resources that are requested in no-cors mode.",
+      "syntax": "Cross-Origin-Embedder-Policy: <token>; <parameter>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy"
+    },
+    {
+      "word": "Cross-Origin-Opener-Policy",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Cross-Origin-Opener-Policy (COOP) response header allows a website to control whether a new top-level document, opened using Window.open() or by navigating to a new page, is opened in the same browsing context group (BCG) or in a new browsing context group.",
+      "syntax": "Cross-Origin-Opener-Policy: unsafe-none | Cross-Origin-Opener-Policy: same-origin-allow-popups | Cross-Origin-Opener-Policy: same-origin | Cross-Origin-Opener-Policy: noopener-allow-popups",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy"
+    },
+    {
+      "word": "Cross-Origin-Resource-Policy",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Cross-Origin-Resource-Policy response header (CORP) indicates that the browser should block no-cors cross-origin or cross-site requests to the given resource.",
+      "syntax": "Cross-Origin-Resource-Policy: same-site | same-origin | cross-origin",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Resource-Policy"
+    },
+    {
+      "word": "Date",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Date request and response header contains the date and time at which the message originated.",
+      "syntax": "Date: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Date"
+    },
+    {
+      "word": "ETag",
+      "context": "Response header, Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP ETag (entity tag) response header is an identifier for a specific version of a resource. It lets caches be more efficient and save bandwidth, as a web server does not need to resend a full response if the content has not changed. Additionally, ETags help to prevent simultaneous updates of a resource from overwriting each other (\"mid-air collisions\").",
+      "syntax": "ETag: W/\"<etag_value>\" | ETag: \"<etag_value>\"",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ETag"
+    },
+    {
+      "word": "Expect",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Expect request header indicates that there are expectations that need to be met by the server in order to handle the complete request successfully.",
+      "syntax": "Expect: 100-continue",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Expect"
+    },
+    {
+      "word": "Expires",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Expires response header contains the date/time after which the response is considered expired in the context of HTTP caching.",
+      "syntax": "Expires: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Expires"
+    },
+    {
+      "word": "Forwarded",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Forwarded request header contains information that may be added by reverse proxy servers (load balancers, CDNs, etc.) that would otherwise be altered or lost when proxy servers are involved in the path of the request.",
+      "syntax": "Forwarded: by=<identifier>;for=<identifier>;host=<host>;proto=<http|https>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Forwarded"
+    },
+    {
+      "word": "Host",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Host request header specifies the host and port number of the server to which the request is being sent.",
+      "syntax": "Host: <host>:<port>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Host"
+    },
+    {
+      "word": "If-Match",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP If-Match request header makes a request conditional. A server will return resources for GET and HEAD methods, or upload resource for PUT and other non-safe methods, only if the resource matches one of the ETag values in the If-Match request header. If the conditional does not match, the 412 Precondition Failed response is returned instead.",
+      "syntax": "If-Match: <etag_value> | If-Match: <etag_value>, <etag_value>, …",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-Match"
+    },
+    {
+      "word": "If-Modified-Since",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP If-Modified-Since request header makes a request conditional. The server sends back the requested resource, with a 200 status, only if it has been modified after the date in the If-Modified-Since header. If the resource has not been modified since, the response is a 304 without any body, and the Last-Modified response header of the previous request contains the date of the last modification.",
+      "syntax": "If-Modified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-Modified-Since"
+    },
+    {
+      "word": "If-None-Match",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP If-None-Match request header makes a request conditional. The server returns the requested resource in GET and HEAD methods with a 200 status, only if it doesn't have an ETag matching the ones in the If-None-Match header. For other methods, the request will be processed only if the eventually existing resource's ETag doesn't match any of the values listed.",
+      "syntax": "If-None-Match: \"<etag_value>\" | If-None-Match: \"<etag_value>\", \"<etag_value>\", … | If-None-Match: *",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-None-Match"
+    },
+    {
+      "word": "If-Range",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP If-Range request header makes a range request conditional. If the condition is fulfilled, a range request is issued, and the server sends back a 206 Partial Content response with part (or parts) of the resource in the body. If the condition is not fulfilled, the full resource is sent back with a 200 OK status.",
+      "syntax": "If-Range: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT | If-Range: <etag>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-Range"
+    },
+    {
+      "word": "If-Unmodified-Since",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP If-Unmodified-Since request header makes the request for the resource conditional. The server will send the requested resource (or accept it in the case of a POST or another non-safe method) only if the resource on the server has not been modified after the date in the request header. If the resource has been modified after the specified date, the response will be a 412 Precondition Failed error.",
+      "syntax": "If-Unmodified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-Unmodified-Since"
+    },
+    {
+      "word": "Keep-Alive",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Keep-Alive request and response header allows the sender to hint how a connection may be used in terms of a timeout and a maximum number of requests.",
+      "syntax": "Keep-Alive: <parameters>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Keep-Alive"
+    },
+    {
+      "word": "Last-Modified",
+      "context": "Response header, Representation header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Last-Modified response header contains a date and time when the origin server believes the resource was last modified. It is used as a validator in conditional requests (If-Modified-Since or If-Unmodified-Since) to determine if a requested resource is the same as one already stored by the client. It is less accurate than an ETag for determining file contents, but can be used as a fallback mechanism if ETags are unavailable.",
+      "syntax": "Last-Modified: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Last-Modified"
+    },
+    {
+      "word": "Link",
+      "context": "Response header, Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Link header provides a means for serializing one or more links in HTTP headers. This allows the server to point a client to another resource containing metadata about the requested resource. This header has the same semantics as the HTML link element. One benefit of using the Link header is that the browser can start preconnecting or preloading resources before the HTML itself is fetched and processed.",
+      "syntax": "Link: <uri-reference>; param1=value1; param2=\"value2\"",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Link"
+    },
+    {
+      "word": "Location",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Location response header indicates the URL to redirect a page to. It only provides a meaning when served with a 3XX redirection response or a 201 Created status response.",
+      "syntax": "Location: <url>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Location"
+    },
+    {
+      "word": "Origin",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Origin request header indicates the origin (scheme, hostname, and port) that _caused_ the request. For example, if a user agent needs to request resources included in a page, or fetched by scripts that it executes, then the origin of the page may be included in the request.",
+      "syntax": "Origin: null | Origin: <scheme>://<hostname> | Origin: <scheme>://<hostname>:<port>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin"
+    },
+    {
+      "word": "Proxy-Authenticate",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Proxy-Authenticate response header defines the authentication method (or challenge) that should be used to gain access to a resource behind a proxy server. It is sent in a 407 Proxy Authentication Required response so a client can identify itself to a proxy that requires authentication.",
+      "syntax": "Proxy-Authenticate: <challenge>, … | Proxy-Authenticate: <auth-scheme> | Proxy-Authenticate: <auth-scheme> token68 | Proxy-Authenticate: <auth-scheme> auth-param1=param-token1 | Proxy-Authenticate: <auth-scheme> auth-param1=param-token1, …, auth-paramN=param-tokenN | Proxy-Authenticate: Basic realm=\"Dev\", charset=\"UTF-8\"",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Proxy-Authenticate"
+    },
+    {
+      "word": "Proxy-Authorization",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Proxy-Authorization request header contains the credentials to authenticate a client with a proxy server, typically after the server has responded with a 407 Proxy Authentication Required status with the Proxy-Authenticate header.",
+      "syntax": "Proxy-Authorization: <auth-scheme> <credentials>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Proxy-Authorization"
+    },
+    {
+      "word": "Range",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Range request header indicates the part of a resource that the server should return. Several parts can be requested at the same time in one Range header, and the server may send back these ranges in a multipart document. If the server sends back ranges, it uses the 206 Partial Content status code for the response. If the ranges are invalid, the server returns the 416 Range Not Satisfiable error.",
+      "syntax": "Range: <unit>=<range-start>- | Range: <unit>=<range-start>-<range-end> | Range: <unit>=<range-start>-<range-end>, …, <range-startN>-<range-endN> | Range: <unit>=-<suffix-length>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Range"
+    },
+    {
+      "word": "Referer",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Referer request header contains the absolute or partial address from which a resource has been requested. The Referer header allows a server to identify referring pages that people are visiting from or where requested resources are being used. This data can be used for analytics, logging, optimized caching, and more.",
+      "syntax": "Referer: <url>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referer"
+    },
+    {
+      "word": "Referrer-Policy",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Referrer-Policy response header controls how much referrer information (sent with the Referer header) should be included with requests. Aside from the HTTP header, you can set this policy in HTML.",
+      "syntax": "Referrer-Policy: no-referrer | Referrer-Policy: no-referrer-when-downgrade | Referrer-Policy: origin | Referrer-Policy: origin-when-cross-origin | Referrer-Policy: same-origin | Referrer-Policy: strict-origin",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy"
+    },
+    {
+      "word": "Retry-After",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Retry-After response header indicates how long the user agent should wait before making a follow-up request. There are three main cases this header is used:",
+      "syntax": "Retry-After: <http-date> | Retry-After: <delay-seconds>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Retry-After"
+    },
+    {
+      "word": "Sec-WebSocket-Accept",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Sec-WebSocket-Accept response header is used in the WebSocket opening handshake to indicate that the server is willing to upgrade to a WebSocket connection.",
+      "syntax": "Sec-WebSocket-Accept: <hashed key>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-WebSocket-Accept"
+    },
+    {
+      "word": "Sec-WebSocket-Extensions",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Sec-WebSocket-Extensions request and response header is used in the WebSocket opening handshake to negotiate a protocol extension used by the client and server.",
+      "syntax": "Sec-WebSocket-Extensions: <extensions>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-WebSocket-Extensions"
+    },
+    {
+      "word": "Sec-WebSocket-Key",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Sec-WebSocket-Key request header is used in the WebSocket opening handshake to allow a client (user agent) to confirm that it \"really wants\" to request that an HTTP client is upgraded to become a WebSocket.",
+      "syntax": "Sec-WebSocket-Key: <key>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-WebSocket-Key"
+    },
+    {
+      "word": "Sec-WebSocket-Protocol",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Sec-WebSocket-Protocol request and response header is used in the WebSocket opening handshake to negotiate a sub-protocol to use in the communication. This can be a well understood protocol, such as SOAP or WAMP, or a custom protocol understood by the client and server.",
+      "syntax": "Sec-WebSocket-Protocol: <sub-protocols>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-WebSocket-Protocol"
+    },
+    {
+      "word": "Sec-WebSocket-Version",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Sec-WebSocket-Version request and response header is used in the WebSocket opening handshake to indicate the WebSocket protocol supported by the client, and the protocol versions supported by the server if it does _not_ support the version specified in the request.",
+      "syntax": "Sec-WebSocket-Version: <version> | Sec-WebSocket-Version: <server-supported-versions>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-WebSocket-Version"
+    },
+    {
+      "word": "Server",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Server response header describes the software used by the origin server that handled the request and generated a response.",
+      "syntax": "Server: <product>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Server"
+    },
+    {
+      "word": "Set-Cookie",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Set-Cookie response header is used to send a cookie from the server to the user agent, so that the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.",
+      "syntax": "Set-Cookie: <cookie-name>=<cookie-value> | Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value> | Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date> | Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly | Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<number> | Set-Cookie: <cookie-name>=<cookie-value>; Partitioned",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "word": "Strict-Transport-Security",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Strict-Transport-Security response header (often abbreviated as HSTS) informs browsers that the host should only be accessed using HTTPS, and that any future attempts to access it using HTTP should automatically be upgraded to HTTPS. Additionally, on future connections to the host, the browser will not allow the user to bypass secure connection errors, such as an invalid certificate. HSTS identifies a host by its domain name only.",
+      "syntax": "Strict-Transport-Security: max-age=<expire-time> | Strict-Transport-Security: max-age=<expire-time>; includeSubDomains | Strict-Transport-Security: max-age=<expire-time>; includeSubDomains; preload",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security"
+    },
+    {
+      "word": "TE",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP TE request header specifies the transfer encodings the user agent is willing to accept. The transfer encodings are for message compression and chunking of data during transmission.",
+      "syntax": "TE: compress | TE: deflate | TE: gzip | TE: trailers | TE: trailers, deflate;q=0.5",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/TE"
+    },
+    {
+      "word": "Timing-Allow-Origin",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Timing-Allow-Origin response header specifies origins that are allowed to see values of attributes retrieved via features of the Resource Timing API, which would otherwise be reported as zero due to cross-origin restrictions.",
+      "syntax": "Timing-Allow-Origin: * | Timing-Allow-Origin: <origin>, …, <originN>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Timing-Allow-Origin"
+    },
+    {
+      "word": "Trailer",
+      "context": "Request header, Response header, Content header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Trailer request and response header allows the sender to include additional fields at the end of chunked messages in order to supply metadata that might be dynamically generated while the message body is sent.",
+      "syntax": "Trailer: header-names",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Trailer"
+    },
+    {
+      "word": "Transfer-Encoding",
+      "context": "Request header, Response header, Content header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Transfer-Encoding request and response header specifies the form of encoding used to transfer messages between nodes on the network.",
+      "syntax": "Transfer-Encoding: chunked | Transfer-Encoding: compress | Transfer-Encoding: deflate | Transfer-Encoding: gzip | Transfer-Encoding: gzip, chunked",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Transfer-Encoding"
+    },
+    {
+      "word": "Upgrade",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Upgrade request and response header can be used to upgrade an already-established client/server connection to a different protocol (over the same transport protocol). For example, it can be used by a client to upgrade a connection from HTTP/1.1 to HTTP/2, or an HTTP(S) connection to a WebSocket connection.",
+      "syntax": "Upgrade: <protocol>[/<protocol_version>] | Upgrade: <protocol>[/<protocol_version>], …, <protocolN>[/<protocol_versionN>]",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Upgrade"
+    },
+    {
+      "word": "User-Agent",
+      "context": "Request header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP User-Agent request header is a characteristic string that lets servers and network peers identify the application, operating system, vendor, and/or version of the requesting user agent.",
+      "syntax": "User-Agent: <product> / <product-version> <comment> | User-Agent: Mozilla/5.0 (<system-information>) <platform> (<platform-details>) <extensions>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent"
+    },
+    {
+      "word": "Vary",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP Vary response header describes the parts of the request message (aside from the method and URL) that influenced the content of the response it occurs in. Including a Vary header ensures that responses are separately cached based on the headers listed in the Vary field. Most often, this is used to create a cache key when content negotiation is in use.",
+      "syntax": "Vary: * | Vary: <header-name>, …, <header-nameN>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"
+    },
+    {
+      "word": "Via",
+      "context": "Request header, Response header",
+      "module": "MDN Web Docs",
+      "description": "The Via request and response header is added by proxies, both forward and reverse. It is used for tracking message forwards, avoiding request loops, and identifying the protocol capabilities of senders along the request/response chain.",
+      "syntax": "Via: [<protocol-name>/]<protocol-version> <host>[:<port>] | Via: [<protocol-name>/]<protocol-version> <pseudonym>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Via"
+    },
+    {
+      "word": "WWW-Authenticate",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP WWW-Authenticate response header advertises the HTTP authentication methods (or challenges) that might be used to gain access to a specific resource.",
+      "syntax": "WWW-Authenticate: <challenge> | WWW-Authenticate: <auth-scheme> | WWW-Authenticate: <auth-scheme> token68 | WWW-Authenticate: <auth-scheme> auth-param1=param-token1 | WWW-Authenticate: <auth-scheme> auth-param1=param-token1, …, auth-paramN=param-tokenN | WWW-Authenticate: Basic realm=\"Dev\", charset=\"UTF-8\"",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/WWW-Authenticate"
+    },
+    {
+      "word": "X-Content-Type-Options",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP X-Content-Type-Options response header indicates that the MIME types advertised in the Content-Type headers should be respected and not changed. The header allows you to avoid MIME type sniffing by specifying that the MIME types are deliberately configured.",
+      "syntax": "X-Content-Type-Options: nosniff",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options"
+    },
+    {
+      "word": "X-Forwarded-For",
+      "context": "Request header",
+      "module": "MDN Web Docs / 非标准",
+      "description": "The HTTP X-Forwarded-For (XFF) request header is a de-facto standard header for identifying the originating IP address of a client connecting to a web server through a proxy server.",
+      "syntax": "X-Forwarded-For: <client>, <proxy> | X-Forwarded-For: <client>, <proxy>, …, <proxyN> | X-Forwarded-For: 2001:db8:85a3:8d3:1319:8a2e:370:7348 | X-Forwarded-For: 203.0.113.195 | X-Forwarded-For: 203.0.113.195, 2001:db8:85a3:8d3:1319:8a2e:370:7348",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For"
+    },
+    {
+      "word": "X-Forwarded-Host",
+      "context": "Request header",
+      "module": "MDN Web Docs / 非标准",
+      "description": "The HTTP X-Forwarded-Host (XFH) request header is a de-facto standard header for identifying the original host requested by the client in the Host HTTP request header.",
+      "syntax": "X-Forwarded-Host: <host>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-Host"
+    },
+    {
+      "word": "X-Forwarded-Proto",
+      "context": "Request header",
+      "module": "MDN Web Docs / 非标准",
+      "description": "The HTTP X-Forwarded-Proto (XFP) request header is a de-facto standard header for identifying the protocol (HTTP or HTTPS) that a client used to connect to a proxy or load balancer.",
+      "syntax": "X-Forwarded-Proto: <protocol>",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-Proto"
+    },
+    {
+      "word": "X-Frame-Options",
+      "context": "Response header",
+      "module": "MDN Web Docs",
+      "description": "The HTTP X-Frame-Options response header can be used to indicate whether a browser should be allowed to render the document in a frame, iframe, embed or object. Sites can use this to avoid clickjacking attacks and some cross-site leaks, by ensuring that their content is not embedded into other sites.",
+      "syntax": "X-Frame-Options: DENY | X-Frame-Options: SAMEORIGIN",
+      "version": "MDN content bd5271a96d81",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options"
+    }
+  ]
+}

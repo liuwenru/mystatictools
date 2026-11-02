@@ -1,0 +1,1116 @@
+{
+  "notice": "Extracted/reformatted from the cited upstream sources; not a validator. See ../licenses/.",
+  "sources": [
+    {
+      "group": "dockerd-cli",
+      "file": "dockerd/dockerd-help.txt",
+      "format": "dockerd-help",
+      "url": "local:/usr/bin/dockerd --help",
+      "ref": "27.3.1 (41ca978)",
+      "sha256": "7fc95d847e4167d642c8cd1b10a5379a5a5795b1d313a0e01acfac7be2cdaa4b",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "dockerd-cli",
+      "file": "dockerd/dockerd-version.txt",
+      "format": "dockerd-version",
+      "url": "local:/usr/bin/dockerd --version",
+      "ref": "27.3.1 (41ca978)",
+      "sha256": "cbd65a927e2261f88b2dc5711adf2bbff012e0a12621ee9d921461dc47dc6bd9",
+      "retrieved": "2026-10-24"
+    }
+  ],
+  "omitted_recursive_refs": [],
+  "entries": [
+    {
+      "word": "--add-runtime",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Register an additional OCI compatible runtime (default [])",
+      "syntax": "--add-runtime runtime",
+      "type": [
+        "runtime"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "[]"
+    },
+    {
+      "word": "--allow-nondistributable-artifacts",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Allow push of nondistributable artifacts to registry",
+      "syntax": "--allow-nondistributable-artifacts list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--authorization-plugin",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Authorization plugins to load",
+      "syntax": "--authorization-plugin list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--bip",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Specify network bridge IP",
+      "syntax": "--bip string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--bridge",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Attach containers to a network bridge；短选项：-b",
+      "syntax": "--bridge string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--cdi-spec-dir",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "CDI specification directories to use",
+      "syntax": "--cdi-spec-dir list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--cgroup-parent",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set parent cgroup for all containers",
+      "syntax": "--cgroup-parent string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--config-file",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Daemon configuration file (default \"/etc/docker/daemon.json\")",
+      "syntax": "--config-file string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/etc/docker/daemon.json\""
+    },
+    {
+      "word": "--containerd",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "containerd grpc address",
+      "syntax": "--containerd string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--containerd-namespace",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Containerd namespace to use (default \"moby\")",
+      "syntax": "--containerd-namespace string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"moby\""
+    },
+    {
+      "word": "--containerd-plugins-namespace",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Containerd namespace to use for plugins (default \"plugins.moby\")",
+      "syntax": "--containerd-plugins-namespace string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"plugins.moby\""
+    },
+    {
+      "word": "--cpu-rt-period",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Limit the CPU real-time period in microseconds for the parent cgroup for all containers (not supported with cgroups v2)",
+      "syntax": "--cpu-rt-period int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--cpu-rt-runtime",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Limit the CPU real-time runtime in microseconds for the parent cgroup for all containers (not supported with cgroups v2)",
+      "syntax": "--cpu-rt-runtime int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--cri-containerd",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "start containerd with cri",
+      "syntax": "--cri-containerd",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--data-root",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Root directory of persistent Docker state (default \"/var/lib/docker\")",
+      "syntax": "--data-root string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/var/lib/docker\""
+    },
+    {
+      "word": "--debug",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable debug mode；短选项：-D",
+      "syntax": "--debug",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--default-address-pool",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default address pools for node specific local networks",
+      "syntax": "--default-address-pool pool-options",
+      "type": [
+        "pool-options"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--default-cgroupns-mode",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default mode for containers cgroup namespace (\"host\" | \"private\") (default \"private\")",
+      "syntax": "--default-cgroupns-mode string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"private\"",
+      "values": [
+        "host",
+        "private"
+      ]
+    },
+    {
+      "word": "--default-gateway",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Container default gateway IPv4 address",
+      "syntax": "--default-gateway ip",
+      "type": [
+        "ip"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--default-gateway-v6",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Container default gateway IPv6 address",
+      "syntax": "--default-gateway-v6 ip",
+      "type": [
+        "ip"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--default-ipc-mode",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default mode for containers ipc (\"shareable\" | \"private\") (default \"private\")",
+      "syntax": "--default-ipc-mode string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"private\"",
+      "values": [
+        "shareable",
+        "private"
+      ]
+    },
+    {
+      "word": "--default-network-opt",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default network options (default map[])",
+      "syntax": "--default-network-opt mapmap",
+      "type": [
+        "mapmap"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "map[]"
+    },
+    {
+      "word": "--default-runtime",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default OCI runtime for containers (default \"runc\")",
+      "syntax": "--default-runtime string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"runc\""
+    },
+    {
+      "word": "--default-shm-size",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default shm size for containers (default 64MiB)",
+      "syntax": "--default-shm-size bytes",
+      "type": [
+        "bytes"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "64MiB"
+    },
+    {
+      "word": "--default-ulimit",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default ulimits for containers (default [])",
+      "syntax": "--default-ulimit ulimit",
+      "type": [
+        "ulimit"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "[]"
+    },
+    {
+      "word": "--dns",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "DNS server to use (default [])",
+      "syntax": "--dns ipSlice",
+      "type": [
+        "ipSlice"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "[]"
+    },
+    {
+      "word": "--dns-opt",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "DNS options to use",
+      "syntax": "--dns-opt list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--dns-search",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "DNS search domains to use",
+      "syntax": "--dns-search list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--exec-opt",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Runtime execution options",
+      "syntax": "--exec-opt list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--exec-root",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Root directory for execution state files (default \"/var/run/docker\")",
+      "syntax": "--exec-root string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/var/run/docker\""
+    },
+    {
+      "word": "--experimental",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable experimental features",
+      "syntax": "--experimental",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--feature",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable feature in the daemon (default map[])",
+      "syntax": "--feature map",
+      "type": [
+        "map"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "map[]"
+    },
+    {
+      "word": "--fixed-cidr",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "IPv4 subnet for fixed IPs",
+      "syntax": "--fixed-cidr string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--fixed-cidr-v6",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "IPv6 subnet for fixed IPs",
+      "syntax": "--fixed-cidr-v6 string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--group",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Group for the unix socket (default \"docker\")；短选项：-G",
+      "syntax": "--group string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"docker\""
+    },
+    {
+      "word": "--help",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Print usage",
+      "syntax": "--help",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--host",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Daemon socket(s) to connect to；短选项：-H",
+      "syntax": "--host list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--host-gateway-ip",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "IP address that the special 'host-gateway' string in --add-host resolves to. Defaults to the IP address of the default bridge",
+      "syntax": "--host-gateway-ip ip",
+      "type": [
+        "ip"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--http-proxy",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "HTTP proxy URL to use for outgoing traffic",
+      "syntax": "--http-proxy string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--https-proxy",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "HTTPS proxy URL to use for outgoing traffic",
+      "syntax": "--https-proxy string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--icc",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable inter-container communication (default true)",
+      "syntax": "--icc",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--init",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Run an init in the container to forward signals and reap processes",
+      "syntax": "--init",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--init-path",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to the docker-init binary",
+      "syntax": "--init-path string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--insecure-registry",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable insecure registry communication",
+      "syntax": "--insecure-registry list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--ip",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default IP when binding container ports (default 0.0.0.0)",
+      "syntax": "--ip ip",
+      "type": [
+        "ip"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "0.0.0.0"
+    },
+    {
+      "word": "--ip-forward",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable net.ipv4.ip_forward (default true)",
+      "syntax": "--ip-forward",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--ip-masq",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable IP masquerading (default true)",
+      "syntax": "--ip-masq",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--ip6tables",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable addition of ip6tables rules (default true)",
+      "syntax": "--ip6tables",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--iptables",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable addition of iptables rules (default true)",
+      "syntax": "--iptables",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--ipv6",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable IPv6 networking",
+      "syntax": "--ipv6",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--label",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set key=value labels to the daemon",
+      "syntax": "--label list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--live-restore",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable live restore of docker when containers are still running",
+      "syntax": "--live-restore",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--log-driver",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default driver for container logs (default \"json-file\")",
+      "syntax": "--log-driver string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"json-file\""
+    },
+    {
+      "word": "--log-format",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the logging format (\"text\"|\"json\") (default \"text\")",
+      "syntax": "--log-format string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"text\"",
+      "values": [
+        "text",
+        "json"
+      ]
+    },
+    {
+      "word": "--log-level",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the logging level (\"debug\"|\"info\"|\"warn\"|\"error\"|\"fatal\") (default \"info\")；短选项：-l",
+      "syntax": "--log-level string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"info\"",
+      "values": [
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "fatal"
+      ]
+    },
+    {
+      "word": "--log-opt",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Default log driver options for containers (default map[])",
+      "syntax": "--log-opt map",
+      "type": [
+        "map"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "map[]"
+    },
+    {
+      "word": "--max-concurrent-downloads",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the max concurrent downloads (default 3)",
+      "syntax": "--max-concurrent-downloads int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "3"
+    },
+    {
+      "word": "--max-concurrent-uploads",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the max concurrent uploads (default 5)",
+      "syntax": "--max-concurrent-uploads int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "5"
+    },
+    {
+      "word": "--max-download-attempts",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the max download attempts for each pull (default 5)",
+      "syntax": "--max-download-attempts int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "5"
+    },
+    {
+      "word": "--metrics-addr",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set default address and port to serve the metrics api on",
+      "syntax": "--metrics-addr string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--mtu",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the MTU for the default \"bridge\" network (default 1500)",
+      "syntax": "--mtu int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "1500"
+    },
+    {
+      "word": "--network-control-plane-mtu",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Network Control plane MTU (default 1500)",
+      "syntax": "--network-control-plane-mtu int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "1500"
+    },
+    {
+      "word": "--no-new-privileges",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set no-new-privileges by default for new containers",
+      "syntax": "--no-new-privileges",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--no-proxy",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Comma-separated list of hosts or IP addresses for which the proxy is skipped",
+      "syntax": "--no-proxy string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--node-generic-resource",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Advertise user-defined resource",
+      "syntax": "--node-generic-resource list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--pidfile",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to use for daemon PID file (default \"/var/run/docker.pid\")；短选项：-p",
+      "syntax": "--pidfile string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/var/run/docker.pid\""
+    },
+    {
+      "word": "--raw-logs",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Full timestamps without ANSI coloring",
+      "syntax": "--raw-logs",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--registry-mirror",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Preferred Docker registry mirror",
+      "syntax": "--registry-mirror list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--rootless",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable rootless mode; typically used with RootlessKit",
+      "syntax": "--rootless",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--seccomp-profile",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to seccomp profile. Set to \"unconfined\" to disable the default seccomp profile (default \"builtin\")",
+      "syntax": "--seccomp-profile string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"builtin\""
+    },
+    {
+      "word": "--selinux-enabled",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable selinux support",
+      "syntax": "--selinux-enabled",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--shutdown-timeout",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the default shutdown timeout (default 15)",
+      "syntax": "--shutdown-timeout int",
+      "type": [
+        "int"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "15"
+    },
+    {
+      "word": "--storage-driver",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Storage driver to use；短选项：-s",
+      "syntax": "--storage-driver string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--storage-opt",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Storage driver options",
+      "syntax": "--storage-opt list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--swarm-default-advertise-addr",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set default address or interface for swarm advertised address",
+      "syntax": "--swarm-default-advertise-addr string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--tls",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Use TLS; implied by --tlsverify",
+      "syntax": "--tls",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--tlscacert",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Trust certs signed only by this CA (default \"/root/.docker/ca.pem\")",
+      "syntax": "--tlscacert string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/root/.docker/ca.pem\""
+    },
+    {
+      "word": "--tlscert",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to TLS certificate file (default \"/root/.docker/cert.pem\")",
+      "syntax": "--tlscert string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/root/.docker/cert.pem\""
+    },
+    {
+      "word": "--tlskey",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to TLS key file (default \"/root/.docker/key.pem\")",
+      "syntax": "--tlskey string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/root/.docker/key.pem\""
+    },
+    {
+      "word": "--tlsverify",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Use TLS and verify the remote",
+      "syntax": "--tlsverify",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--userland-proxy",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Use userland proxy for loopback traffic (default true)",
+      "syntax": "--userland-proxy",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "true"
+    },
+    {
+      "word": "--userland-proxy-path",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to the userland proxy binary (default \"/usr/bin/docker-proxy\")",
+      "syntax": "--userland-proxy-path string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/usr/bin/docker-proxy\""
+    },
+    {
+      "word": "--userns-remap",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "User/Group setting for user namespaces",
+      "syntax": "--userns-remap string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--validate",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Validate daemon configuration and exit",
+      "syntax": "--validate",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "--version",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Print version information and quit；短选项：-v",
+      "syntax": "--version",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "-D",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Enable debug mode",
+      "syntax": "-D / --debug",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "-G",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Group for the unix socket (default \"docker\")",
+      "syntax": "-G / --group string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"docker\""
+    },
+    {
+      "word": "-H",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Daemon socket(s) to connect to",
+      "syntax": "-H / --host list",
+      "type": [
+        "list"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "-b",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Attach containers to a network bridge",
+      "syntax": "-b / --bridge string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "-l",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Set the logging level (\"debug\"|\"info\"|\"warn\"|\"error\"|\"fatal\") (default \"info\")",
+      "syntax": "-l / --log-level string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"info\"",
+      "values": [
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "fatal"
+      ]
+    },
+    {
+      "word": "-p",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Path to use for daemon PID file (default \"/var/run/docker.pid\")",
+      "syntax": "-p / --pidfile string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help",
+      "default": "\"/var/run/docker.pid\""
+    },
+    {
+      "word": "-s",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Storage driver to use",
+      "syntax": "-s / --storage-driver string",
+      "type": [
+        "string"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    },
+    {
+      "word": "-v",
+      "context": "dockerd CLI",
+      "version": "27.3.1 (41ca978)",
+      "description": "Print version information and quit",
+      "syntax": "-v / --version",
+      "type": [
+        "boolean"
+      ],
+      "source": "local:/usr/bin/dockerd --help"
+    }
+  ]
+}

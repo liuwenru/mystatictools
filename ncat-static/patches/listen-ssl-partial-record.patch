@@ -1,0 +1,17 @@
+ncat -l --ssl（不带 -k）接收时，SSL_read 读到半条 TLS 记录返回 SSL_ERROR_WANT_READ，fdinfo_recv
+返回 0；read_socket 知道这不是 EOF、没有关闭连接，但仍返回 0，监听循环把 rc == 0 当作连接结束，
+以 0 正常退出。跨网络传输时 TLS 记录常被拆成多个 TCP 段，ncat -l --ssl > file 只收到前几 KB
+（Alpine nmap-ncat 7.97 同样如此）。改为只有连接确实已关闭（read_socket 已调用 close_fd，fd 不在
+client_fdlist 中）时才结束循环。
+--- a/ncat/ncat_listen.c
++++ b/ncat/ncat_listen.c
+@@ -541,7 +541,8 @@
+             } else {
+                 /* Read from a client and write to stdout. */
+                 rc = read_socket(cfd, o.sendonly ? Ignore : Write);
+-                if (rc <= 0 && !o.keepopen)
++                if (rc <= 0 && !o.keepopen
++                        && get_fdinfo(&client_fdlist, cfd) == NULL)
+                     breakloop = (rc == 0 ? BREAKLOOP_SUCCESS : BREAKLOOP_ERROR);
+             }
+ 

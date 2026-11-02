@@ -1,0 +1,14 @@
+OfflineCompletion	offline.txt	/*OfflineCompletion*
+OfflineCompletionAll	offline.txt	/*OfflineCompletionAll*
+OfflineCompletionReload	offline.txt	/*OfflineCompletionReload*
+OfflineHelp	offline.txt	/*OfflineHelp*
+offline	offline.txt	/*offline*
+offline-clipboard	offline.txt	/*offline-clipboard*
+offline-completion	offline.txt	/*offline-completion*
+offline-format	offline.txt	/*offline-format*
+offline-headers	offline.txt	/*offline-headers*
+offline-limits	offline.txt	/*offline-limits*
+offline-nginx	offline.txt	/*offline-nginx*
+offline-theme	offline.txt	/*offline-theme*
+offline-tree	offline.txt	/*offline-tree*
+offline.txt	offline.txt	/*offline.txt*

@@ -1,0 +1,5 @@
+dist
+.git
+.*backup*
+**/.*backup*
+__pycache__

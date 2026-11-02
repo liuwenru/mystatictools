@@ -1,0 +1,15 @@
+Ncat 7.99 起（上游提交 b408fc243c "Ignore stdin with --recv-only"）--recv-only 不再把 stdin
+加入 client_fdlist，但监听循环条件仍是 nfds > 1（原意：监听 socket + stdin）。只有一个监听 socket 时
+（指定监听地址、-4，或内核禁用 IPv6）nfds 为 1，ncat -l --recv-only 启动后立即以 0 退出。
+--recv-only 时监听 socket 本身就应保持循环，退出仍由 breakloop（非 -k 时连接结束）控制。
+--- a/ncat/ncat_listen.c
++++ b/ncat/ncat_listen.c
+@@ -409,7 +409,7 @@
+ 
+     init_fdlist(&broadcast_fdlist, o.conn_limit);
+ 
+-    while (!breakloop && (client_fdlist.nfds > 1 || get_conn_count() > 0)) {
++    while (!breakloop && (client_fdlist.nfds > (o.recvonly ? 0 : 1) || get_conn_count() > 0)) {
+         long usec_wait = -1;
+         tvp = NULL;
+         /* We pass these temporary descriptor sets to fselect, since fselect

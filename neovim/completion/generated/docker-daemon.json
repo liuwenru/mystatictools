@@ -1,0 +1,1168 @@
+{
+  "notice": "Extracted/reformatted from the cited upstream sources; not a validator. See ../licenses/.",
+  "sources": [
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/daemon/config/config.go",
+      "format": "dockerd-go",
+      "package": "config",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go",
+      "sha256": "534f2beec946753d51c43774ed0884af711960a4de2722c2128d1b8e5020a39d",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/daemon/config/config_linux.go",
+      "format": "dockerd-go",
+      "package": "config",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go",
+      "sha256": "f257522742386950b83dbddcc7816bd776e3cb2481fb2848a111e74e2f11fd5c",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/daemon/config/builder.go",
+      "format": "dockerd-go",
+      "package": "config",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go",
+      "sha256": "ec3f48b4a93815b5d8400fc1116d36ba05279ee02075f5f5e5d50afe6086fa08",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/registry/config.go",
+      "format": "dockerd-go",
+      "package": "registry",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/registry/config.go",
+      "sha256": "92b884c683890f0f48dc670ec83d139b3f54b199f4d027be839a9732523f73a4",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/opts/address_pools.go",
+      "format": "dockerd-go",
+      "package": "opts",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/opts/address_pools.go",
+      "sha256": "3bbd5183666ea525ee25754bd6ee6f41904909f12338225aa13c84430e6e3b1a",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/api/types/system/runtime.go",
+      "format": "dockerd-go",
+      "package": "system",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go",
+      "sha256": "7f849ad02b027ab6d26ad459aae7ad7635098897a051aab509be6f90314843e1",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/api/types/container/hostconfig.go",
+      "format": "dockerd-go",
+      "package": "container",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/container/hostconfig.go",
+      "sha256": "4194a6d98c117a3e61ae159d00f945273ba9cf329ed991000691d91c6b424701",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/vendor/github.com/docker/go-units/ulimit.go",
+      "format": "dockerd-go",
+      "package": "units",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/ulimit.go",
+      "sha256": "aa71f061bf12bd811db15e80ca732bbb9add820f30773f2491abf4a480be37d8",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/cmd/dockerd/config.go",
+      "format": "dockerd-go",
+      "package": "dockerd",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/cmd/dockerd/config.go",
+      "sha256": "9d64a8488925b3138fb2a02c78ad9ffd827bb22231a654139191db0a819f547d",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/cmd/dockerd/config_unix.go",
+      "format": "dockerd-go",
+      "package": "dockerd",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/cmd/dockerd/config_unix.go",
+      "sha256": "0709cb3c079bfa1b901f02106b56137b259540c6f689d14c6b244bfadcb3184d",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "docker-daemon",
+      "file": "dockerd/libnetwork/ipamutils/utils.go",
+      "format": "dockerd-go",
+      "package": "ipamutils",
+      "ref": "v27.3.1",
+      "url": "https://raw.githubusercontent.com/moby/moby/v27.3.1/libnetwork/ipamutils/utils.go",
+      "retrieved": "2026-10-24",
+      "sha256": "66fffb43db9e9337501b6d6da335ab164dd6abee1dadee0be1a373c228419606"
+    }
+  ],
+  "omitted_recursive_refs": [],
+  "entries": [
+    {
+      "word": "all",
+      "context": "builder.gc.policy[]",
+      "type": [
+        "boolean"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "allow-nondistributable-artifacts",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --allow-nondistributable-artifacts：Allow push of nondistributable artifacts to registry",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/registry/config.go"
+    },
+    {
+      "word": "authorization-plugins",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --authorization-plugin：Authorization plugins to load",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "base",
+      "context": "default-address-pools[]",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/libnetwork/ipamutils/utils.go"
+    },
+    {
+      "word": "bip",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --bip：Specify network bridge IP",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "bridge",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --bridge：Attach containers to a network bridge；短选项：-b",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "builder",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "cdi-spec-dirs",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "CDISpecDirs is a list of directories in which CDI specifications can be found.；相关 CLI --cdi-spec-dir：CDI specification directories to use",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "cgroup-parent",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --cgroup-parent：Set parent cgroup for all containers",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "containerd",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "ContainerAddr is the address used to connect to containerd if we're not starting it ourselves；相关 CLI --containerd：containerd grpc address",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "containerd-namespace",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --containerd-namespace：Containerd namespace to use (default \"moby\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "containerd-plugin-namespace",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --containerd-plugins-namespace：Containerd namespace to use for plugins (default \"plugins.moby\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "cpu-rt-period",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "相关 CLI --cpu-rt-period：Limit the CPU real-time period in microseconds for the parent cgroup for all containers (not supported with cgroups v2)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "cpu-rt-runtime",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "相关 CLI --cpu-rt-runtime：Limit the CPU real-time runtime in microseconds for the parent cgroup for all containers (not supported with cgroups v2)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "cri-containerd",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "CriContainerd determines whether a supervised containerd instance should be configured with the CRI plugin enabled. This allows using Docker's containerd instance directly with a Kubernetes kubelet.；相关 CLI --cri-containerd：start containerd with cri",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "data-root",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --data-root：Root directory of persistent Docker state (default \"/var/lib/docker\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "debug",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --debug：Enable debug mode；短选项：-D",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "default-address-pools",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "Default address pools for docker networks；相关 CLI --default-address-pool：Default address pools for node specific local networks",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "default-cgroupns-mode",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --default-cgroupns-mode：Default mode for containers cgroup namespace (\"host\" | \"private\") (default \"private\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "default-gateway",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --default-gateway：Container default gateway IPv4 address",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "default-gateway-v6",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --default-gateway-v6：Container default gateway IPv6 address",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "default-ipc-mode",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --default-ipc-mode：Default mode for containers ipc (\"shareable\" | \"private\") (default \"private\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "default-network-opts",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "Default options for newly created networks；相关 CLI --default-network-opt：Default network options (default map[])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "default-runtime",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --default-runtime：Default OCI runtime for containers (default \"runc\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "default-shm-size",
+      "context": "$",
+      "type": [
+        "Go: opts.MemBytes"
+      ],
+      "description": "相关 CLI --default-shm-size：Default shm size for containers (default 64MiB)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "default-ulimits",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "相关 CLI --default-ulimit：Default ulimits for containers (default [])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "defaultKeepStorage",
+      "context": "builder.gc",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "dns",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --dns：DNS server to use (default [])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "dns-opts",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --dns-opt：DNS options to use",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "dns-search",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --dns-search：DNS search domains to use",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "enabled",
+      "context": "builder.gc",
+      "type": [
+        "boolean"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "entitlements",
+      "context": "builder",
+      "type": [
+        "object"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "exec-opts",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --exec-opt：Runtime execution options",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "exec-root",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --exec-root：Root directory for execution state files (default \"/var/run/docker\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "experimental",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --experimental：Enable experimental features",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "features",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "Features contains a list of feature key value pairs indicating what features are enabled or disabled. If a certain feature doesn't appear in this list then it's unset (i.e. neither true nor false).；相关 CLI --feature：Enable feature in the daemon (default map[])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "filter",
+      "context": "builder.gc.policy[]",
+      "type": [
+        "Go: BuilderGCFilter"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "fixed-cidr",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --fixed-cidr：IPv4 subnet for fixed IPs",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "fixed-cidr-v6",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --fixed-cidr-v6：IPv6 subnet for fixed IPs",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "gc",
+      "context": "builder",
+      "type": [
+        "object"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "group",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --group：Group for the unix socket (default \"docker\")；短选项：-G",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "hard",
+      "context": "default-ulimits.*",
+      "type": [
+        "number"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/ulimit.go"
+    },
+    {
+      "word": "history",
+      "context": "builder",
+      "type": [
+        "object"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "host-gateway-ip",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --host-gateway-ip：IP address that the special 'host-gateway' string in --add-host resolves to. Defaults to the IP address of the default bridge",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "hosts",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --host：Daemon socket(s) to connect to；短选项：-H",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "http-proxy",
+      "context": "proxies",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --http-proxy：HTTP proxy URL to use for outgoing traffic",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "https-proxy",
+      "context": "proxies",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --https-proxy：HTTPS proxy URL to use for outgoing traffic",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "icc",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --icc：Enable inter-container communication (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "init",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --init：Run an init in the container to forward signals and reap processes",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "init-path",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --init-path：Path to the docker-init binary",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "insecure-registries",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --insecure-registry：Enable insecure registry communication",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/registry/config.go"
+    },
+    {
+      "word": "ip",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --ip：Default IP when binding container ports (default 0.0.0.0)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "ip-forward",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --ip-forward：Enable net.ipv4.ip_forward (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "ip-masq",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --ip-masq：Enable IP masquerading (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "ip6tables",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --ip6tables：Enable addition of ip6tables rules (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "iptables",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --iptables：Enable addition of iptables rules (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "ipv6",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "Fields below here are platform specific.；相关 CLI --ipv6：Enable IPv6 networking",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "keepStorage",
+      "context": "builder.gc.policy[]",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "labels",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --label：Set key=value labels to the daemon",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "live-restore",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "LiveRestoreEnabled determines whether we should keep containers alive upon daemon shutdown/start；相关 CLI --live-restore：Enable live restore of docker when containers are still running",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "log-driver",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --log-driver：Default driver for container logs (default \"json-file\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "log-format",
+      "context": "$",
+      "type": [
+        "Go: log.OutputFormat"
+      ],
+      "description": "相关 CLI --log-format：Set the logging format (\"text\"|\"json\") (default \"text\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "log-level",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --log-level：Set the logging level (\"debug\"|\"info\"|\"warn\"|\"error\"|\"fatal\") (default \"info\")；短选项：-l",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "log-opts",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "相关 CLI --log-opt：Default log driver options for containers (default map[])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "max-concurrent-downloads",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "MaxConcurrentDownloads is the maximum number of downloads that may take place at a time for each pull.；相关 CLI --max-concurrent-downloads：Set the max concurrent downloads (default 3)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "max-concurrent-uploads",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "MaxConcurrentUploads is the maximum number of uploads that may take place at a time for each push.；相关 CLI --max-concurrent-uploads：Set the max concurrent uploads (default 5)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "max-download-attempts",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "MaxDownloadAttempts is the maximum number of attempts that may take place at a time for each push.；相关 CLI --max-download-attempts：Set the max download attempts for each pull (default 5)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "maxAge",
+      "context": "builder.history",
+      "type": [
+        "Go: bkconfig.Duration"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "maxEntries",
+      "context": "builder.history",
+      "type": [
+        "number"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "metrics-addr",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --metrics-addr：Set default address and port to serve the metrics api on",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "mtu",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "相关 CLI --mtu：Set the MTU for the default \"bridge\" network (default 1500)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "name",
+      "context": "default-ulimits.*",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/ulimit.go"
+    },
+    {
+      "word": "network-control-plane-mtu",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "NetworkControlPlaneMTU allows to specify the control plane MTU, this will allow to optimize the network use in some components；相关 CLI --network-control-plane-mtu：Network Control plane MTU (default 1500)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "network-host",
+      "context": "builder.entitlements",
+      "type": [
+        "boolean"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "no-new-privileges",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --no-new-privileges：Set no-new-privileges by default for new containers",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "no-proxy",
+      "context": "proxies",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --no-proxy：Comma-separated list of hosts or IP addresses for which the proxy is skipped",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "node-generic-resources",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "Exposed node Generic Resources e.g: [\"orange=red\", \"orange=green\", \"orange=blue\", \"apple=3\"]；相关 CLI --node-generic-resource：Advertise user-defined resource",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "options",
+      "context": "runtimes.*",
+      "type": [
+        "object"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go"
+    },
+    {
+      "word": "path",
+      "context": "runtimes.*",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go"
+    },
+    {
+      "word": "pidfile",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --pidfile：Path to use for daemon PID file (default \"/var/run/docker.pid\")；短选项：-p",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "policy",
+      "context": "builder.gc",
+      "type": [
+        "array"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "proxies",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "Proxies holds the proxies that are configured for the daemon.",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "raw-logs",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --raw-logs：Full timestamps without ANSI coloring",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "registry-mirrors",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --registry-mirror：Preferred Docker registry mirror",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/registry/config.go"
+    },
+    {
+      "word": "rootless",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --rootless：Enable rootless mode; typically used with RootlessKit",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "runtimeArgs",
+      "context": "runtimes.*",
+      "type": [
+        "array"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go"
+    },
+    {
+      "word": "runtimeType",
+      "context": "runtimes.*",
+      "type": [
+        "string"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/api/types/system/runtime.go"
+    },
+    {
+      "word": "runtimes",
+      "context": "$",
+      "type": [
+        "object"
+      ],
+      "description": "Fields below here are platform specific.；相关 CLI --add-runtime：Register an additional OCI compatible runtime (default [])",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "seccomp-profile",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --seccomp-profile：Path to seccomp profile. Set to \"unconfined\" to disable the default seccomp profile (default \"builtin\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "security-insecure",
+      "context": "builder.entitlements",
+      "type": [
+        "boolean"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/builder.go"
+    },
+    {
+      "word": "selinux-enabled",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --selinux-enabled：Enable selinux support",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "shutdown-timeout",
+      "context": "$",
+      "type": [
+        "number"
+      ],
+      "description": "ShutdownTimeout is the timeout value (in seconds) the daemon will wait for the container to stop when daemon is being shutdown；相关 CLI --shutdown-timeout：Set the default shutdown timeout (default 15)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "size",
+      "context": "default-address-pools[]",
+      "type": [
+        "number"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/libnetwork/ipamutils/utils.go"
+    },
+    {
+      "word": "soft",
+      "context": "default-ulimits.*",
+      "type": [
+        "number"
+      ],
+      "description": "Moby Linux daemon 配置字段",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/vendor/github.com/docker/go-units/ulimit.go"
+    },
+    {
+      "word": "storage-driver",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --storage-driver：Storage driver to use；短选项：-s",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "storage-opts",
+      "context": "$",
+      "type": [
+        "array"
+      ],
+      "description": "相关 CLI --storage-opt：Storage driver options",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "swarm-default-advertise-addr",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "SwarmDefaultAdvertiseAddr is the default host/IP or network interface to use if a wildcard address is specified in the ListenAddr value given to the /swarm/init endpoint and no advertise address is specified.；相关 CLI --swarm-default-advertise-addr：Set default address or interface for swarm advertised address",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "tls",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --tls：Use TLS; implied by --tlsverify",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "tlscacert",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --tlscacert：Trust certs signed only by this CA (default \"/root/.docker/ca.pem\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "tlscert",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --tlscert：Path to TLS certificate file (default \"/root/.docker/cert.pem\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "tlskey",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --tlskey：Path to TLS key file (default \"/root/.docker/key.pem\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "tlsverify",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --tlsverify：Use TLS and verify the remote",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config.go"
+    },
+    {
+      "word": "userland-proxy",
+      "context": "$",
+      "type": [
+        "boolean"
+      ],
+      "description": "相关 CLI --userland-proxy：Use userland proxy for loopback traffic (default true)",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "userland-proxy-path",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --userland-proxy-path：Path to the userland proxy binary (default \"/usr/bin/docker-proxy\")",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    },
+    {
+      "word": "userns-remap",
+      "context": "$",
+      "type": [
+        "string"
+      ],
+      "description": "相关 CLI --userns-remap：User/Group setting for user namespaces",
+      "version": "27.3.1 / Linux",
+      "source": "https://raw.githubusercontent.com/moby/moby/v27.3.1/daemon/config/config_linux.go"
+    }
+  ]
+}

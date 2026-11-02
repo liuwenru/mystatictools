@@ -1,0 +1,1714 @@
+{
+  "notice": "Extracted/reformatted from the cited upstream sources; not a validator. See ../licenses/.",
+  "sources": [
+    {
+      "group": "redis",
+      "file": "redis/redis.conf",
+      "format": "redis",
+      "ref": "8.10.2",
+      "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf",
+      "sha256": "5ae0cda89cc3ab7a399280f92ee840a476a8a230249a1b8a138e589ecf522345",
+      "retrieved": "2026-10-24"
+    },
+    {
+      "group": "redis",
+      "file": "redis/src/config.c",
+      "format": "redis-registry",
+      "ref": "8.10.2",
+      "url": "https://raw.githubusercontent.com/redis/redis/8.10.2/src/config.c",
+      "sha256": "a600d92c78d1c9afb4fc89ffbc2c5307fc6b4c3ae588a93273071b9b5e3050c4",
+      "retrieved": "2026-10-24"
+    }
+  ],
+  "omitted_recursive_refs": [],
+  "entries": [
+    {
+      "word": "acl-pubsub-default",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Using an external ACL file Instead of configuring users here in this file, it is possible to use a stand-alone file just listing users. The two methods cannot be mixed: if you configure users here and at the same time you activate the external ACL file, the server will refuse to start. The format of the external ACL user file is exactly the same as the format that is used inside redis.conf to describe users. IMPORTANT NOTE: starting with Redis 6 \"requirepass\" is just a compatibility layer on top of the new ACL system. The option effect will be just setting the password for the default user. Clients will still authenticate using AUTH <password> as usually, or more explicitly with AUTH default",
+      "syntax": "acl-pubsub-default configuration directive, which accepts one of these values: | acl-pubsub-default resetchannels",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aclfile",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Using an external ACL file Instead of configuring users here in this file, it is possible to use a stand-alone file just listing users. The two methods cannot be mixed: if you configure users here and at the same time you activate the external ACL file, the server will refuse to start. The format of the external ACL user file is exactly the same as the format that is used inside redis.conf to describe users.",
+      "syntax": "aclfile /etc/redis/users.acl",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "acllog-max-len",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Warning: since Redis is pretty fast, an outside user can try up to 1 million passwords per second against a modern box. This means that you should use very strong passwords, otherwise they will be very easy to break. Note that because the password is really a shared secret between the client and the server, and should not be memorized by any human, the password can be easily a long string from /dev/urandom or whatever, so by using a long and unguessable password no brute force attack will be possible. Redis ACL users are defined in the following format: For example: The special username \"default\" is used for new connections. If this user has the \"nopass\" rule, then new connections will be im",
+      "syntax": "acllog-max-len 128",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-cycle-max",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-cycle-max 25",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-cycle-min",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-cycle-min 1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-ignore-bytes",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-ignore-bytes 100mb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-max-scan-fields",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-max-scan-fields 1000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-threshold-lower",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-threshold-lower 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-defrag-threshold-upper",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "active-defrag-threshold-upper 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "active-expire-effort",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "active-expire-effort 1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "activedefrag",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "activedefrag no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "activerehashing",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in order to help rehashing the main Redis hash table (the one mapping top-level keys to values). The hash table implementation Redis uses (see dict.c) performs a lazy rehashing: the more operation you run into a hash table that is rehashing, the more rehashing \"steps\" are performed, so if the server is idle the rehashing is never complete and some more memory is used by the hash table. The default is to use this millisecond 10 times every second in order to actively rehash the main dictionaries, freeing memory when possible. If unsure: use \"activerehashing no\" if you have hard latency requirements and it is not a good thi",
+      "syntax": "activerehashing yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "always-show-logo",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "By default Redis shows an ASCII art logo only when started to log to the standard output and if the standard output is a TTY and syslog logging is disabled. Basically this means that normally a logo is displayed only in interactive sessions. However it is possible to force the pre-4.0 behavior and always show a ASCII art logo in startup logs by setting the following option to yes.",
+      "syntax": "always-show-logo no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-load-corrupt-tail-max-size",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "An AOF file may be found to be corrupted at the end during the Redis startup process, when the AOF data gets loaded back into memory. This may happen when the system where Redis is running crashes. The aof-load-corrupt-tail-max-size option allows Redis to automatically recover from small amounts of corruption at the end of the AOF file by truncating the corrupted portion and continuing with startup. Set this to the maximum number of bytes of corruption you're willing to lose from the end of the AOF file. If the corrupted portion is larger than this value, Redis will refuse to start and require manual intervention. Setting this to 0 (default) disables automatic recovery from corruption. Redis",
+      "syntax": "aof-load-corrupt-tail-max-size 4096",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-load-truncated",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "An AOF file may be found to be truncated at the end during the Redis startup process, when the AOF data gets loaded back into memory. This may happen when the system where Redis is running crashes, especially when an ext4 filesystem is mounted without the data=ordered option (however this can't happen when Redis itself crashes or aborts but the operating system still works correctly). Redis can either exit with an error when this happens, or load as much data as possible (the default now) and start if the AOF file is found to be truncated at the end. The following option controls this behavior. If aof-load-truncated is set to yes, a truncated AOF file is loaded and the Redis server starts em",
+      "syntax": "aof-load-truncated yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-rewrite-cpulist",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "aof-rewrite-cpulist 8-11",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-rewrite-incremental-fsync",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "When a child rewrites the AOF file, if the following option is enabled the file will be fsync-ed every 4 MB of data generated. This is useful in order to commit the file to the disk more incrementally and avoid big latency spikes.",
+      "syntax": "aof-rewrite-incremental-fsync yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-timestamp-enabled",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "Redis supports recording timestamp annotations in the AOF to support restoring the data from a specific point-in-time. However, using this capability changes the AOF format in a way that may not be compatible with existing AOF parsers.",
+      "syntax": "aof-timestamp-enabled no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "aof-use-rdb-preamble",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "An AOF file may be found to be corrupted at the end during the Redis startup process, when the AOF data gets loaded back into memory. This may happen when the system where Redis is running crashes. The aof-load-corrupt-tail-max-size option allows Redis to automatically recover from small amounts of corruption at the end of the AOF file by truncating the corrupted portion and continuing with startup. Set this to the maximum number of bytes of corruption you're willing to lose from the end of the AOF file. If the corrupted portion is larger than this value, Redis will refuse to start and require manual intervention. Setting this to 0 (default) disables automatic recovery from corruption. Redis",
+      "syntax": "aof-use-rdb-preamble yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "appenddirname",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "For convenience, Redis stores all persistent append-only files in a dedicated directory. The name of the directory is determined by the appenddirname configuration parameter.",
+      "syntax": "appenddirname \"appendonlydir\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "appendfilename",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "The base name of the append only file. Redis 7 and newer use a set of append-only files to persist the dataset and changes applied to it. There are two basic types of files in use: - Base files, which are a snapshot representing the complete state of the dataset at the time the file was created. Base files can be either in the form of RDB (binary serialized) or AOF (textual commands). - Incremental files, which contain additional commands that were applied to the dataset following the previous file. In addition, manifest files are used to track the files and the order in which they were created and should be applied. Append-only file names are created by Redis following a specific pattern. T",
+      "syntax": "appendfilename \"appendonly.aof\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "appendfsync",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "The fsync() call tells the Operating System to actually write data on disk instead of waiting for more data in the output buffer. Some OS will really flush data on disk, some other OS will just try to do it ASAP. Redis supports three different modes: no: don't fsync, just let the OS flush the data when it wants. Faster. always: fsync after every write to the append only log. Slow, Safest. everysec: fsync only one time every second. Compromise. The default is \"everysec\", as that's usually the right compromise between speed and data safety. It's up to you to understand if you can relax this to \"no\" that will let the operating system flush the output buffer when it wants, for better performance",
+      "syntax": "appendfsync always | appendfsync everysec | appendfsync no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "appendonly",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "By default Redis asynchronously dumps the dataset on disk. This mode is good enough in many applications, but an issue with the Redis process or a power outage may result into a few minutes of writes lost (depending on the configured save points). The Append Only File is an alternative persistence mode that provides much better durability. For instance using the default data fsync policy (see later in the config file) Redis can lose just one second of writes in a dramatic event like a server power outage, or a single write if something wrong with the Redis process itself happens, but the operating system is still running correctly. AOF and RDB persistence can be enabled at the same time with",
+      "syntax": "appendonly no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "array-slice-size",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis Streams support Idempotent Message Producer (IDMP) tracking to prevent duplicate message delivery. When producers send messages with IDMP identifiers (using XADD with IDMP or IDMPAUTO parameters), Redis tracks these identifiers to detect and reject duplicates within a configurable time window. stream-idmp-duration: Specifies how long (in seconds) Redis should remember IDMP identifiers for duplicate detection. After this duration expires, old identifiers are automatically removed. This prevents unbounded memory growth while allowing reasonable duplicate detection windows. Valid range: 1 to 86400 seconds (1 second to 24 hours) Default: 100 seconds stream-idmp-maxsize: Maximum number of I",
+      "syntax": "array-slice-size 4096",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "array-sparse-kmax",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Arrays start with sparse slices (sorted key-value pairs) for memory efficiency when elements are scattered. When a sparse slice exceeds array-sparse-kmax entries, it promotes to a dense slice (direct array). When a dense slice's element count drops below array-sparse-kmin and demotion would save memory, it demotes back to sparse. Set kmax to 0 to disable sparse encoding entirely. Set kmin to 0 if you never want dense slices to be demoted to sparse (useful when in your work load arrays reach an almost empty state to be filled again and so forth).",
+      "syntax": "array-sparse-kmax 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "array-sparse-kmin",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "array-sparse-kmin 5",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "auto-aof-rewrite-min-size",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "auto-aof-rewrite-min-size 64mb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "auto-aof-rewrite-percentage",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "Automatic rewrite of the append only file. Redis is able to automatically rewrite the log file implicitly calling BGREWRITEAOF when the AOF log size grows by the specified percentage. This is how it works: Redis remembers the size of the AOF file after the latest rewrite (if no rewrite has happened since the restart, the size of the AOF at startup is used). This base size is compared to the current size. If the current size is bigger than the specified percentage, the rewrite is triggered. Also you need to specify a minimal size for the AOF file to be rewritten, this is useful to avoid rewriting the AOF file even if the percentage increase is reached but it is still pretty small. Specify a p",
+      "syntax": "auto-aof-rewrite-percentage 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "backup-sealed-ttl",
+      "context": "BACKUP / RESTORE",
+      "version": "8.10.2",
+      "description": "How long Redis keeps a sealed backup before automatically cleaning it up. The value is in seconds. A value of 0 disables automatic cleanup, so the backup files remain pinned until BACKUP CLEANUP is called explicitly. The default is 0 because the external backup process may need time to upload or copy the sealed files.",
+      "syntax": "backup-sealed-ttl 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "backupdirname",
+      "context": "BACKUP / RESTORE",
+      "version": "8.10.2",
+      "description": "BACKUP creates a restorable MP-AOF file set under the Redis working directory. The backup directory name is configured by backupdirname. It must be a directory name only, not an absolute path or a nested path. For example, with:",
+      "syntax": "backupdirname backupdir | backupdirname \"backupdir\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "bgsave-cpulist",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "bgsave-cpulist 1,10-11",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "bind",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "By default, if no \"bind\" configuration directive is specified, Redis listens for connections from all available network interfaces on the host machine. It is possible to listen to just one or multiple selected interfaces using the \"bind\" configuration directive, followed by one or more IP addresses. Each address can be prefixed by \"-\", which means that redis will not fail to start if the address is not available. Being not available only refers to addresses that does not correspond to any network interface. Addresses that are already in use will always fail, and unsupported protocols will always BE silently skipped. Examples:",
+      "syntax": "bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses | bind 127.0.0.1 ::1              # listens on loopback IPv4 and IPv6 | bind * -::*                     # like the default, all available interfaces",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "bind-source-addr",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "By default, outgoing connections (from replica to master, from Sentinel to instances, cluster bus, etc.) are not bound to a specific local address. In most cases, this means the operating system will handle that based on routing and the interface through which the connection goes out. Using bind-source-addr it is possible to configure a specific address to bind to, which may also affect how the connection gets routed. Example:",
+      "syntax": "bind-source-addr 10.0.0.1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "bio-cpulist",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "bio-cpulist 1,3",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "busy-reply-threshold",
+      "context": "NON-DETERMINISTIC LONG BLOCKING COMMANDS",
+      "version": "8.10.2",
+      "description": "Maximum time in milliseconds for EVAL scripts, functions and in some cases modules' commands before Redis can start processing or rejecting other clients. If the maximum execution time is reached Redis will start to reply to most commands with a BUSY error. In this state Redis will only allow a handful of commands to be executed. For instance, SCRIPT KILL, FUNCTION KILL, SHUTDOWN NOSAVE and possibly some module specific 'allow-busy' commands. SCRIPT KILL and FUNCTION KILL will only be able to stop a script that did not yet call any write commands, so SHUTDOWN NOSAVE may be the only way to stop the server in the case a write command was already issued by the script when the user doesn't want ",
+      "syntax": "busy-reply-threshold 5000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "client-output-buffer-limit",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "The client output buffer limits can be used to force disconnection of clients that are not reading data from the server fast enough for some reason (a common reason is that a Pub/Sub client can't consume messages as fast as the publisher can produce them). The limit can be set differently for the three different classes of clients: normal -> normal clients including MONITOR clients replica -> replica clients pubsub -> clients subscribed to at least one pubsub channel or pattern The syntax of every client-output-buffer-limit directive is the following:",
+      "syntax": "client-output-buffer-limit <class> <hard limit> <soft limit> <soft seconds> | client-output-buffer-limit normal 0 0 0 | client-output-buffer-limit replica 256mb 64mb 60",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "client-query-buffer-limit",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Client query buffers accumulate new commands. They are limited to a fixed amount by default in order to avoid that a protocol desynchronization (for instance due to a bug in the client) will lead to unbound memory usage in the query buffer. However you can configure it here if you have very special needs, such as a command with huge argument, or huge multi/exec requests or alike.",
+      "syntax": "client-query-buffer-limit 1gb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-allow-pubsubshard-when-down",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-allow-pubsubshard-when-down yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-allow-reads-when-down",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-allow-reads-when-down no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-allow-replica-migration",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-allow-replica-migration yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-bus-port",
+      "context": "CLUSTER DOCKER/NAT support",
+      "version": "8.10.2",
+      "description": "In certain deployments, Redis Cluster nodes address discovery fails, because addresses are NAT-ted or because ports are forwarded (the typical case is Docker and other containers). In order to make Redis Cluster working in such environments, a static configuration where each node knows its public address is needed. The following four options are used for this scope, and are: * cluster-announce-ip * cluster-announce-port * cluster-announce-tls-port * cluster-announce-bus-port Each instructs the node about its address, client ports (for connections without and with TLS) and cluster message bus port. The information is then published in the header of the bus packets so that other nodes will be ",
+      "syntax": "cluster-announce-bus-port 6380",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-hostname",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-announce-hostname \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-human-nodename",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-announce-human-nodename \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-ip",
+      "context": "CLUSTER DOCKER/NAT support",
+      "version": "8.10.2",
+      "description": "In certain deployments, Redis Cluster nodes address discovery fails, because addresses are NAT-ted or because ports are forwarded (the typical case is Docker and other containers). In order to make Redis Cluster working in such environments, a static configuration where each node knows its public address is needed. The following four options are used for this scope, and are: * cluster-announce-ip * cluster-announce-port * cluster-announce-tls-port * cluster-announce-bus-port Each instructs the node about its address, client ports (for connections without and with TLS) and cluster message bus port. The information is then published in the header of the bus packets so that other nodes will be ",
+      "syntax": "cluster-announce-ip 10.1.1.5",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-port",
+      "context": "CLUSTER DOCKER/NAT support",
+      "version": "8.10.2",
+      "description": "In certain deployments, Redis Cluster nodes address discovery fails, because addresses are NAT-ted or because ports are forwarded (the typical case is Docker and other containers). In order to make Redis Cluster working in such environments, a static configuration where each node knows its public address is needed. The following four options are used for this scope, and are: * cluster-announce-ip * cluster-announce-port * cluster-announce-tls-port * cluster-announce-bus-port Each instructs the node about its address, client ports (for connections without and with TLS) and cluster message bus port. The information is then published in the header of the bus packets so that other nodes will be ",
+      "syntax": "cluster-announce-port 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-announce-tls-port",
+      "context": "CLUSTER DOCKER/NAT support",
+      "version": "8.10.2",
+      "description": "In certain deployments, Redis Cluster nodes address discovery fails, because addresses are NAT-ted or because ports are forwarded (the typical case is Docker and other containers). In order to make Redis Cluster working in such environments, a static configuration where each node knows its public address is needed. The following four options are used for this scope, and are: * cluster-announce-ip * cluster-announce-port * cluster-announce-tls-port * cluster-announce-bus-port Each instructs the node about its address, client ports (for connections without and with TLS) and cluster message bus port. The information is then published in the header of the bus packets so that other nodes will be ",
+      "syntax": "cluster-announce-tls-port 6379",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-bus-port-protected-mode",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-bus-port-protected-mode no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-compatibility-sample-ratio",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-compatibility-sample-ratio 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-config-file",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names.",
+      "syntax": "cluster-config-file nodes-6379.conf",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-enabled",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following:",
+      "syntax": "cluster-enabled yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-link-sendbuf-limit",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-link-sendbuf-limit 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-migration-barrier",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-migration-barrier 1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-node-timeout",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-node-timeout 15000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-port",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-port 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-preferred-endpoint-type",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-preferred-endpoint-type ip",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-replica-no-failover",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-replica-no-failover no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-replica-validity-factor",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-replica-validity-factor 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-require-full-coverage",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-require-full-coverage yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-slot-migration-handoff-max-lag-bytes",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-slot-migration-handoff-max-lag-bytes 1mb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-slot-migration-write-pause-timeout",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-slot-migration-write-pause-timeout 10000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "cluster-slot-stats-enabled",
+      "context": "REDIS CLUSTER",
+      "version": "8.10.2",
+      "description": "Normal Redis instances can't be part of a Redis Cluster; only nodes that are started as cluster nodes can. In order to start a Redis instance as a cluster node enable the cluster support uncommenting the following: Every cluster node has a cluster configuration file. This file is not intended to be edited by hand. It is created and updated by Redis nodes. Every Redis Cluster node requires a different cluster configuration file. Make sure that instances running in the same system do not have overlapping cluster configuration file names. Cluster node timeout is the amount of milliseconds a node must be unreachable for it to be considered in failure state. Most other internal time limits are a ",
+      "syntax": "cluster-slot-stats-enabled no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "crash-log-enabled",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs. Specify the syslog identity. Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7. To disable the built in crash log, which will possibly produce cleaner core dumps when they are needed, uncomment the following:",
+      "syntax": "crash-log-enabled no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "crash-memcheck-enabled",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs. Specify the syslog identity. Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7. To disable the built in crash log, which will possibly produce cleaner core dumps when they are needed, uncomment the following: To disable the fast memory check that's run as part of the crash log, which will possibly let redis terminate sooner, uncomment the following:",
+      "syntax": "crash-memcheck-enabled no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "daemonize",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "By default Redis does not run as a daemon. Use 'yes' if you need it. Note that Redis will write a pid file in /var/run/redis.pid when daemonized. When Redis is supervised by upstart or systemd, this parameter has no impact.",
+      "syntax": "daemonize no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "databases",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs. Specify the syslog identity. Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7. To disable the built in crash log, which will possibly produce cleaner core dumps when they are needed, uncomment the following: To disable the fast memory check that's run as part of the crash log, which will possibly let redis terminate sooner, uncomment the following: Set the number of databases. The default database is DB 0, you can select a different one on a per-connection basis using SELECT <dbid> where dbid is a number between 0 and 'databases'-1",
+      "syntax": "databases 16",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "dbfilename",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Enables or disables full sanitization checks for ziplist and listpack etc when loading an RDB or RESTORE payload. This reduces the chances of a assertion or crash later on while processing commands. Options: yes        - Always perform full sanitization clients    - Perform full sanitization only for user connections. Excludes: RDB files, RESTORE commands received from the master connection, and client connections which have the skip-sanitize-payload ACL flag. The default should be 'clients' but since it currently affects cluster resharding via MIGRATE, it is temporarily set to 'no' by default. The filename where to dump the DB",
+      "syntax": "dbfilename dump.rdb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "dir",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "The working directory. The DB will be written inside this directory, with the filename specified above using the 'dbfilename' configuration directive. The Append Only File will also be created inside this directory. Note that you must specify a directory here, not a file name.",
+      "syntax": "dir ./ | dir /var/lib/redis",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "disable-thp",
+      "context": "KERNEL transparent hugepage CONTROL",
+      "version": "8.10.2",
+      "description": "Usually the kernel Transparent Huge Pages control is set to \"madvise\" or \"never\" by default (/sys/kernel/mm/transparent_hugepage/enabled), in which case this config has no effect. On systems in which it is set to \"always\", redis will attempt to disable it specifically for the redis process in order to avoid latency problems specifically with fork(2) and CoW. If for some reason you prefer to keep it enabled, you can set this config to \"no\" and the kernel global to \"always\".",
+      "syntax": "disable-thp yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "dynamic-hz",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Normally it is useful to have an HZ value which is proportional to the number of clients connected. This is useful in order, for instance, to avoid too many clients are processed for each background task invocation in order to avoid latency spikes. Since the default HZ value by default is conservatively set to 10, Redis offers, and enables by default, the ability to use an adaptive HZ value which will temporarily raise when there are many connected clients. When dynamic HZ is enabled, the actual configured HZ will be used as a baseline, but multiples of the configured HZ value will be actually used as needed once more clients are connected. In this way an idle instance will use very little C",
+      "syntax": "dynamic-hz yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "enable-debug-command",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Redis uses default hardened security configuration directives to reduce the attack surface on innocent users. Therefore, several sensitive configuration directives are immutable, and some potentially-dangerous commands are blocked. Configuration directives that control files that Redis writes to (e.g., 'dir' and 'dbfilename') and that aren't usually modified during runtime are protected by making them immutable. Commands that can increase the attack surface of Redis and that aren't usually called by users are blocked by default. These can be exposed to either all connections or just local ones by setting each of the configs listed below to either of these values: yes   - Allow for any connec",
+      "syntax": "enable-debug-command no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "enable-module-command",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Redis uses default hardened security configuration directives to reduce the attack surface on innocent users. Therefore, several sensitive configuration directives are immutable, and some potentially-dangerous commands are blocked. Configuration directives that control files that Redis writes to (e.g., 'dir' and 'dbfilename') and that aren't usually modified during runtime are protected by making them immutable. Commands that can increase the attack surface of Redis and that aren't usually called by users are blocked by default. These can be exposed to either all connections or just local ones by setting each of the configs listed below to either of these values: yes   - Allow for any connec",
+      "syntax": "enable-module-command no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "enable-protected-configs",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Redis uses default hardened security configuration directives to reduce the attack surface on innocent users. Therefore, several sensitive configuration directives are immutable, and some potentially-dangerous commands are blocked. Configuration directives that control files that Redis writes to (e.g., 'dir' and 'dbfilename') and that aren't usually modified during runtime are protected by making them immutable. Commands that can increase the attack surface of Redis and that aren't usually called by users are blocked by default. These can be exposed to either all connections or just local ones by setting each of the configs listed below to either of these values: yes   - Allow for any connec",
+      "syntax": "enable-protected-configs no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-max-listpack-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Hashes are encoded using a memory efficient data structure when they have a small number of entries, and the biggest entry does not exceed a given threshold. These thresholds can be configured using the following directives.",
+      "syntax": "hash-max-listpack-entries 512",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-max-listpack-value",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "hash-max-listpack-value 64",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-max-template-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Upper bound for automatic template conversion. A hash with more fields than this is not converted to the template encoding, even if it meets hash-min-template-entries. This is useful to keep very wide hashes out of the shared template registry. The default 0 disables the upper bound. Like the minimum, this is applied lazily on the next write and never converts existing templates back.",
+      "syntax": "hash-max-template-entries 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-min-template-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Hashes that share the same set of field names can store those names once in a shared template instead of repeating them in every key, saving memory when many hashes use the same field set. A hash with at least this many fields is automatically converted to the template encoding on write. Hashes that use field expiration (e.g. HEXPIRE) are never converted, since templates target stable field sets. The default 0 disables automatic conversion. Conversion is one-way: once a hash uses the template encoding it keeps it for the life of the key, even if fields are later removed (e.g. via HDEL) and the count drops back below the threshold. Changing this directive at runtime is applied lazily: it only",
+      "syntax": "hash-min-template-entries 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-rdb-load-max-template-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "hash-rdb-load-max-template-entries 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-rdb-load-min-template-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "The two directives above convert hashes on the write path (HSET and friends). The two below convert hashes while an RDB is being loaded. They only do something when the RDB has no templates in it; if the RDB already contains templates, it is loaded as is and these are ignored. So this is a one-time conversion that lets an old RDB (saved before templates existed) gain the memory savings on load. This is mainly because of the which allows Redis to disassemble inefficient templates. Limiting the conversion to the initial upgrade avoids repeatedly assembling and disassembling templates on every restart. While such an RDB loads, a plain hash is converted to a template when its field count is at l",
+      "syntax": "hash-rdb-load-min-template-entries 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hash-rdb-load-template-disassembly-threshold",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "The two directives above convert hashes on the write path (HSET and friends). The two below convert hashes while an RDB is being loaded. They only do something when the RDB has no templates in it; if the RDB already contains templates, it is loaded as is and these are ignored. So this is a one-time conversion that lets an old RDB (saved before templates existed) gain the memory savings on load. This is mainly because of the",
+      "syntax": "hash-rdb-load-template-disassembly-threshold configuration described below, | hash-rdb-load-template-disassembly-threshold 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hide-user-data-from-log",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To avoid logging personal identifiable information (PII) into server log file, uncomment the following:",
+      "syntax": "hide-user-data-from-log yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hll-sparse-max-bytes",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "HyperLogLog sparse representation bytes limit. The limit includes the 16 bytes header. When a HyperLogLog using the sparse representation crosses this limit, it is converted into the dense representation. A value greater than 16000 is totally useless, since at that point the dense representation is more memory efficient. The suggested value is ~ 3000 in order to have the benefits of the space efficient encoding without slowing down too much PFADD, which is O(N) with the sparse encoding. The value can be raised to ~ 10000 when CPU is not a concern, but space is, and the data set is composed of many HyperLogLogs with cardinality in the 0 - 15000 range.",
+      "syntax": "hll-sparse-max-bytes 3000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "hz",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Client query buffers accumulate new commands. They are limited to a fixed amount by default in order to avoid that a protocol desynchronization (for instance due to a bug in the client) will lead to unbound memory usage in the query buffer. However you can configure it here if you have very special needs, such as a command with huge argument, or huge multi/exec requests or alike. Defines how many commands in each client pipeline to decode and prefetch In some scenarios client connections can hog up memory leading to OOM errors or data eviction. To avoid this we can cap the accumulated memory used by all client connections (all pubsub and normal clients). Once we reach that limit connections ",
+      "syntax": "hz 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "ignore-warnings",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "ignore-warnings ARM64-COW-BUG",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "include",
+      "context": "INCLUDES",
+      "version": "8.10.2",
+      "description": "Include one or more other config files here.  This is useful if you have a standard template that goes to all Redis servers but also need to customize a few per-server settings.  Include files can include other files, so use this wisely. Note that option \"include\" won't be rewritten by command \"CONFIG REWRITE\" from admin or Redis Sentinel. Since Redis always uses the last processed line as value of a configuration directive, you'd better put includes at the beginning of this file to avoid overwriting config change at runtime. If instead you are interested in using includes to override configuration options, it is better to use include as the last line. Included paths may contain wildcards. A",
+      "syntax": "include /path/to/local.conf | include /path/to/other.conf | include /path/to/fragments/*.conf",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "io-threads",
+      "context": "THREADED I/O",
+      "version": "8.10.2",
+      "description": "Redis is mostly single threaded, however there are certain threaded operations such as UNLINK, slow I/O accesses and other things that are performed on side threads. Now it is also possible to handle Redis clients socket reads and writes in different I/O threads. Since especially writing is so slow, normally Redis users use pipelining in order to speed up the Redis performances per core, and spawn multiple instances in order to scale more. Using I/O threads it is possible to easily speedup several times Redis without resorting to pipelining nor sharding of the instance. By default threading is disabled, we suggest enabling it only in machines that have at least 4 or more cores, leaving at le",
+      "syntax": "io-threads 4",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "jemalloc-bg-thread",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "What is active defragmentation? ------------------------------- Active (online) defragmentation allows a Redis server to compact the spaces left between small allocations and deallocations of data in memory, thus allowing to reclaim back memory. Fragmentation is a natural process that happens with every allocator (but less so with Jemalloc, fortunately) and certain workloads. Normally a server restart is needed in order to lower the fragmentation, or at least to flush away all the data and create it again. However thanks to this feature implemented by Oran Agra for Redis 4.0 this process can happen at runtime in a \"hot\" way, while the server is running. Basically when the fragmentation is ov",
+      "syntax": "jemalloc-bg-thread yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "key-memory-histograms",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "key-memory-histograms no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "latency-monitor-threshold",
+      "context": "LATENCY MONITOR",
+      "version": "8.10.2",
+      "description": "The Redis latency monitoring subsystem samples different operations at runtime in order to collect data related to possible sources of latency of a Redis instance. Via the LATENCY command this information is available to the user that can print graphs and obtain reports. The system only logs operations that were performed in a time equal or greater than the amount of milliseconds specified via the",
+      "syntax": "latency-monitor-threshold configuration directive. When its value is set | latency-monitor-threshold 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "latency-tracking",
+      "context": "LATENCY TRACKING",
+      "version": "8.10.2",
+      "description": "The Redis extended latency monitoring tracks the per command latencies and enables exporting the percentile distribution via the INFO latencystats command, and cumulative latency distributions (histograms) via the LATENCY command. By default, the extended latency monitoring is enabled since the overhead of keeping track of the command latency is very small.",
+      "syntax": "latency-tracking yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "latency-tracking-info-percentiles",
+      "context": "LATENCY TRACKING",
+      "version": "8.10.2",
+      "description": "The Redis extended latency monitoring tracks the per command latencies and enables exporting the percentile distribution via the INFO latencystats command, and cumulative latency distributions (histograms) via the LATENCY command. By default, the extended latency monitoring is enabled since the overhead of keeping track of the command latency is very small. By default the exported latency percentiles via the INFO latencystats command are the p50, p99, and p999.",
+      "syntax": "latency-tracking-info-percentiles 50 99 99.9",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lazyfree-lazy-eviction",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "Redis has two primitives to delete keys. One is called DEL and is a blocking deletion of the object. It means that the server stops processing new commands in order to reclaim all the memory associated with an object in a synchronous way. If the key deleted is associated with a small object, the time needed in order to execute the DEL command is very small and comparable to most other O(1) or O(log_N) commands in Redis. However if the key is associated with an aggregated value containing millions of elements, the server can block for a long time (even seconds) in order to complete the operation. For the above reasons Redis also offers non blocking deletion primitives such as UNLINK (non bloc",
+      "syntax": "lazyfree-lazy-eviction no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lazyfree-lazy-expire",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "lazyfree-lazy-expire no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lazyfree-lazy-server-del",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "lazyfree-lazy-server-del no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lazyfree-lazy-user-del",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "It is also possible, for the case when to replace the user code DEL calls with UNLINK calls is not easy, to modify the default behavior of the DEL command to act exactly like UNLINK, using the following configuration directive:",
+      "syntax": "lazyfree-lazy-user-del no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lazyfree-lazy-user-flush",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "FLUSHDB, FLUSHALL, SCRIPT FLUSH and FUNCTION FLUSH support both asynchronous and synchronous deletion, which can be controlled by passing the [SYNC|ASYNC] flags into the commands. When neither flag is passed, this directive will be used to determine if the data should be deleted asynchronously.",
+      "syntax": "lazyfree-lazy-user-flush no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lfu-decay-time",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis LFU eviction (see maxmemory setting) can be tuned. However it is a good idea to start with the default settings and only change them after investigating how to improve the performances and how the keys LFU change over time, which is possible to inspect via the OBJECT FREQ command. There are two tunable parameters in the Redis LFU implementation: the counter logarithm factor and the counter decay time. It is important to understand what the two parameters mean before changing them. The LFU counter is just 8 bits per key, it's maximum value is 255, so Redis uses a probabilistic increment with logarithmic behavior. Given the value of the old counter, when a key is accessed, the counter is",
+      "syntax": "lfu-decay-time 1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lfu-log-factor",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis LFU eviction (see maxmemory setting) can be tuned. However it is a good idea to start with the default settings and only change them after investigating how to improve the performances and how the keys LFU change over time, which is possible to inspect via the OBJECT FREQ command. There are two tunable parameters in the Redis LFU implementation: the counter logarithm factor and the counter decay time. It is important to understand what the two parameters mean before changing them. The LFU counter is just 8 bits per key, it's maximum value is 255, so Redis uses a probabilistic increment with logarithmic behavior. Given the value of the old counter, when a key is accessed, the counter is",
+      "syntax": "lfu-log-factor 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "list-compress-depth",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Lists may also be compressed. Compress depth is the number of quicklist ziplist nodes from *each* side of the list to *exclude* from compression.  The head and tail of the list are always uncompressed for fast push/pop operations.  Settings are: 0: disable all list compression 1: depth 1 means \"don't start compressing until after 1 node into the list, going from either the head or tail\" So: [head]->node->node->...->node->[tail] [head], [tail] will always be uncompressed; inner nodes will compress. 2: [head]->[next]->node->node->...->node->[prev]->[tail] 2 here means: don't compress head or head->next or tail->prev or tail, but compress all nodes between them. 3: [head]->[next]->[next]->node-",
+      "syntax": "list-compress-depth 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "list-max-listpack-size",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Lists are also encoded in a special way to save a lot of space. The number of entries allowed per internal list node can be specified as a fixed maximum size or a maximum number of elements. For a fixed maximum size, use -5 through -1, meaning: -5: max size: 64 Kb  <-- not recommended for normal workloads -4: max size: 32 Kb  <-- not recommended -3: max size: 16 Kb  <-- probably not recommended -2: max size: 8 Kb   <-- good -1: max size: 4 Kb   <-- good Positive numbers mean store up to _exactly_ that number of elements per list node. The highest performing option is usually -2 (8 Kb size) or -1 (4 Kb size), but if your use case is unique, adjust the settings as necessary.",
+      "syntax": "list-max-listpack-size -2",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "loadmodule",
+      "context": "MODULES",
+      "version": "8.10.2",
+      "description": "Load modules at startup. If the server is not able to load modules it will abort. It is possible to use multiple loadmodule directives.",
+      "syntax": "loadmodule /path/to/my_module.so | loadmodule /path/to/other_module.so | loadmodule /path/to/args_module.so [arg [arg ...]]",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "locale-collate",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "Set the local environment which is used for string comparison operations, and also affect the performance of Lua scripts. Empty String indicates the locale is derived from the environment variables.",
+      "syntax": "locale-collate \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "logfile",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "Specify the log file name. Also the empty string can be used to force Redis to log on the standard output. Note that if you use standard output for logging but daemonize, logs will be sent to /dev/null",
+      "syntax": "logfile \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "loglevel",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "Specify the server verbosity level. This can be one of: debug (a lot of information, useful for development/testing) verbose (many rarely useful info, but not a mess like the debug level) notice (moderately verbose, what you want in production probably) warning (only very important / critical messages are logged) nothing (nothing is logged)",
+      "syntax": "loglevel notice",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "lookahead",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Client query buffers accumulate new commands. They are limited to a fixed amount by default in order to avoid that a protocol desynchronization (for instance due to a bug in the client) will lead to unbound memory usage in the query buffer. However you can configure it here if you have very special needs, such as a command with huge argument, or huge multi/exec requests or alike. Defines how many commands in each client pipeline to decode and prefetch",
+      "syntax": "lookahead 16",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "masterauth",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master-Replica replication. Use replicaof to make a Redis instance a copy of another Redis server. A few things to understand ASAP about Redis replication. +------------------+      +---------------+ |      Master      | ---> |    Replica    | | (receive writes) |      |  (exact copy) | +------------------+      +---------------+ 1) Redis replication is asynchronous, but you can configure a master to stop accepting writes if it appears to be not connected with at least a given number of replicas. 2) Redis replicas are able to perform a partial resynchronization with the master if the replication link is lost for a relatively small amount of time. You may want to configure the replication bac",
+      "syntax": "masterauth <master-password>",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "masteruser",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master-Replica replication. Use replicaof to make a Redis instance a copy of another Redis server. A few things to understand ASAP about Redis replication. +------------------+      +---------------+ |      Master      | ---> |    Replica    | | (receive writes) |      |  (exact copy) | +------------------+      +---------------+ 1) Redis replication is asynchronous, but you can configure a master to stop accepting writes if it appears to be not connected with at least a given number of replicas. 2) Redis replicas are able to perform a partial resynchronization with the master if the replication link is lost for a relatively small amount of time. You may want to configure the replication bac",
+      "syntax": "masteruser configuration as such: | masteruser <username>",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "max-new-connections-per-cycle",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis LFU eviction (see maxmemory setting) can be tuned. However it is a good idea to start with the default settings and only change them after investigating how to improve the performances and how the keys LFU change over time, which is possible to inspect via the OBJECT FREQ command. There are two tunable parameters in the Redis LFU implementation: the counter logarithm factor and the counter decay time. It is important to understand what the two parameters mean before changing them. The LFU counter is just 8 bits per key, it's maximum value is 255, so Redis uses a probabilistic increment with logarithmic behavior. Given the value of the old counter, when a key is accessed, the counter is",
+      "syntax": "max-new-connections-per-cycle 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "max-new-tls-connections-per-cycle",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis LFU eviction (see maxmemory setting) can be tuned. However it is a good idea to start with the default settings and only change them after investigating how to improve the performances and how the keys LFU change over time, which is possible to inspect via the OBJECT FREQ command. There are two tunable parameters in the Redis LFU implementation: the counter logarithm factor and the counter decay time. It is important to understand what the two parameters mean before changing them. The LFU counter is just 8 bits per key, it's maximum value is 255, so Redis uses a probabilistic increment with logarithmic behavior. Given the value of the old counter, when a key is accessed, the counter is",
+      "syntax": "max-new-tls-connections-per-cycle 1",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxclients",
+      "context": "CLIENTS",
+      "version": "8.10.2",
+      "description": "Set the max number of connected clients at the same time. By default this limit is set to 10000 clients, however if the Redis server is not able to configure the process file limit to allow for the specified limit the max number of allowed clients is set to the current file limit minus 32 (as Redis reserves a few file descriptors for internal uses). Once the limit is reached Redis will close all the new connections sending an error 'max number of clients reached'. IMPORTANT: When Redis Cluster is used, the max number of connections is also shared with the cluster bus: every node in the cluster will use two connections, one incoming and another outgoing. It is important to size the limit acco",
+      "syntax": "maxclients 10000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxmemory",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "maxmemory <bytes>",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxmemory-clients",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Client query buffers accumulate new commands. They are limited to a fixed amount by default in order to avoid that a protocol desynchronization (for instance due to a bug in the client) will lead to unbound memory usage in the query buffer. However you can configure it here if you have very special needs, such as a command with huge argument, or huge multi/exec requests or alike. Defines how many commands in each client pipeline to decode and prefetch In some scenarios client connections can hog up memory leading to OOM errors or data eviction. To avoid this we can cap the accumulated memory used by all client connections (all pubsub and normal clients). Once we reach that limit connections ",
+      "syntax": "maxmemory-clients 1g | maxmemory-clients 5%",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxmemory-eviction-tenacity",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "maxmemory-eviction-tenacity 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxmemory-policy",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "maxmemory-policy noeviction",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "maxmemory-samples",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "maxmemory-samples 5",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "min-replicas-max-lag",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "min-replicas-max-lag 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "min-replicas-to-write",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "min-replicas-to-write 3",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "no",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Redis uses default hardened security configuration directives to reduce the attack surface on innocent users. Therefore, several sensitive configuration directives are immutable, and some potentially-dangerous commands are blocked. Configuration directives that control files that Redis writes to (e.g., 'dir' and 'dbfilename') and that aren't usually modified during runtime are protected by making them immutable. Commands that can increase the attack surface of Redis and that aren't usually called by users are blocked by default. These can be exposed to either all connections or just local ones by setting each of the configs listed below to either of these values:",
+      "syntax": "no - Block for any connection (remain immutable) | no - Never perform full sanitization | no sub-commands, and is not allowed as negative form",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "no-appendfsync-on-rewrite",
+      "context": "APPEND ONLY MODE",
+      "version": "8.10.2",
+      "description": "When the AOF fsync policy is set to always or everysec, and a background saving process (a background save or AOF log background rewriting) is performing a lot of I/O against the disk, in some Linux configurations Redis may block too long on the fsync() call. Note that there is no fix for this currently, as even performing fsync in a different thread will block our synchronous write(2) call. In order to mitigate this problem it's possible to use the following option that will prevent fsync() from being called in the main process while a BGSAVE or BGREWRITEAOF is in progress. This means that while another child is saving, the durability of Redis is the same as \"appendfsync no\". In practical t",
+      "syntax": "no-appendfsync-on-rewrite no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "notify-keyspace-events",
+      "context": "EVENT NOTIFICATION",
+      "version": "8.10.2",
+      "description": "Redis can notify Pub/Sub clients about events happening in the key space. This feature is documented at https://redis.io/docs/latest/develop/use/keyspace-notifications/ For instance if keyspace events notification is enabled, and a client performs a DEL operation on key \"foo\" stored in the Database 0, two messages will be published via Pub/Sub: PUBLISH __keyspace@0__:foo del PUBLISH __keyevent@0__:del foo It is possible to select the events that Redis will notify among a set of classes. Every class is identified by a single character: K     Keyspace events, published with __keyspace@<db>__ prefix. E     Keyevent events, published with __keyevent@<db>__ prefix. g     Generic commands (non-typ",
+      "syntax": "notify-keyspace-events Elg | notify-keyspace-events Ex | notify-keyspace-events \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "oom-score-adj",
+      "context": "KERNEL OOM CONTROL",
+      "version": "8.10.2",
+      "description": "On Linux, it is possible to hint the kernel OOM killer on what processes should be killed first when out of memory. Enabling this feature makes Redis actively control the oom_score_adj value for all its processes, depending on their role. The default scores will attempt to have background child processes killed before all others, and replicas killed before masters. Redis supports these options: no:       Don't make changes to oom-score-adj (default). yes:      Alias to \"relative\" see below. absolute: Values in oom-score-adj-values are written as is to the kernel. relative: Values are used relative to the initial value of oom_score_adj when the server starts and are then clamped to a range of",
+      "syntax": "oom-score-adj no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "oom-score-adj-values",
+      "context": "KERNEL OOM CONTROL",
+      "version": "8.10.2",
+      "description": "When oom-score-adj is used, this directive controls the specific values used for master, replica and background child processes. Values range -2000 to 2000 (higher means more likely to be killed). Unprivileged processes (not root, and without CAP_SYS_RESOURCE capabilities) can freely increase their value, but not decrease it below its initial settings. This means that setting oom-score-adj to \"relative\" and setting the oom-score-adj-values to positive values will always succeed.",
+      "syntax": "oom-score-adj-values 0 200 800",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "pidfile",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "If you run Redis from upstart or systemd, Redis can interact with your supervision tree. Options: requires \"expect stop\" in your upstart job config on startup, and updating Redis status on a regular basis. UPSTART_JOB or NOTIFY_SOCKET environment variables Note: these supervision methods only signal \"process is ready.\" They do not enable continuous pings back to your supervisor. The default is \"no\". To run under upstart/systemd, you can simply uncomment the line below: If a pid file is specified, Redis writes it where specified at startup and removes it at exit. When the server runs non daemonized, no pid file is created if none is specified in the configuration. When the server is daemonize",
+      "syntax": "pidfile /var/run/redis_6379.pid",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "port",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Redis uses default hardened security configuration directives to reduce the attack surface on innocent users. Therefore, several sensitive configuration directives are immutable, and some potentially-dangerous commands are blocked. Configuration directives that control files that Redis writes to (e.g., 'dir' and 'dbfilename') and that aren't usually modified during runtime are protected by making them immutable. Commands that can increase the attack surface of Redis and that aren't usually called by users are blocked by default. These can be exposed to either all connections or just local ones by setting each of the configs listed below to either of these values: yes   - Allow for any connec",
+      "syntax": "port 6379 | port 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "preload-file",
+      "context": "BACKUP / RESTORE",
+      "version": "8.10.2",
+      "description": "preload-file can load an RDB file, an AOF file, or an AOF manifest and its referenced files during server startup. The value is specified as <type>:<path>, where <type> is either rdb or aof. To restore a sealed backup created by BACKUP, specify its manifest:",
+      "syntax": "preload-file aof:/tmp/restore-backup/appendonly.aof.manifest | preload-file rdb:/tmp/backup-to-recover.rdb | preload-file aof:/tmp/appendonly.aof",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "proc-title-template",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "When changing the process title, Redis uses the following template to construct the modified title. Template variables are specified in curly brackets. The following variables are supported: {title}           Name of process as executed if parent, or type of child process. {listen-addr}     Bind address or '*' followed by TCP or TLS port listening on, or Unix socket if only that's available. {server-mode}     Special mode, i.e. \"[sentinel]\" or \"[cluster]\". {port}            TCP port listening on, or 0. {tls-port}        TLS port listening on, or 0. {unixsocket}      Unix domain socket listening on, or \"\". {config-file}     Name of configuration file used.",
+      "syntax": "proc-title-template \"{title} {listen-addr} {server-mode}\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "propagation-error-behavior",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "propagation-error-behavior ignore",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "protected-mode",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "By default, outgoing connections (from replica to master, from Sentinel to instances, cluster bus, etc.) are not bound to a specific local address. In most cases, this means the operating system will handle that based on routing and the interface through which the connection goes out. Using bind-source-addr it is possible to configure a specific address to bind to, which may also affect how the connection gets routed. Example: Protected mode is a layer of security protection, in order to avoid that Redis instances left open on the internet are accessed and exploited. When protected mode is on and the default user has no password, the server only accepts local connections from the IPv4 addres",
+      "syntax": "protected-mode yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "proto-max-bulk-len",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Client query buffers accumulate new commands. They are limited to a fixed amount by default in order to avoid that a protocol desynchronization (for instance due to a bug in the client) will lead to unbound memory usage in the query buffer. However you can configure it here if you have very special needs, such as a command with huge argument, or huge multi/exec requests or alike. Defines how many commands in each client pipeline to decode and prefetch In some scenarios client connections can hog up memory leading to OOM errors or data eviction. To avoid this we can cap the accumulated memory used by all client connections (all pubsub and normal clients). Once we reach that limit connections ",
+      "syntax": "proto-max-bulk-len 512mb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "rdb-del-sync-files",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Remove RDB files used by replication in instances without persistence enabled. By default this option is disabled, however there are environments where for regulations or other security concerns, RDB files persisted on disk by masters in order to feed replicas, or stored on disk by replicas in order to load them for the initial synchronization, should be deleted ASAP. Note that this option ONLY WORKS in instances that have both AOF and RDB persistence disabled, otherwise is completely ignored. An alternative (and sometimes better) way to obtain the same effect is to use diskless replication on both master and replicas instances. However in the case of replicas, diskless is not always an opti",
+      "syntax": "rdb-del-sync-files no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "rdb-save-incremental-fsync",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "When redis saves RDB file, if the following option is enabled the file will be fsync-ed every 4 MB of data generated. This is useful in order to commit the file to the disk more incrementally and avoid big latency spikes.",
+      "syntax": "rdb-save-incremental-fsync yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "rdbchecksum",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Since version 5 of RDB a CRC64 checksum is placed at the end of the file. This makes the format more resistant to corruption but there is a performance hit to pay (around 10%) when saving and loading RDB files, so you can disable it for maximum performances. RDB files created with checksum disabled have a checksum of zero that will tell the loading code to skip the check.",
+      "syntax": "rdbchecksum yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "rdbcompression",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Compress string objects using LZF when dump .rdb databases? By default compression is enabled as it's almost always a win. If you want to save some CPU in the saving child set it to 'no' but the dataset will likely be bigger if you have compressible values or keys.",
+      "syntax": "rdbcompression yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "rename-command",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Using an external ACL file Instead of configuring users here in this file, it is possible to use a stand-alone file just listing users. The two methods cannot be mixed: if you configure users here and at the same time you activate the external ACL file, the server will refuse to start. The format of the external ACL user file is exactly the same as the format that is used inside redis.conf to describe users. IMPORTANT NOTE: starting with Redis 6 \"requirepass\" is just a compatibility layer on top of the new ACL system. The option effect will be just setting the password for the default user. Clients will still authenticate using AUTH <password> as usually, or more explicitly with AUTH default",
+      "syntax": "rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52 | rename-command CONFIG \"\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-backlog-size",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Set the replication backlog size. The backlog is a buffer that accumulates replica data when replicas are disconnected for some time, so that when a replica wants to reconnect again, often a full resync is not needed, but a partial resync is enough, just passing the portion of data the replica missed while disconnected. The bigger the replication backlog, the longer the replica can endure the disconnect and later be able to perform a partial resynchronization. The backlog is only allocated if there is at least one replica connected.",
+      "syntax": "repl-backlog-size 1mb",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-backlog-ttl",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Set the replication backlog size. The backlog is a buffer that accumulates replica data when replicas are disconnected for some time, so that when a replica wants to reconnect again, often a full resync is not needed, but a partial resync is enough, just passing the portion of data the replica missed while disconnected. The bigger the replication backlog, the longer the replica can endure the disconnect and later be able to perform a partial resynchronization. The backlog is only allocated if there is at least one replica connected. After a master has no connected replicas for some time, the backlog will be freed. The following option configures the amount of seconds that need to elapse, sta",
+      "syntax": "repl-backlog-ttl 3600",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-compression",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "repl-compression 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-compression-max-latency",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "repl-compression-max-latency 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-disable-tcp-nodelay",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master send PINGs to its replicas in a predefined interval. It's possible to change this interval with the repl-ping-replica-period option. The default value is 10 seconds. The following option sets the replication timeout for: 1) Bulk transfer I/O during SYNC, from the point of view of replica. 2) Master timeout from the point of view of replicas (data, pings). 3) Replica timeout from the point of view of masters (REPLCONF ACK pings). It is important to make sure that this value is greater than the value specified for repl-ping-replica-period otherwise a timeout will be detected every time there is low traffic between the master and the replica. The default value is 60 seconds. Disable TCP_",
+      "syntax": "repl-disable-tcp-nodelay no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-diskless-load",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "----------------------------------------------------------------------------- WARNING: Since in this setup the replica does not immediately store an RDB on disk, it may cause data loss during failovers. RDB diskless load + Redis modules not handling I/O reads may cause Redis to abort in case of I/O errors during the initial synchronization stage with the master. ----------------------------------------------------------------------------- Replica can load the RDB it reads from the replication link directly from the socket, or store the RDB to a file and read that file after it was completely received from the master. In many cases the disk is slower than the network, and storing and loading ",
+      "syntax": "repl-diskless-load disabled",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-diskless-sync",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Replication SYNC strategy: disk or socket. New replicas and reconnecting replicas that are not able to continue the replication process just receiving differences, need to do what is called a \"full synchronization\". An RDB file is transmitted from the master to the replicas. The transmission can happen in two different ways: 1) Disk-backed: The Redis master creates a new process that writes the RDB file on disk. Later the file is transferred by the parent process to the replicas incrementally. 2) Diskless: The Redis master creates a new process that directly writes the RDB file to replica sockets, without touching the disk at all. With disk-backed replication, while the RDB file is generated",
+      "syntax": "repl-diskless-sync yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-diskless-sync-delay",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "When diskless replication is enabled, it is possible to configure the delay the server waits in order to spawn the child that transfers the RDB via socket to the replicas. This is important since once the transfer starts, it is not possible to serve new replicas arriving, that will be queued for the next RDB transfer, so the server waits a delay in order to let more replicas arrive. The delay is specified in seconds, and by default is 5 seconds. To disable it entirely just set it to 0 seconds and the transfer will start ASAP.",
+      "syntax": "repl-diskless-sync-delay 5",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-diskless-sync-max-replicas",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "When diskless replication is enabled with a delay, it is possible to let the replication start before the maximum delay is reached if the maximum number of replicas expected have connected. Default of 0 means that the maximum is not defined and Redis will wait the full delay.",
+      "syntax": "repl-diskless-sync-max-replicas 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-ping-replica-period",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master send PINGs to its replicas in a predefined interval. It's possible to change this interval with the repl-ping-replica-period option. The default value is 10 seconds.",
+      "syntax": "repl-ping-replica-period 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "repl-timeout",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master send PINGs to its replicas in a predefined interval. It's possible to change this interval with the repl-ping-replica-period option. The default value is 10 seconds. The following option sets the replication timeout for: 1) Bulk transfer I/O during SYNC, from the point of view of replica. 2) Master timeout from the point of view of replicas (data, pings). 3) Replica timeout from the point of view of masters (REPLCONF ACK pings). It is important to make sure that this value is greater than the value specified for repl-ping-replica-period otherwise a timeout will be detected every time there is low traffic between the master and the replica. The default value is 60 seconds.",
+      "syntax": "repl-timeout 60",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-announce-ip",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "replica-announce-ip 5.5.5.5",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-announce-port",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "replica-announce-port 1234",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-announced",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "replica-announced set to 'no', the replica can be promoted to master. To | replica-announced yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-full-sync-buffer-limit",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Set the replication backlog size. The backlog is a buffer that accumulates replica data when replicas are disconnected for some time, so that when a replica wants to reconnect again, often a full resync is not needed, but a partial resync is enough, just passing the portion of data the replica missed while disconnected. The bigger the replication backlog, the longer the replica can endure the disconnect and later be able to perform a partial resynchronization. The backlog is only allocated if there is at least one replica connected. After a master has no connected replicas for some time, the backlog will be freed. The following option configures the amount of seconds that need to elapse, sta",
+      "syntax": "replica-full-sync-buffer-limit 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-ignore-disk-write-errors",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "The propagation error behavior controls how Redis will behave when it is unable to handle a command being processed in the replication stream from a master or processed while reading from an AOF file. Errors that occur during propagation are unexpected, and can cause data inconsistency. However, there are edge cases in earlier versions of Redis where it was possible for the server to replicate or persist commands that would fail on future versions. For this reason the default behavior is to ignore such errors and continue processing commands. If an application wants to ensure there is no data divergence, this configuration should be set to 'panic' instead. The value can also be set to 'panic",
+      "syntax": "replica-ignore-disk-write-errors no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-ignore-maxmemory",
+      "context": "MEMORY MANAGEMENT",
+      "version": "8.10.2",
+      "description": "Set a memory usage limit to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see maxmemory-policy). If Redis can't remove keys according to the policy, or if the policy is set to 'noeviction', Redis will start to reply with errors to commands that would use more memory, like SET, LPUSH, and so on, and will continue to reply to read-only commands like GET. This option is usually useful when using Redis as an LRU or LFU cache, or to set a hard memory limit for an instance (using the 'noeviction' policy). WARNING: If you have replicas attached to an instance with maxmemory on, the size of the output buffers ",
+      "syntax": "replica-ignore-maxmemory yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-lazy-flush",
+      "context": "LAZY FREEING",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "replica-lazy-flush no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-priority",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Set the replication backlog size. The backlog is a buffer that accumulates replica data when replicas are disconnected for some time, so that when a replica wants to reconnect again, often a full resync is not needed, but a partial resync is enough, just passing the portion of data the replica missed while disconnected. The bigger the replication backlog, the longer the replica can endure the disconnect and later be able to perform a partial resynchronization. The backlog is only allocated if there is at least one replica connected. After a master has no connected replicas for some time, the backlog will be freed. The following option configures the amount of seconds that need to elapse, sta",
+      "syntax": "replica-priority 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-read-only",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "You can configure a replica instance to accept writes or not. Writing against a replica instance may be useful to store some ephemeral data (because data written on a replica will be easily deleted after resync with the master) but may also cause problems if clients are writing to it because of a misconfiguration. Since Redis 2.6 by default replicas are read-only. Note: read only replicas are not designed to be exposed to untrusted clients on the internet. It's just a protection layer against misuse of the instance. Still a read only replica exports by default all the administrative commands such as CONFIG, DEBUG, and so forth. To a limited extent you can improve security of read only replic",
+      "syntax": "replica-read-only yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replica-serve-stale-data",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master-Replica replication. Use replicaof to make a Redis instance a copy of another Redis server. A few things to understand ASAP about Redis replication. +------------------+      +---------------+ |      Master      | ---> |    Replica    | | (receive writes) |      |  (exact copy) | +------------------+      +---------------+ 1) Redis replication is asynchronous, but you can configure a master to stop accepting writes if it appears to be not connected with at least a given number of replicas. 2) Redis replicas are able to perform a partial resynchronization with the master if the replication link is lost for a relatively small amount of time. You may want to configure the replication bac",
+      "syntax": "replica-serve-stale-data yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "replicaof",
+      "context": "REPLICATION",
+      "version": "8.10.2",
+      "description": "Master-Replica replication. Use replicaof to make a Redis instance a copy of another Redis server. A few things to understand ASAP about Redis replication. +------------------+      +---------------+ |      Master      | ---> |    Replica    | | (receive writes) |      |  (exact copy) | +------------------+      +---------------+ 1) Redis replication is asynchronous, but you can configure a master to stop accepting writes if it appears to be not connected with at least a given number of replicas. 2) Redis replicas are able to perform a partial resynchronization with the master if the replication link is lost for a relatively small amount of time. You may want to configure the replication bac",
+      "syntax": "replicaof <masterip> <masterport>",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "requirepass",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Using an external ACL file Instead of configuring users here in this file, it is possible to use a stand-alone file just listing users. The two methods cannot be mixed: if you configure users here and at the same time you activate the external ACL file, the server will refuse to start. The format of the external ACL user file is exactly the same as the format that is used inside redis.conf to describe users. IMPORTANT NOTE: starting with Redis 6 \"requirepass\" is just a compatibility layer on top of the new ACL system. The option effect will be just setting the password for the default user. Clients will still authenticate using AUTH <password> as usually, or more explicitly with AUTH default",
+      "syntax": "requirepass foobared",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "sanitize-dump-payload",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Enables or disables full sanitization checks for ziplist and listpack etc when loading an RDB or RESTORE payload. This reduces the chances of a assertion or crash later on while processing commands. Options: yes        - Always perform full sanitization clients    - Perform full sanitization only for user connections. Excludes: RDB files, RESTORE commands received from the master connection, and client connections which have the skip-sanitize-payload ACL flag. The default should be 'clients' but since it currently affects cluster resharding via MIGRATE, it is temporarily set to 'no' by default.",
+      "syntax": "sanitize-dump-payload no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "save",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Save the DB to disk.",
+      "syntax": "save <seconds> <changes> [<seconds> <changes> ...] | save \"\" | save 3600 1 300 100 60 10000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "server-cpulist",
+      "context": "ACTIVE DEFRAGMENTATION",
+      "version": "8.10.2",
+      "description": "It is possible to pin different threads and processes of Redis to specific CPUs in your system, in order to maximize the performances of the server. This is useful both in order to pin different Redis threads in different CPUs, but also in order to make sure that multiple Redis instances running in the same host will be pinned to different CPUs. Normally you can do this using the \"taskset\" command, however it is also possible to this via Redis configuration directly, both in Linux and FreeBSD. You can pin the server/IO threads, bio threads, aof rewrite child process, and the bgsave child process. The syntax to specify the cpu list is the same as the taskset command: Set redis server/io threa",
+      "syntax": "server-cpulist 0-7:2",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "set-max-intset-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Sets have a special encoding when a set is composed of just strings that happen to be integers in radix 10 in the range of 64 bit signed integers. The following configuration setting sets the limit in the size of the set in order to use this special memory saving encoding.",
+      "syntax": "set-max-intset-entries 512",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "set-max-listpack-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Sets containing non-integer values are also encoded using a memory efficient data structure when they have a small number of entries, and the biggest entry does not exceed a given threshold. These thresholds can be configured using the following directives.",
+      "syntax": "set-max-listpack-entries 128",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "set-max-listpack-value",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "set-max-listpack-value 64",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "set-proc-title",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To avoid logging personal identifiable information (PII) into server log file, uncomment the following: By default, Redis modifies the process title (as seen in 'top' and 'ps') to provide some runtime information. It is possible to disable this and leave the process name as executed by setting the following to no.",
+      "syntax": "set-proc-title yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "shutdown-on-sigint",
+      "context": "SHUTDOWN",
+      "version": "8.10.2",
+      "description": "Maximum time to wait for replicas when shutting down, in seconds. During shut down, a grace period allows any lagging replicas to catch up with the latest replication offset before the master exists. This period can prevent data loss, especially for deployments without configured disk backups. The 'shutdown-timeout' value is the grace period's duration in seconds. It is only applicable when the instance has replicas. To disable the feature, set the value to 0. When Redis receives a SIGINT or SIGTERM, shutdown is initiated and by default an RDB snapshot is written to disk in a blocking operation if save points are configured. The options used on signaled shutdown can include the following val",
+      "syntax": "shutdown-on-sigint default",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "shutdown-on-sigterm",
+      "context": "SHUTDOWN",
+      "version": "8.10.2",
+      "description": "Maximum time to wait for replicas when shutting down, in seconds. During shut down, a grace period allows any lagging replicas to catch up with the latest replication offset before the master exists. This period can prevent data loss, especially for deployments without configured disk backups. The 'shutdown-timeout' value is the grace period's duration in seconds. It is only applicable when the instance has replicas. To disable the feature, set the value to 0. When Redis receives a SIGINT or SIGTERM, shutdown is initiated and by default an RDB snapshot is written to disk in a blocking operation if save points are configured. The options used on signaled shutdown can include the following val",
+      "syntax": "shutdown-on-sigterm default",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "shutdown-timeout",
+      "context": "SHUTDOWN",
+      "version": "8.10.2",
+      "description": "Maximum time to wait for replicas when shutting down, in seconds. During shut down, a grace period allows any lagging replicas to catch up with the latest replication offset before the master exists. This period can prevent data loss, especially for deployments without configured disk backups. The 'shutdown-timeout' value is the grace period's duration in seconds. It is only applicable when the instance has replicas. To disable the feature, set the value to 0.",
+      "syntax": "shutdown-timeout 10",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "slowlog-entry-max-argc",
+      "context": "SLOW LOG",
+      "version": "8.10.2",
+      "description": "When a command is written to the slowlog we check how many arguments it has and if it has more than slowlog-entry-max-argc we trim the excess ones. The last of the non-trimmed arguments is overwritten with an info string about how many args were trimmed. That's why slowlog-entry-max-argc has minimum value of 2, so we can always preserve the command name. Moreover, each individual argument string is also trimmed depending on slowlog-entry-max-string-len. Default values:",
+      "syntax": "slowlog-entry-max-argc 32",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "slowlog-entry-max-string-len",
+      "context": "SLOW LOG",
+      "version": "8.10.2",
+      "description": "When a command is written to the slowlog we check how many arguments it has and if it has more than slowlog-entry-max-argc we trim the excess ones. The last of the non-trimmed arguments is overwritten with an info string about how many args were trimmed. That's why slowlog-entry-max-argc has minimum value of 2, so we can always preserve the command name. Moreover, each individual argument string is also trimmed depending on slowlog-entry-max-string-len. Default values:",
+      "syntax": "slowlog-entry-max-string-len 128",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "slowlog-log-slower-than",
+      "context": "SLOW LOG",
+      "version": "8.10.2",
+      "description": "The Redis Slow Log is a system to log queries that exceeded a specified execution time. The execution time does not include the I/O operations like talking with the client, sending the reply and so forth, but just the time needed to actually execute the command (this is the only stage of command execution where the thread is blocked and can not serve other requests in the meantime). You can configure the slow log with two parameters: one tells Redis what is the execution time, in microseconds, to exceed in order for the command to get logged, and the other parameter is the length of the slow log. When a new command is logged the oldest one is removed from the queue of logged commands. The fo",
+      "syntax": "slowlog-log-slower-than 10000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "slowlog-max-len",
+      "context": "SLOW LOG",
+      "version": "8.10.2",
+      "description": "There is no limit to this length. Just be aware that it will consume memory. You can reclaim memory used by the slow log with SLOWLOG RESET.",
+      "syntax": "slowlog-max-len 128",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "socket-mark-id",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Apply OS-specific mechanism to mark the listening socket with the specified ID, to support advanced routing and filtering capabilities. On Linux, the ID represents a connection mark. On FreeBSD, the ID represents a socket cookie ID. On OpenBSD, the ID represents a route table ID. The default value is 0, which implies no marking is required.",
+      "syntax": "socket-mark-id 0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "stop-writes-on-bgsave-error",
+      "context": "SNAPSHOTTING",
+      "version": "8.10.2",
+      "description": "Save the DB to disk. Redis will save the DB if the given number of seconds elapsed and it surpassed the given number of write operations against the DB. Snapshotting can be completely disabled with a single empty string argument as in following example: Unless specified otherwise, by default Redis will save the DB: * After 3600 seconds (an hour) if at least 1 change was performed * After 300 seconds (5 minutes) if at least 100 changes were performed * After 60 seconds if at least 10000 changes were performed You can set these explicitly by uncommenting the following line. By default Redis will stop accepting writes if RDB snapshots are enabled (at least one save point) and the latest backgro",
+      "syntax": "stop-writes-on-bgsave-error yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "stream-idmp-duration",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis Streams support Idempotent Message Producer (IDMP) tracking to prevent duplicate message delivery. When producers send messages with IDMP identifiers (using XADD with IDMP or IDMPAUTO parameters), Redis tracks these identifiers to detect and reject duplicates within a configurable time window. stream-idmp-duration: Specifies how long (in seconds) Redis should remember IDMP identifiers for duplicate detection. After this duration expires, old identifiers are automatically removed. This prevents unbounded memory growth while allowing reasonable duplicate detection windows. Valid range: 1 to 86400 seconds (1 second to 24 hours) Default: 100 seconds stream-idmp-maxsize: Maximum number of I",
+      "syntax": "stream-idmp-duration 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "stream-idmp-maxsize",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis Streams support Idempotent Message Producer (IDMP) tracking to prevent duplicate message delivery. When producers send messages with IDMP identifiers (using XADD with IDMP or IDMPAUTO parameters), Redis tracks these identifiers to detect and reject duplicates within a configurable time window. stream-idmp-duration: Specifies how long (in seconds) Redis should remember IDMP identifiers for duplicate detection. After this duration expires, old identifiers are automatically removed. This prevents unbounded memory growth while allowing reasonable duplicate detection windows. Valid range: 1 to 86400 seconds (1 second to 24 hours) Default: 100 seconds stream-idmp-maxsize: Maximum number of I",
+      "syntax": "stream-idmp-maxsize 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "stream-node-max-bytes",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Streams macro node max size / items. The stream data structure is a radix tree of big nodes that encode multiple items inside. Using this configuration it is possible to configure how big a single node can be in bytes, and the maximum number of items it may contain before switching to a new node when appending new stream entries. If any of the following settings are set to zero, the limit is ignored, so for instance it is possible to set just a max entries limit by setting max-bytes to 0 and max-entries to the desired value.",
+      "syntax": "stream-node-max-bytes 4096",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "stream-node-max-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "stream-node-max-entries 100",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "supervised",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "If you run Redis from upstart or systemd, Redis can interact with your supervision tree. Options:",
+      "syntax": "supervised no      - no supervision interaction | supervised upstart - signal upstart by putting Redis into SIGSTOP mode | supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "syslog-enabled",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs.",
+      "syntax": "syslog-enabled no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "syslog-facility",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs. Specify the syslog identity. Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7.",
+      "syntax": "syslog-facility local0",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "syslog-ident",
+      "context": "GENERAL",
+      "version": "8.10.2",
+      "description": "To enable logging to the system logger, just set 'syslog-enabled' to yes, and optionally update the other syslog parameters to suit your needs. Specify the syslog identity.",
+      "syntax": "syslog-ident redis",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tcp-backlog",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "TCP listen() backlog. In high requests-per-second environments you need a high backlog in order to avoid slow clients connection issues. Note that the Linux kernel will silently truncate it to the value of /proc/sys/net/core/somaxconn so make sure to raise both the value of somaxconn and tcp_max_syn_backlog in order to get the desired effect.",
+      "syntax": "tcp-backlog 511",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tcp-keepalive",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "TCP keepalive. If non-zero, use SO_KEEPALIVE to send TCP ACKs to clients in absence of communication. This is useful for two reasons: 1) Detect dead peers. 2) Force network equipment in the middle to consider the connection to be alive. On Linux, the specified value (in seconds) is the period used to send ACKs. Note that to close the connection the double of the time is needed. On other kernels the period depends on the kernel configuration. A reasonable value for this option is 300 seconds, which is the new Redis default starting with Redis 3.2.1.",
+      "syntax": "tcp-keepalive 300",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "timeout",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Unix socket. Specify the path for the Unix socket that will be used to listen for incoming connections. There is no default, so Redis will not listen on a unix socket when not specified. Close the connection after a client is idle for N seconds (0 to disable)",
+      "syntax": "timeout 0 | timeout too low.",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-auth-clients",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-auth-clients no | tls-auth-clients optional",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-auth-clients-user",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-auth-clients-user CN",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-ca-cert-dir",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-ca-cert-dir /etc/ssl/certs",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-ca-cert-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-ca-cert-file ca.crt",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-cert-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted.",
+      "syntax": "tls-cert-file redis.crt",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-ciphers",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-ciphers DEFAULT:!MEDIUM",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-ciphersuites",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-ciphersuites TLS_CHACHA20_POLY1305_SHA256",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-client-cert-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-client-cert-file client.crt",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-client-key-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-client-key-file client.key",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-client-key-file-pass",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-client-key-file-pass secret",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-cluster",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-cluster yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-dh-params-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-dh-params-file redis.dh",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-expected-peer-name",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-expected-peer-name node.my-redis-cluster.example.com",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-key-file",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted.",
+      "syntax": "tls-key-file redis.key",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-key-file-pass",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well.",
+      "syntax": "tls-key-file-pass secret",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-port",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use:",
+      "syntax": "tls-port 6379",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-prefer-server-ciphers",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-prefer-server-ciphers yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-protocols",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-protocols \"TLSv1.2 TLSv1.3\"",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-replication",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-replication yes",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-session-cache-size",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-session-cache-size 5000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-session-cache-timeout",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-session-cache-timeout 60",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tls-session-caching",
+      "context": "TLS/SSL",
+      "version": "8.10.2",
+      "description": "By default, TLS/SSL is disabled. To enable it, the \"tls-port\" configuration directive can be used to define TLS-listening ports. To enable TLS on the default port, use: Configure a X.509 certificate and private key to use for authenticating the server to connected clients, masters or cluster peers.  These files should be PEM formatted. If the key file is encrypted using a passphrase, it can be included here as well. Normally Redis uses the same certificate for both server functions (accepting connections) and client functions (replicating from a master, establishing cluster bus connections, etc.). Sometimes certificates are issued with attributes that designate them as client-only or server-",
+      "syntax": "tls-session-caching no",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "tracking-table-max-keys",
+      "context": "KEYS TRACKING",
+      "version": "8.10.2",
+      "description": "Redis implements server assisted support for client side caching of values. This is implemented using an invalidation table that remembers, using a radix key indexed by key name, what clients have which keys. In turn this is used in order to send invalidation messages to clients. Please check this page to understand more about the feature: https://redis.io/docs/latest/develop/use/client-side-caching/ When tracking is enabled for a client, all the read only queries are assumed to be cached: this will force Redis to store information in the invalidation table. When keys are modified, such information is flushed away, and invalidation messages are sent to the clients. However if the workload is",
+      "syntax": "tracking-table-max-keys 1000000",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "unixsocket",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Unix socket. Specify the path for the Unix socket that will be used to listen for incoming connections. There is no default, so Redis will not listen on a unix socket when not specified.",
+      "syntax": "unixsocket /run/redis.sock",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "unixsocketperm",
+      "context": "NETWORK",
+      "version": "8.10.2",
+      "description": "Unix socket. Specify the path for the Unix socket that will be used to listen for incoming connections. There is no default, so Redis will not listen on a unix socket when not specified.",
+      "syntax": "unixsocketperm 700",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "user",
+      "context": "SECURITY",
+      "version": "8.10.2",
+      "description": "Warning: since Redis is pretty fast, an outside user can try up to 1 million passwords per second against a modern box. This means that you should use very strong passwords, otherwise they will be very easy to break. Note that because the password is really a shared secret between the client and the server, and should not be memorized by any human, the password can be easily a long string from /dev/urandom or whatever, so by using a long and unguessable password no brute force attack will be possible. Redis ACL users are defined in the following format:",
+      "syntax": "user <username> ... acl rules ... | user worker +@list +@connection ~jobs:* on >ffa9203c493aa99 | user (outside the parentheses).",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "zset-max-listpack-entries",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Similarly to hashes and lists, sorted sets are also specially encoded in order to save a lot of space. This encoding is only used when the length and elements of a sorted set are below the following limits:",
+      "syntax": "zset-max-listpack-entries 128",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    },
+    {
+      "word": "zset-max-listpack-value",
+      "context": "ADVANCED CONFIG",
+      "version": "8.10.2",
+      "description": "Redis 配置指令，参数示例见语法",
+      "syntax": "zset-max-listpack-value 64",
+      "source": "https://raw.githubusercontent.com/redis/redis/8.10.2/redis.conf"
+    }
+  ]
+}
