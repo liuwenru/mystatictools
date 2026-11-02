@@ -94,6 +94,9 @@ _mini_docker_completion()
     local local_daemon=yes
     case "${DOCKER_HOST:-unix:///var/run/docker.sock}" in unix://*) ;; *) local_daemon=no ;; esac
     [ -z "${DOCKER_CONTEXT:-}" ] || local_daemon=no
+    # Bound each object query to 2s (+1s before SIGKILL); without timeout, query unbounded as before.
+    local limit=
+    if command -v timeout >/dev/null 2>&1; then limit='timeout -k 1 2'; fi
     for ((i=1; i<COMP_CWORD; i++)); do
         word="${COMP_WORDS[i]}"
         case "$word" in -H|--host|--host=*|--context|--context=*) local_daemon=no ;; esac
@@ -142,7 +145,7 @@ _mini_docker_completion()
         --pull) words='always missing never' ;;
         --network|--net)
             words='bridge host none'
-            [ "$local_daemon" != yes ] || words="$words $(docker --host "${DOCKER_HOST:-unix:///var/run/docker.sock}" network ls --format '{{.Name}}' 2>/dev/null)" ;;
+            [ "$local_daemon" != yes ] || words="$words $($limit docker --host "${DOCKER_HOST:-unix:///var/run/docker.sock}" network ls --format '{{.Name}}' 2>/dev/null)" ;;
         -f)
             case "$command" in build|compose|buildx) ;; *) return ;; esac
             while IFS= read -r candidate; do COMPREPLY+=("$candidate"); done < <(compgen -f -- "$current")
@@ -179,13 +182,17 @@ _mini_docker_completion()
                     case "$command" in
                         exec)
                             # Only running container IDs; later arguments belong to its command.
-                            [ -n "$subcommand" ] || words="$(docker --host "$endpoint" ps --format '{{.ID}}' 2>/dev/null)" ;;
-                        start|stop|restart|kill|rm|logs|inspect|stats|top|attach|wait|port|rename|update)
-                            words="$(docker --host "$endpoint" ps -a --format '{{.Names}}' 2>/dev/null)" ;;
+                            [ -n "$subcommand" ] || words="$($limit docker --host "$endpoint" ps --format '{{.ID}}' 2>/dev/null)" ;;
+                        inspect)
+                            # Short IDs and names of all containers; Names may hold legacy comma-separated links.
+                            words="$($limit docker --host "$endpoint" ps -a --format '{{.ID}} {{.Names}}' 2>/dev/null)"
+                            words="${words//,/ }" ;;
+                        start|stop|restart|kill|rm|logs|stats|top|attach|wait|port|rename|update)
+                            words="$($limit docker --host "$endpoint" ps -a --format '{{.Names}}' 2>/dev/null)" ;;
                         run|create|rmi|image-rm|image-inspect|image-history|save|tag)
-                            [ -n "$subcommand" ] || words="$(docker --host "$endpoint" images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)" ;;
-                        network) words="$(docker --host "$endpoint" network ls --format '{{.Name}}' 2>/dev/null)" ;;
-                        volume) words="$(docker --host "$endpoint" volume ls --format '{{.Name}}' 2>/dev/null)" ;;
+                            [ -n "$subcommand" ] || words="$($limit docker --host "$endpoint" images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)" ;;
+                        network) words="$($limit docker --host "$endpoint" network ls --format '{{.Name}}' 2>/dev/null)" ;;
+                        volume) words="$($limit docker --host "$endpoint" volume ls --format '{{.Name}}' 2>/dev/null)" ;;
                     esac
                 fi
             fi ;;

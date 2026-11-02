@@ -230,6 +230,12 @@ check -it _mini_docker_completion docker container exec -i
 check alpine:latest _mini_docker_completion docker run --name example al
 check example-network _mini_docker_completion docker run --network ex
 check example-volume _mini_docker_completion docker volume inspect ex
+check a1b2c3d4e5f6 _mini_docker_completion docker inspect a1
+check example-container _mini_docker_completion docker inspect exa
+check stopped-db _mini_docker_completion docker inspect sto
+check f6e5d4c3b2a1 _mini_docker_completion docker inspect example-container f6
+check f6e5d4c3b2a1 _mini_docker_completion docker container inspect f6
+check stopped-db _mini_docker_completion docker container inspect sto
 check TCP _mini_lsof_completion lsof -i T
 check LISTEN _mini_lsof_completion lsof -s TCP:L
 TEST_COMP_LINE='lsof -s TCP:L' check LISTEN _mini_lsof_completion lsof -s TCP : L

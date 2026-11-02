@@ -42,6 +42,9 @@ cp -R --preserve=timestamps,links "${SCRIPT_DIR}/." "${PUBLISH_SOURCE}/"
 # 防止把发布脚本自身复制进发布包；如需保留可删除这一行
 rm -f "${PUBLISH_SOURCE}/publish.sh"
 
+# 测试脚本和桩数据不进入发布包；同时清掉旧版本发布时留下的 tests/
+rm -rf "${PUBLISH_SOURCE}/tests"
+
 info "正在生成发布包……"
 tar -C "$PUBLISH_ROOT" \
     -zcf "$ARCHIVE" \

@@ -46,9 +46,15 @@
 - Docker 仅查询本地 Unix socket，显式指定 `--host`/`-H`、`--context`，
   设置 `DOCKER_CONTEXT`，或 `DOCKER_HOST` 不是 Unix socket 时不查询对象。
   未指定端点时固定读取 `/var/run/docker.sock`，不跟随配置中的默认远程 context。
+  容器、镜像、网络、卷的名称/ID 查询有 `timeout -k 1 2` 时限：2 秒未返回放弃，
+  再过 1 秒强制结束客户端，daemon 卡住时按 Tab 最多等约 3 秒。
+  宿主机没有 `timeout` 时这些查询照常执行，但不限时（`cp` 的容器查询则直接跳过）。
 - `docker exec` 和 `docker container exec` 补全运行中容器的短 CONTAINER ID
   （来自 `docker ps --format '{{.ID}}'`），支持 `-it`、`--user root` 等选项后的
   ID 补全；其他原有按容器名称补全的子命令保持不变。
+- `docker inspect` 和 `docker container inspect` 同时补全容器短 ID 和名称
+  （来自 `docker ps -a`，包括已停止的容器），可连续补多个容器。
+  `docker inspect` 也能查看镜像、网络、卷，但这里只补全容器。
 - `docker cp`（包括 `docker container cp`）支持源端和目标端的路径补全：
   未输入冒号时提供本地路径及容器短 ID 和名称（带 `:`，来自
   `docker ps -a`，包括已停止的容器）；输入 `容器:/路径` 后列出容器内目录。
@@ -125,7 +131,7 @@
 
 ### 自测
 
-在项目根目录运行：
+测试只在源码仓库中，发布包不含 `tests/`。在源码仓库的项目根目录运行：
 
 ```bash
 bash tests/completions.bash
