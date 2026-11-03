@@ -95,9 +95,11 @@ local function dictionary_name()
 	if name == "server.xml" then return "tomcat" end
 	if name == "redis.conf" then return "redis" end
 	if name == "opencode.json" or name == "opencode.jsonc" then return "opencode" end
+	-- 自动模式下，示例配置已把官方 Compose schema 交给 yaml 服务器；服务器附加后由它按层级补全，
+	-- 词库不再给出重复候选，只在服务器没有附加时兜底。手动 :OfflineCompletion 选择不受影响。
 	if name == "compose.yaml" or name == "compose.yml" or name == "docker-compose.yaml" or name == "docker-compose.yml"
 		or name:match("^compose[%.%-].+%.ya?ml$") or name:match("^docker%-compose[%.%-].+%.ya?ml$") then
-		return "compose"
+		return #vim.lsp.get_clients({ bufnr = 0, name = "offline_yaml" }) == 0 and "compose" or nil
 	end
 	if name:match("%.service$") or path:match("%.service%.d/[^/]+%.conf$") then return "systemd-service" end
 	if vim.bo.filetype == "nginx" then return nginx_header_token() and "http-headers" or "nginx" end

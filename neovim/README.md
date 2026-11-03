@@ -323,7 +323,7 @@ Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在
 | --- | --- | --- |
 | Python | 标准库成员（`os.pa` → `path`） | 类型错误（`count: int = "a"`） |
 | TypeScript / JS | 内置类型成员、同一项目内其他文件的导出、`.js` 文件 | 类型错误 |
-| YAML | 只在指定了本地 schema 时补全键名 | 不符合 schema 的值，以及 YAML 语法错误 |
+| YAML | Compose 文件按随包官方 schema 分层补全键名和部分枚举值；其他文件需指定本地 schema | 不符合 schema 的字段/值，以及 YAML 语法错误 |
 | JSON | 只在指定了本地 schema 时补全键名 | 不符合 schema 的值，以及 JSON 语法错误 |
 | Bash | 文件内定义的变量 | 未测试（需要 shellcheck，未随包） |
 
@@ -332,8 +332,32 @@ Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在
 主动确认 LSP 候选时，服务器可能附带额外的文本编辑（如补充 import），可以用撤销检查。
 
 **YAML、JSON 的补全依赖 schema。** 离线时 SchemaStore 查询和 schema 下载都已关闭，所以没有 schema 的文件
-只有语法诊断，不能补全键名。Compose、`daemon.json` 等常见文件的补全由下文的离线词库提供。
-需要按 schema 补全和校验时，在文件里指定本地 schema：
+只有语法诊断，不能补全键名。
+
+**随包 Compose schema：** 运行包的 `nvim/completion/schemas/compose.json` 是 compose-spec 提交 3a4a699 的官方 schema，
+和 Compose 词库提取用的是同一份固定快照（SHA-256 见 `completion/sources.json`）。配置通过 `yaml.schemas` 把它关联到
+`compose.yaml/yml`、`docker-compose.yaml/yml`，以及 `compose.override.yaml`、`docker-compose.prod.yml` 等文件，文件里不用写 schema。
+
+改用 schema 是因为词库不分层级、也不校验；schema 只给当前层级的字段（比如在 `services.web` 下不会出现顶层的
+`include`），会把未知字段、类型不对、不在枚举里的值报成诊断，也能补部分枚举值（如 `cgroup` 的 `host`、`private`）。
+
+- **词库只兜底**：yaml 服务器附加到这个缓冲区之后，Compose 词库不再给出候选，避免菜单里同一个字段出现两次；
+  服务器没有附加时（如随包服务器缺失、PATH 里也没有）仍用词库。词库里的中文说明只在兜底时看得到，
+  想看时用 `:OfflineCompletion compose` 手动选择词库，`:OfflineCompletion auto` 恢复。
+- **插入内容不同**：确认 LSP 候选时服务器会把冒号一起插入，比如 `container_name: `。词库只插入关键字本身。
+- 实测 yaml-language-server 的值补全有空缺：服务下只有 `cgroup:` 一个键时没有候选，前面已有其他键时有候选。
+- 打开文件后服务器刚附加时，第一次补全请求可能为空（schema 还在加载），约几秒后正常；继续输入会重新请求。
+- schema 是 2026-10-24 取的快照，目标环境的 Docker Compose 比它新或旧都可能导致误报或漏报，最终以 `docker compose config` 为准。
+
+**其他文件不用 schema 的原因：**
+
+- opencode 的官方 schema 有现成快照，但其中 `model` 等字段用 `$ref` 引用 `https://models.dev/model-schema.json`
+  （8935 个模型 ID 的枚举，经常变）。json 服务器遇到外部 `$ref` 会联网下载，`schemaDownload.enable = false` 拦不住；
+  断网时报 `Unable to load schema`，联网时会访问 models.dev。把这张表做成快照又会很快过期、把新模型报成错误，
+  所以 opencode 继续用词库，不关联 schema。这是构建内断网测试发现的，本机联网时下载成功、没有暴露。
+- `daemon.json` 没有官方 schema；Nginx、systemd 等不是 YAML/JSON，都继续用词库。
+
+其他文件需要按 schema 补全和校验时，在文件里指定本地 schema：
 
 ```yaml
 # yaml-language-server: $schema=./schema.json
@@ -343,7 +367,8 @@ Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在
 { "$schema": "./schema.json" }
 ```
 
-相对路径基于当前文件所在目录，也可以用绝对路径。本包不附带任何 schema 文件。
+相对路径基于当前文件所在目录，也可以用绝对路径。除 Compose 外，本包不附带其他 schema 文件。
+自己指定的 schema 如果用 `$ref` 引用了外部 URL，服务器同样会去联网下载，离线时会报加载失败。
 
 **配置上的取舍：**
 
@@ -353,7 +378,29 @@ Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在
 - TypeScript：关闭自动类型获取（ATA，`disableAutomaticTypeAcquisition`、
   `tsserver.automaticTypeAcquisition.enabled = false`）。开启时它会调用 PATH 中的 `npm install @types/...`。
   这两个设置名取自 TypeScript 7.0.2 源码，是否确实生效没有单独测试。Node 项目的补全依赖项目自己的
-  `node_modules` 里的类型，比如 Node API 需要项目安装 `@types/node`，本包不会替项目安装。
+  `node_modules` 里的类型，本包不会替项目安装。TypeScript 只读类型声明（`.d.ts`），不运行代码，
+  也不找全局 `npm install -g` 的包或本机的 `node`。
+
+  **Node 内置模块（`fs`、`process`、`require` 等）要两步：** 项目装 `@types/node`，**并且**在项目根目录写配置文件，
+  JS 项目用 `jsconfig.json`，TS 项目用 `tsconfig.json`：
+
+  ```json
+  { "compilerOptions": { "types": ["node"] } }
+  ```
+
+  只装 `@types/node` 不够：TypeScript 7 不再自动加载 `node_modules/@types` 下的全部类型包，
+  诊断会提示 `add 'node' to the types field in your tsconfig`。第三方包看包本身：自带类型的（如 axios）装上就能补；
+  不带的（如 express 5）要另装 `@types/express`，它通过 import 加载，不需要写进 `types`。
+  装了 `@types/express` 后，即使不写 `types`，Node 内置模块也能补全，因为它自己引用了 Node 类型，这不是通用做法。
+
+  实测（Rocky 9.6，断网，`.js` 用 `require`、`.ts` 用 `import`，两者结果一致）：
+
+  | 项目 | `fs.` / `process.` | axios | express | 数组等内置对象 |
+  | --- | --- | --- | --- | --- |
+  | 什么都不装 | 否 | 否 | 否 | 能 |
+  | 装 `@types/node`、axios、express | 否 | 能 | 否 | 能 |
+  | 同上，加 `"types": ["node"]` | 能 | 能 | 否 | 能 |
+  | 再装 `@types/express` | 能 | 能 | 能 | 能 |
 - Python：ty 按 `pyproject.toml`、`setup.py`、`setup.cfg`、`requirements.txt`、`.git` 识别项目根目录。
   第三方库补全要找到库所在的 site-packages。ty 自己只查找 `VIRTUAL_ENV`、`CONDA_PREFIX` 和项目根目录的 `.venv`，
   不使用 PATH 中的 `python3`。运维机上常见的是直接 `pip install` 到系统 Python，所以示例配置补了一步：
@@ -413,7 +460,7 @@ TEST_ROOT=/tmp/opencode/nvim-completion TEST_LSP=1 \
 | 词库 | 默认匹配 |
 | --- | --- |
 | OpenCode | `opencode.json`、`opencode.jsonc`；Schema 标记废弃的节点/分支不提取 |
-| Compose | `compose.yaml/yml`、`docker-compose.yaml/yml` 及常见 override/prod 等后缀文件 |
+| Compose | `compose.yaml/yml`、`docker-compose.yaml/yml` 及常见 override/prod 等后缀文件。yaml 服务器附加后只兜底 |
 | Nginx | `nginx` 文件类型；常用开源 HTTP/stream 模块指令 |
 | systemd service | `*.service`（含模板单元）、`*.service.d/*.conf`；字段名保留大小写 |
 | Tomcat | `server.xml`；Tomcat 9.0.123 / 10.1.61 的元素名、属性名及 TLS 等常用组件 |
@@ -430,6 +477,7 @@ TEST_ROOT=/tmp/opencode/nvim-completion TEST_LSP=1 \
 词库从随仓库固定的 Schema/XML、帮助/源码及 MDN 文档快照提取，更新时校验来源哈希，构建不自动联网更新词库。
 常用项另有中文简释，其余沿用上游英文；generated 和 custom 合并，同名关键字在菜单里去重。
 第一版**不解析层级**，上下文只作说明，不等同于 Schema/LSP 校验，部分复杂注释/多行值可能出现额外提示。
+Compose 的分层补全和校验由上面的随包 schema 提供，词库只在 yaml 服务器没有附加时使用。
 Tomcat 可区分元素/属性，支持 `<Con`、`</Con`、`<Connector maxT` 和跨行属性；不自动插入 XML 结构
 或属性值，不按当前元素过滤所有属性。自定义 Redis 配置名使用 `:OfflineCompletion redis`。
 Docker 特殊命令位置用 `:OfflineCompletion dockerd-cli`，自定义 JSON 文件名用
@@ -674,6 +722,26 @@ uv 安装的 Python 3.14 软链接）和 `192.168.182.150` Fedora 44 aarch64 原
 `examples/init.lua`、`offline.txt` 与仓库一致；新的 x86_64 包在 Rocky 机器上复测通过。
 已发布到 fdoc `tools/neovim/`，与 `dist/` 逐字节比较一致；旧包备份为 `.pre-release-2026-11-03-13-19-23`。
 测试是 headless 下直接发补全请求，未在终端交互确认菜单显示；Debian 系 `dist-packages` 和 `pip install --user` 未测试。
+
+2026-11-03 Compose 改用随包官方 schema：`completion/sources/compose.json`（compose-spec 3a4a699）装到
+`nvim/completion/schemas/`，通过 `yaml.schemas` 按文件名关联；yaml 服务器附加后 Compose 词库只兜底。
+原计划 opencode 同样处理，构建内断网测试发现其 schema 引用 `https://models.dev/model-schema.json`，
+json 服务器会联网下载（本机联网时下载成功，未暴露），改为继续用词库，测试中加了反向检查。
+`test/lsp-bundled-test.lua` 新增：服务级字段补全、顶层不出现 `container_name`、`cgroup` 枚举值、`servics` 未知字段诊断、
+`docker-compose.prod.yml` 匹配、`other.yaml` 不匹配、词库让位和手动选择；opencode 仍由词库补全且无 schema 诊断。
+本机用 `unshare -n`（只有回环网卡）先跑通；插入模式实际按键确认候选，插入 `container_name: `，菜单无重复候选。
+双架构用默认 builder 原生构建（x86_64 本机，aarch64 `192.168.182.150`），构建内全部测试通过；ELF 架构正确、
+无 INTERP/NEEDED，包内 `completion/schemas/compose.json` 与仓库快照一致，`examples/init.lua`、`offline.txt` 与仓库一致。
+新 x86_64 包在 Rocky 9.6 断网命名空间复测通过；发现服务器刚附加时第一次请求为空，几秒后正常，已写入说明。
+`dist/` 已更新；源码包中的 README 不含"第一次请求为空"这一条和本段记录（构建后补写）。
+已发布到 fdoc `tools/neovim/`，与 `dist/` 逐字节比较一致；旧包备份为 `.pre-release-2026-11-03-15-37-39`。
+
+2026-11-03 Node.js 补全实测：在 Rocky 9.6 上用上面发布的 x86_64 包、`unshare -n` 断网，测试项目依赖事先用 npm 装进各自的
+`node_modules`（@types/node 26.6.6、axios 1.21.0、express 5.3.0、@types/express 5.0.6）。结果见“配置上的取舍”中的表：
+发现只装 `@types/node` 不能补全 Node 内置模块，需在 jsconfig/tsconfig 写 `"types": ["node"]`。只改了 README 和
+`offline.txt` 的说明，配置未改。测试目录已清理。双架构原生重建（x86_64 本机，aarch64 `192.168.182.150`），
+构建内全部测试通过，ELF/INTERP/NEEDED 检查正常，包内 `offline.txt` 与仓库一致；已发布到 fdoc `tools/neovim/`，
+与 `dist/` 逐字节一致，旧包备份为 `.pre-release-2026-11-03-16-04-56`。
 
 ## Reference Documentation
 

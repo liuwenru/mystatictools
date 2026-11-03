@@ -104,6 +104,8 @@ COPY completion/init.lua completion/README.md /out/nvim/completion/
 COPY completion/generated/ /out/nvim/completion/generated/
 COPY completion/custom/ /out/nvim/completion/custom/
 COPY completion/licenses/ /out/nvim/completion/licenses/
+# 官方 Compose schema 快照（哈希在 completion/sources.json，构建时 generate-completion.py --check 已校验），供 yaml 服务器使用。
+COPY completion/sources/compose.json /out/nvim/completion/schemas/
 COPY doc/ /out/nvim/share/nvim/runtime/doc/
 COPY --from=extras /out/sources/ /out/sources/
 COPY extras.json fetch-extras.py /out/sources/build/

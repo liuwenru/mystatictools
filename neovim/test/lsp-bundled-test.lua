@@ -107,6 +107,58 @@ buf = open('yaml/syntax.yaml', 'yaml')
 expect_diagnostic(buf, '.')
 print('PASS yaml-language-server: 本地 schema 键名补全和类型校验，语法错误诊断')
 
+-- 自动模式下词库是否让位：用当前行前缀判断，> = 0 表示词库会给出候选。
+local function keyword_start(buf, line, col)
+  vim.api.nvim_win_set_cursor(0, { line + 1, col })
+  return OfflineKeywordComplete(1, '')
+end
+
+-- Compose：随包官方 schema，无文件头，按文件名自动关联。
+write('compose/compose.yaml', { 'services:', '  web:', '    ima' })
+write('compose/compose.top.yaml', { 'services: {}', 'co' })
+write('compose/compose.enum.yaml', { 'services:', '  web:', '    image: nginx', '    cgroup: ' })
+write('compose/compose.bad.yaml', { 'servics:', '  web: {}' })
+write('compose/docker-compose.prod.yml', { 'services:', '  web:', '    ima' })
+write('compose/other.yaml', { 'services:', '  web:', '    ima' })
+buf = open('compose/compose.yaml', 'yaml')
+expect_completion(buf, 2, 7, 'image')
+assert(keyword_start(buf, 2, 7) == -2, 'yaml 服务器附加后 compose 词库仍给出候选')
+vim.b.offline_completion = 'compose'
+assert(keyword_start(buf, 2, 7) >= 0, '手动选择 compose 词库后没有候选')
+vim.b.offline_completion = nil
+buf = open('compose/compose.top.yaml', 'yaml')
+-- 已写出的 services 不再提示；include 只在顶层存在。
+expect_completion(buf, 1, 2, 'include')
+local top = vim.lsp.buf_request_sync(buf, 'textDocument/completion',
+  { textDocument = { uri = vim.uri_from_bufnr(buf) }, position = { line = 1, character = 2 } }, 10000)
+for _, response in pairs(top or {}) do
+  assert(not vim.tbl_contains(labels(response.result), 'container_name'), '顶层出现了服务级字段 container_name')
+end
+buf = open('compose/compose.enum.yaml', 'yaml')
+-- 服务下只有 cgroup 一个键时 yaml-language-server 不给值候选，这里放在已有 image 之后。
+expect_completion(buf, 3, 12, 'host')
+buf = open('compose/compose.bad.yaml', 'yaml')
+expect_diagnostic(buf, 'servics')
+buf = open('compose/docker-compose.prod.yml', 'yaml')
+expect_completion(buf, 2, 7, 'image')
+buf = open('compose/other.yaml', 'yaml')
+local other = vim.lsp.buf_request_sync(buf, 'textDocument/completion',
+  { textDocument = { uri = vim.uri_from_bufnr(buf) }, position = { line = 2, character = 7 } }, 10000)
+for _, response in pairs(other or {}) do
+  assert(not vim.tbl_contains(labels(response.result), 'image'), '非 Compose 文件名也关联了 Compose schema')
+end
+print('PASS yaml-language-server + Compose schema: 按层级补全、枚举值、未知字段诊断、文件名匹配、词库让位')
+
+-- opencode：不关联 schema（其 schema 引用外部 models.dev），json 服务器附加后仍由词库补全。
+write('opencode/opencode.json', { '{', '  "prov",', '  "share": 123', '}' })
+buf = open('opencode/opencode.json', 'json')
+expect_diagnostic(buf, '.')
+assert(keyword_start(buf, 1, 6) >= 0, 'json 服务器附加后 opencode 词库没有候选')
+for _, d in ipairs(vim.diagnostic.get(buf)) do
+  assert(not d.message:find('schema'), 'opencode 文件出现 schema 相关诊断: ' .. d.message)
+end
+print('PASS opencode: json 服务器只做语法诊断，不加载 schema，词库照常补全')
+
 -- JSON：$schema 指向本地文件
 write('json/schema.json', schema)
 write('json/app.json', { '{', '  "$schema": "./schema.json",', '  ""', '}' })

@@ -349,6 +349,23 @@ local servers = {
 		settings = { yaml = { schemaStore = { enable = false } } } },
 	clangd = { cmds = { { "clangd" } }, filetypes = { "c", "cpp" } },
 }
+-- 随包官方 Compose schema 交给 yaml 服务器，按层级补全并校验。
+-- 安装后在 completion/schemas/，仓库试用时读 completion/sources/ 中的同一份固定快照。
+-- opencode 不这样做：它的 schema 用 $ref 引用 https://models.dev/model-schema.json，
+-- json 服务器会联网下载（schemaDownload 关闭也拦不住），断网时报加载失败，所以 opencode 继续用词库。
+local function bundled_schema(file)
+	for _, dir in ipairs({ "/schemas/", "/sources/" }) do
+		if vim.fn.filereadable(completion_dir .. dir .. file) == 1 then return completion_dir .. dir .. file end
+	end
+end
+local compose_schema = bundled_schema("compose.json")
+if compose_schema then
+	-- 与 completion/init.lua 中 compose 词库的文件名匹配一致。
+	servers.yaml.settings.yaml.schemas = { [vim.uri_from_fname(compose_schema)] = {
+		"**/compose.{yaml,yml}", "**/docker-compose.{yaml,yml}",
+		"**/compose[.-]*.{yaml,yml}", "**/docker-compose[.-]*.{yaml,yml}",
+	} }
+end
 for name, config in pairs(servers) do
 	local cmds = config.cmds
 	config.cmds = nil

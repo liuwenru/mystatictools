@@ -36,6 +36,11 @@ Lua 相对自身位置读取词库，不扫描工作目录、不执行词库内�
 | `docker-daemon.json` | `daemon.json` | Moby v27.3.1 Linux 配置定义：80 个根字段、25 个嵌套字段 |
 | `http-headers.json` | `.http` / `.rest` 或 `http` 文件类型的头部区域；Nginx 指定指令的头名称位置 | MDN 固定提交的 74 个常用 Header；含认证、缓存、内容、CORS、安全、代理、WebSocket |
 
+`compose` 在自动模式下只兜底：示例配置把同一份 Schema 快照（构建时装到 `nvim/completion/schemas/`）
+交给随包的 yaml 语言服务器，服务器附加到缓冲区后由它按层级补全和校验，词库不再给出重复候选；
+服务器没有附加时仍用词库。手动 `:OfflineCompletion compose` 仍强制使用词库。
+`opencode` 不这样做：它的 Schema 用 `$ref` 引用外部 models.dev 的模型表，交给 json 服务器会联网下载。
+
 不把所有 YAML/JSON/`.conf` 都启用词库。自定义文件名可以在当前缓冲区手动选择：
 
 ```vim
@@ -122,6 +127,7 @@ OpenCode Schema URL 随上游更新，因此保留本地快照；未来从原 UR
 ## 边界与许可
 
 - 第一版按文件类别和前缀提示；除 HTTP Header 名称外均区分大小写，位置只作说明，**不按配置层级过滤或校验**。
+  Compose 需要分层和校验时由语言服务器提供（见上文），词库本身仍不分层。
   Compose 动态服务名、环境变量名不会作为固定词条提取；`*`、`[]` 只是说明中的路径占位。
 - 用简单行内规则避免在常见值/注释位置提示；不完整解析 JSONC 块注释、YAML 多行标量等语法。
   路径上下文只交给路径来源，避免词库/LSP 的替换起点冲突；保留原有正文和可选 LSP 补全。

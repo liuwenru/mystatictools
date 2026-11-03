@@ -119,7 +119,13 @@ OpenCode、Compose、Nginx、systemd 等也有固定资料版本，提示不保�
 只扫描当前文件单词，不扫描其他缓冲区或 tags。
 随包 LSP：Python 用 ty，JS/TS 用 TypeScript 7，YAML、JSON、Shell 由随包静态 node
 运行对应服务器；随包没有时再找 PATH 中的同类程序。Nginx/Lua/C 仍需 PATH 中已有服务器。
-YAML/JSON 只在文件指定本地 schema 时补全键名，否则只报语法错误：
+Node 内置模块（fs、process）补全：项目装 @types/node，并在 jsconfig.json/tsconfig.json 写
+  { "compilerOptions": { "types": ["node"] } }
+TypeScript 7 不再自动加载 node_modules/@types；第三方包需自带类型或装对应 @types 包。
+Compose（compose.yaml、docker-compose.*.yml 等）自动使用随包官方 schema：按层级补全、
+校验字段和值；yaml 服务器附加后 Compose 词库只兜底，:OfflineCompletion compose 可强制用词库。
+确认 LSP 候选会一起插入冒号，与词库只插关键字不同。opencode 等其他文件仍用词库。
+其他 YAML/JSON 只在文件指定本地 schema 时补全键名，否则只报语法错误：
   YAML 文件头：# yaml-language-server: $schema=./schema.json
   JSON 顶层：  "$schema": "./schema.json"
 Python 第三方库：项目 .venv 或 VIRTUAL_ENV 由 ty 自己查找；没有 venv 时执行一次 PATH 中的
