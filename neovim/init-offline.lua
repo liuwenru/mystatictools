@@ -258,13 +258,77 @@ local function lsp_cmd_available(cmd)
 	if vim.fn.executable(cmd[1]) ~= 1 then return false end
 	return cmd[1] ~= lsp_node or vim.fn.filereadable(cmd[2]) == 1
 end
+-- ty 只自动查找 VIRTUAL_ENV、CONDA_PREFIX 和项目根目录的 .venv，不使用 PATH 中的 python3；
+-- --system-site-packages 的 venv 也只带上 sys.prefix 下的系统目录。
+-- 项目和用户没有 ty 配置时：没有 venv 用 PATH 中的 python3，venv 带系统包时用 venv 的 python，
+-- 把它的 site-packages 交给 ty。只用独立 venv 或 Conda 时不处理，由 ty 自己查找。
+-- 目录由该 python 的 site.getsitepackages() 给出：RHEL 系 pip 默认装到 /usr/local/lib/pythonX.Y，
+-- 这是发行版改过的 site.py 运行时加入的，ty 按 sys.prefix 推算不到。不能加 -I/-s，否则 RHEL 不返回 /usr/local。
+-- 传给 ty 的是 sys.prefix 而不是 sys.executable：uv 等安装的 python3 是软链接，ty 会按链接位置推算出错误前缀。
+local python_environments = {}
+local python_script = [[
+import site, sys
+paths = site.getsitepackages()
+if site.ENABLE_USER_SITE:
+    paths.append(site.getusersitepackages())
+print(sys.prefix)
+print("\n".join(paths))
+]]
+local function ty_python_environment(root)
+	if vim.env.CONDA_PREFIX then return nil end
+	local config_home = vim.env.XDG_CONFIG_HOME or ((vim.env.HOME or "") .. "/.config")
+	if vim.uv.fs_stat(config_home .. "/ty/ty.toml") then return nil end
+	if root then
+		if vim.uv.fs_stat(root .. "/ty.toml") then return nil end
+		local pyproject = root .. "/pyproject.toml"
+		if vim.fn.filereadable(pyproject) == 1 then
+			for _, line in ipairs(vim.fn.readfile(pyproject)) do
+				if line:find("^%s*%[tool%.ty[%].]") then return nil end
+			end
+		end
+	end
+	local venv = vim.env.VIRTUAL_ENV or (root and vim.uv.fs_stat(root .. "/.venv/pyvenv.cfg") and root .. "/.venv")
+	local exe
+	if venv then
+		local cfg = vim.fn.filereadable(venv .. "/pyvenv.cfg") == 1 and vim.fn.readfile(venv .. "/pyvenv.cfg") or {}
+		for _, line in ipairs(cfg) do
+			if line:lower():find("^%s*include%-system%-site%-packages%s*=%s*true") then exe = venv .. "/bin/python" end
+		end
+		if not exe or vim.fn.executable(exe) ~= 1 then return nil end
+	else
+		exe = vim.fn.exepath("python3")
+		if exe == "" then return nil end
+	end
+	if python_environments[exe] == nil then
+		python_environments[exe] = false
+		-- 在 / 下运行，避免 -c 把当前目录放进 sys.path 后导入同名模块。
+		local ok, result = pcall(function()
+			return vim.system({ exe, "-c", python_script }, { cwd = "/", text = true }):wait(3000)
+		end)
+		if ok and result.code == 0 then
+			local lines = vim.split(vim.trim(result.stdout or ""), "\n")
+			local paths = vim.tbl_filter(function(p) return vim.fn.isdirectory(p) == 1 end, vim.list_slice(lines, 2))
+			if lines[1] ~= "" and #paths > 0 then
+				python_environments[exe] = { python = lines[1], ["extra-paths"] = paths }
+			end
+		end
+	end
+	return python_environments[exe] or nil
+end
 local servers = {
 	nginx = { cmds = { { "nginx-language-server" } }, filetypes = { "nginx" } },
 	bash = { cmds = { node_server("bash-language-server/out/cli.js", "start"), { "bash-language-server", "start" } },
 		filetypes = { "sh", "bash" } },
 	python = { cmds = { { lsp_libexec .. "ty", "server" }, { "pyright-langserver", "--stdio" } },
 		filetypes = { "python" },
-		root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" } },
+		root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+		-- client.settings 引用的是这个表，before_init 里原地修改才会发给服务器。
+		settings = {},
+		before_init = function(_, config)
+			if vim.fs.basename(config.cmd[1]) ~= "ty" then return end
+			local environment = ty_python_environment(config.root_dir)
+			if environment then config.settings.ty = { configuration = { environment = environment } } end
+		end },
 	typescript = { cmds = { { lsp_libexec .. "typescript/lib/tsc", "--lsp", "--stdio" } },
 		filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 		root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },

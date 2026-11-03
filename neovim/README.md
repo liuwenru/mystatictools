@@ -355,7 +355,23 @@ Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在
   这两个设置名取自 TypeScript 7.0.2 源码，是否确实生效没有单独测试。Node 项目的补全依赖项目自己的
   `node_modules` 里的类型，比如 Node API 需要项目安装 `@types/node`，本包不会替项目安装。
 - Python：ty 按 `pyproject.toml`、`setup.py`、`setup.cfg`、`requirements.txt`、`.git` 识别项目根目录。
-  第三方库的补全需要能找到对应的虚拟环境或 site-packages，没有时只能补全标准库和项目内代码。
+  第三方库补全要找到库所在的 site-packages。ty 自己只查找 `VIRTUAL_ENV`、`CONDA_PREFIX` 和项目根目录的 `.venv`，
+  不使用 PATH 中的 `python3`。运维机上常见的是直接 `pip install` 到系统 Python，所以示例配置补了一步：
+  - 没有 venv：执行一次 PATH 中的 `python3`，取 `site.getsitepackages()`（启用 user site 时再加
+    `~/.local/lib/pythonX.Y/site-packages`），把 `sys.prefix` 和这些目录作为 `environment.python`、
+    `environment.extra-paths` 传给 ty。
+  - venv 用 `--system-site-packages` 创建：用这个 venv 的 python 取同样的目录。ty 自己只带上 `/usr/lib` 下的系统目录。
+  - 独立 venv、Conda 环境不做处理，由 ty 自己查找。项目里有 `ty.toml` 或 `pyproject.toml` 的 `[tool.ty]`、
+    或者有 `~/.config/ty/ty.toml` 时也不处理，以免覆盖用户自己的配置；只检查项目根目录，不检查上级目录。
+
+  要单独执行 python 才能取目录，是因为 RHEL/Rocky 的 pip 默认装到 `/usr/local/lib/pythonX.Y/site-packages`，
+  这个目录由发行版改过的 `site.py` 在运行时加入，ty 不运行 Python，按 `sys.prefix` 推算不到。
+  执行时不加 `-I`、`-s`，因为加了以后 RHEL 不返回 `/usr/local` 目录；在 `/` 目录下执行，避免导入当前目录里的同名模块。
+  每个 nvim 会话对每个解释器只执行一次，超时 3 秒；PATH 里没有 `python3` 时只补全标准库和项目内代码。
+  传 `sys.prefix` 而不是解释器路径，是因为 uv 等工具安装的 `python3` 是软链接，ty 按链接位置推算出的前缀不对。
+- Python 库本身没有类型注解时，模块成员能补全，但推不出函数返回值类型，比如 requests 2.34 之前的
+  `requests.get()` 返回值后面补不出 `status_code`。装上对应的存根包（如 `types-requests`）就可以，
+  存根装在 venv 或上面这些 site-packages 中都行。
 - Bash：bash-language-server 的 shellcheck 诊断需要 PATH 里有 `shellcheck`（未随包）；
   悬浮显示命令说明会调用系统的 `bash`、`man`，scratch 测试里没有这些程序，只验证了补全。
 
@@ -645,6 +661,19 @@ PATH 指向不存在的目录，再跑同一测试：全部通过。x86_64 宿�
 无 INTERP、无 NEEDED；没有软链接，没有 `.node` 文件，不含测试文件；`examples/init.lua`、`offline.txt` 与仓库一致。
 tar.gz：x86_64 约 150 MB，aarch64 约 144 MB。未验证：真实目标机、悬浮说明和跳转、带第三方依赖的
 Python 虚拟环境、带 `@types/node` 的 Node 项目、shellcheck 诊断。`dist/` 已更新，未发布。
+
+2026-11-03 Python 第三方库补全：ty 不使用 PATH 中的 python3，系统 pip 安装的库补不出来。示例配置改为在
+没有 venv（或 venv 带 `--system-site-packages`）时，用该 python 的 `site.getsitepackages()` 设置
+`environment.python`、`environment.extra-paths`。在 Rocky 9.6 x86_64（Python 3.9，requests 2.32.5 装在
+`/usr/local/lib/python3.9/site-packages`）上测试：修改前 ty 找不到 requests，`ty.toml` 只写 `python = "/usr/bin/python3"`
+也不行；修改后没有 venv 和 `--system-site-packages` 的 venv 都能补全 `Session`、`get`、`headers`；
+项目 `.venv`、项目已有 `ty.toml` 时行为不变；PATH 中没有 python3 时只有标准库补全。requests 2.32.5 没有类型注解，
+`requests.get()` 返回值的成员需要 `types-requests`，装上后通过。本机 Fedora 44 x86_64（系统 Python 3.14、
+uv 安装的 Python 3.14 软链接）和 `192.168.182.150` Fedora 44 aarch64 原生测试同样通过。
+双架构用默认 builder 原生重建，构建内全部测试通过，ELF 架构正确、无 INTERP/NEEDED，运行包中的
+`examples/init.lua`、`offline.txt` 与仓库一致；新的 x86_64 包在 Rocky 机器上复测通过。
+已发布到 fdoc `tools/neovim/`，与 `dist/` 逐字节比较一致；旧包备份为 `.pre-release-2026-11-03-13-19-23`。
+测试是 headless 下直接发补全请求，未在终端交互确认菜单显示；Debian 系 `dist-packages` 和 `pip install --user` 未测试。
 
 ## Reference Documentation
 

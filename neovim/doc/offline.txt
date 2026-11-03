@@ -122,6 +122,9 @@ OpenCode、Compose、Nginx、systemd 等也有固定资料版本，提示不保�
 YAML/JSON 只在文件指定本地 schema 时补全键名，否则只报语法错误：
   YAML 文件头：# yaml-language-server: $schema=./schema.json
   JSON 顶层：  "$schema": "./schema.json"
+Python 第三方库：项目 .venv 或 VIRTUAL_ENV 由 ty 自己查找；没有 venv 时执行一次 PATH 中的
+python3 取 site-packages（含 RHEL 的 /usr/local/lib/pythonX.Y）交给 ty。项目或用户有 ty 配置时不处理。
+库没有类型注解时装对应存根（如 types-requests）才能补全返回值的成员。
 有服务器时可用 gd 跳转、K 悬浮和 Ctrl+x Ctrl+o 手动补全（总开关 on 时）。
 确认 LSP 候选可能应用服务器提供的额外编辑，不等同于纯词库只插入名称。
 
@@ -250,6 +253,7 @@ XML 混合内容空白、JSON 重复键/数值等可能受格式化影响。
 不支持 dlopen 动态 .so 插件/解析器；纯 Lua/Vimscript 插件可离线复制，但依赖也要自备。
 随包 LSP 之外的语言服务器、Shell/终端命令和 Python 解释器不随包提供。
 只有 Nginx 格式化依赖外部 python3；其他随包格式化工具不因语言名称而需要解释器。
+Python LSP 不需要 python3 也能运行，有 python3 时才能补全系统中 pip 安装的第三方库。
 不能由静态链接推断所有脚本、外部服务或浏览器能力都已支持。
 
 词库是离线提示，不是 Schema/配置/HTTP 语义验证器；不承诺目标版本全部兼容。
