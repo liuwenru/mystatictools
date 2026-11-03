@@ -1,0 +1,10 @@
+{
+  "name": "nvim-offline-lsp-node",
+  "private": true,
+  "description": "随 nvim 离线包分发、由静态 node 运行的语言服务器；版本和完整性由 package-lock.json 固定",
+  "dependencies": {
+    "bash-language-server": "5.8.1",
+    "vscode-langservers-extracted": "4.10.0",
+    "yaml-language-server": "2.0.0"
+  }
+}

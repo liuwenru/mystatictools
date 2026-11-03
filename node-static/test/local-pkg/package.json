@@ -1,0 +1,8 @@
+{
+  "name": "offline-local-pkg",
+  "version": "1.0.0",
+  "description": "npm 离线安装本地目录的测试包",
+  "main": "index.js",
+  "bin": { "offline-local-pkg": "index.js" },
+  "license": "MIT"
+}

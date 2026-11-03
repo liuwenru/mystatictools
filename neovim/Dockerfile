@@ -17,8 +17,9 @@ RUN cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release \
       -D LIBXML2_WITH_MODULES=OFF -D LIBXML2_WITH_TESTS=OFF \
     && cmake --build build --target xmllint --parallel 4 \
     && cp build/xmllint /out/nvim/libexec/xmllint
-RUN for tool in /out/nvim/libexec/*; do \
+RUN for tool in /out/nvim/libexec/* /out/nvim/libexec/typescript/lib/tsc /out/nvim/libexec/node/bin/node; do \
       case "$tool" in *.py) continue ;; esac; \
+      if [ -d "$tool" ]; then continue; fi; \
       strip "$tool"; file "$tool"; \
       if readelf -l "$tool" | grep -q INTERP; then exit 1; fi; \
       if readelf -d "$tool" | grep -q '(NEEDED)'; then exit 1; fi; \
@@ -28,6 +29,21 @@ RUN for tool in /out/nvim/libexec/*; do \
         *) exit 1 ;; \
       esac || exit 1; \
     done
+# Node 写的语言服务器：用随包静态 node 自带的 npm 按 package-lock.json 安装，npm ci 校验每个包的 integrity。
+# --ignore-scripts：依赖中只有 core-js 有 postinstall，内容是打印赞助信息。
+# 静态 node 不能加载 .node 原生扩展，安装后确认没有 .node 文件。
+# --no-bin-links：配置直接用 node 执行入口脚本，不需要 .bin；软链接在 ARM 端经 SSHFS 导出会失败。
+COPY lsp-node/package.json lsp-node/package-lock.json /out/nvim/libexec/lsp-node/
+WORKDIR /out/nvim/libexec/lsp-node
+RUN /build/node-dist/bin/node /build/node-dist/lib/node_modules/npm/bin/npm-cli.js ci \
+      --ignore-scripts --omit=dev --no-audit --no-fund --no-update-notifier --no-bin-links \
+      --fetch-retries=5 --cache /tmp/npm-cache --registry=https://registry.npmjs.org/ \
+    && rm -rf /tmp/npm-cache \
+    && ! find . -name '*.node' | grep . \
+    && ! find . -type l | grep . \
+    && test -f node_modules/yaml-language-server/bin/yaml-language-server \
+    && test -f node_modules/vscode-langservers-extracted/bin/vscode-json-language-server \
+    && test -f node_modules/bash-language-server/out/cli.js
 FROM alpine:${ALPINE_VERSION} AS builder
 ARG NVIM_VERSION=0.12.6
 ARG NVIM_SHA256=8629fdc5eb951daf89a76f68cad12f2f1e03fab0d539150ba3fe6d177d254b7f
@@ -77,6 +93,7 @@ RUN curl -fL --retry 4 --retry-all-errors \
          '+helptags /out/nvim/share/nvim/runtime/pack/offline/opt/nvim-tree.lua/doc' '+qa!'
 COPY Dockerfile build.sh fetch-deps.py static-parsers.py bundle-sources.py generate-completion.py init-offline.lua biome-jsonc.json README.md /out/sources/build/
 COPY completion/ /out/sources/build/completion/
+COPY lsp-node/ /out/sources/build/lsp-node/
 COPY doc/ /out/sources/build/doc/
 RUN python3 /out/sources/build/generate-completion.py --check
 COPY test/ /out/sources/build/test/
@@ -108,6 +125,9 @@ ENV HOME=/test XDG_CONFIG_HOME=/test/config XDG_DATA_HOME=/test/data \
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "-l", "/tests/smoke-test.lua"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "+lua if vim.fn.filereadable('/test/headless.ok') ~= 1 then vim.cmd('cquit 1') end", "+qa!"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "/nvim/examples/init.lua", "-i", "NONE", "-c", "lua local ok, err = pcall(dofile, '/tests/completion-test.lua'); if not ok then print(err); vim.cmd('cquit 1') end"]
+# 随包语言服务器：scratch 中没有 shell、libc、Python、系统 Node，且断网。
+RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "/nvim/examples/init.lua", "-i", "NONE", "-c", "lua local ok, err = pcall(dofile, '/tests/lsp-bundled-test.lua'); if not ok then print(err); vim.cmd('cquit 1') end"]
+RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "+lua if vim.fn.filereadable('/test/lsp-bundled.ok') ~= 1 then vim.cmd('cquit 1') end", "+qa!"]
 FROM scratch AS artifact
 COPY --from=minimal-test /nvim /nvim
 COPY --from=builder /out/sources /sources

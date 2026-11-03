@@ -247,28 +247,57 @@ end, {
 	desc = "关闭/恢复当前会话全部补全；无参数查询状态",
 })
 
--- 只接入已有可执行程序；不安装服务器、插件或项目依赖。
+-- 每种语言按顺序取第一个可用命令：先用随包 libexec 中的服务器，没有时再找 PATH。
+-- 不安装服务器、插件或项目依赖。
+local lsp_libexec = vim.fn.fnamemodify(vim.uv.exepath(), ":h:h") .. "/libexec/"
+local lsp_node = lsp_libexec .. "node/bin/node"
+local function node_server(script, ...)
+	return { lsp_node, lsp_libexec .. "lsp-node/node_modules/" .. script, ... }
+end
+local function lsp_cmd_available(cmd)
+	if vim.fn.executable(cmd[1]) ~= 1 then return false end
+	return cmd[1] ~= lsp_node or vim.fn.filereadable(cmd[2]) == 1
+end
 local servers = {
-	nginx = { cmd = { "nginx-language-server" }, filetypes = { "nginx" } },
-	bash = { cmd = { "bash-language-server", "start" }, filetypes = { "sh", "bash" } },
-	python = { cmd = { "pyright-langserver", "--stdio" }, filetypes = { "python" } },
-	lua = { cmd = { "lua-language-server" }, filetypes = { "lua" } },
-	json = { cmd = { "vscode-json-language-server", "--stdio" }, filetypes = { "json", "jsonc" } },
-	yaml = { cmd = { "yaml-language-server", "--stdio" }, filetypes = { "yaml" },
+	nginx = { cmds = { { "nginx-language-server" } }, filetypes = { "nginx" } },
+	bash = { cmds = { node_server("bash-language-server/out/cli.js", "start"), { "bash-language-server", "start" } },
+		filetypes = { "sh", "bash" } },
+	python = { cmds = { { lsp_libexec .. "ty", "server" }, { "pyright-langserver", "--stdio" } },
+		filetypes = { "python" },
+		root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" } },
+	typescript = { cmds = { { lsp_libexec .. "typescript/lib/tsc", "--lsp", "--stdio" } },
+		filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+		root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+		-- 关闭自动类型获取（ATA），不调用 npm 下载 @types。
+		settings = {
+			typescript = { disableAutomaticTypeAcquisition = true },
+			javascript = { disableAutomaticTypeAcquisition = true },
+			["js/ts"] = { tsserver = { automaticTypeAcquisition = { enabled = false } } },
+		} },
+	lua = { cmds = { { "lua-language-server" } }, filetypes = { "lua" } },
+	json = { cmds = { node_server("vscode-langservers-extracted/bin/vscode-json-language-server", "--stdio"),
+		{ "vscode-json-language-server", "--stdio" } }, filetypes = { "json", "jsonc" },
+		init_options = { provideFormatter = false },
+		-- 该服务器收到设置后执行 validateEnabled = !!json.validate.enable，不显式开启就没有诊断。
+		settings = { json = { validate = { enable = true }, schemaDownload = { enable = false } } } },
+	yaml = { cmds = { node_server("yaml-language-server/bin/yaml-language-server", "--stdio"),
+		{ "yaml-language-server", "--stdio" } }, filetypes = { "yaml" },
 		settings = { yaml = { schemaStore = { enable = false } } } },
-	clangd = { cmd = { "clangd" }, filetypes = { "c", "cpp" } },
+	clangd = { cmds = { { "clangd" } }, filetypes = { "c", "cpp" } },
 }
 for name, config in pairs(servers) do
-	if vim.fn.executable(config.cmd[1]) == 1 then
-		config.root_markers = { ".git" }
-		-- 无项目标记的独立配置文件也可启用。
-		config.workspace_required = false
-		if name == "json" then
-			config.init_options = { provideFormatter = false }
-			config.settings = { json = { schemaDownload = { enable = false } } }
+	local cmds = config.cmds
+	config.cmds = nil
+	for _, cmd in ipairs(cmds) do
+		if lsp_cmd_available(cmd) then
+			config.cmd = cmd
+			config.root_markers = config.root_markers or { ".git" }
+			-- 无项目标记的独立配置文件也可启用。
+			config.workspace_required = false
+			vim.lsp.config("offline_" .. name, config)
+			vim.lsp.enable("offline_" .. name)
+			break
 		end
-		vim.lsp.config("offline_" .. name, config)
-		vim.lsp.enable("offline_" .. name)
 	end
 end
 vim.api.nvim_create_autocmd("LspAttach", {

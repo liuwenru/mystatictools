@@ -117,7 +117,11 @@ OpenCode、Compose、Nginx、systemd 等也有固定资料版本，提示不保�
 输入 ./、../、/、~/ 提示路径，相对路径以当前文件所在目录为准，不改变工作目录。
 路径含空格/转义等复杂情况不保证识别；不会自动进行 Shell/JSON 转义。
 只扫描当前文件单词，不扫描其他缓冲区或 tags。
-LSP 服务器不随包提供，只有 PATH 中已有对应程序才启用；其依赖和联网行为需自行管理。
+随包 LSP：Python 用 ty，JS/TS 用 TypeScript 7，YAML、JSON、Shell 由随包静态 node
+运行对应服务器；随包没有时再找 PATH 中的同类程序。Nginx/Lua/C 仍需 PATH 中已有服务器。
+YAML/JSON 只在文件指定本地 schema 时补全键名，否则只报语法错误：
+  YAML 文件头：# yaml-language-server: $schema=./schema.json
+  JSON 顶层：  "$schema": "./schema.json"
 有服务器时可用 gd 跳转、K 悬浮和 Ctrl+x Ctrl+o 手动补全（总开关 on 时）。
 确认 LSP 候选可能应用服务器提供的额外编辑，不等同于纯词库只插入名称。
 
@@ -244,7 +248,7 @@ XML 混合内容空白、JSON 重复键/数值等可能受格式化影响。
 不自动修改 PATH 或 ~/.config/nvim；-u NONE 不加载本包示例功能。
 
 不支持 dlopen 动态 .so 插件/解析器；纯 Lua/Vimscript 插件可离线复制，但依赖也要自备。
-LSP 服务端、Shell/终端命令和 Python 解释器不随包提供。
+随包 LSP 之外的语言服务器、Shell/终端命令和 Python 解释器不随包提供。
 只有 Nginx 格式化依赖外部 python3；其他随包格式化工具不因语言名称而需要解释器。
 不能由静态链接推断所有脚本、外部服务或浏览器能力都已支持。
 

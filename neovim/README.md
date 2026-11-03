@@ -20,9 +20,10 @@ generate-completion.py # 从固定快照提取关键字；仅维护/构建时需
 extras.json           # 附加工具与插件的版本和校验值
 fetch-deps.py         # 下载 Neovim 构建依赖
 fetch-extras.py       # 下载附加工具与插件
+lsp-node/             # Node 语言服务器的 package.json 和 package-lock.json（固定版本和 integrity）
 static-parsers.py     # 静态解析器构建适配
 bundle-sources.py     # 收集源码和许可证
-test/                 # headless、PTY/tmux、文件树及增强功能测试
+test/                 # headless、PTY/tmux、文件树、增强功能及随包 LSP 测试
 dist/                 # 分架构产物、运行包和源码包
 ```
 
@@ -235,7 +236,7 @@ Biome 版本、源码及双架构二进制哈希固定在 `extras.json`，许可
 
 保留文件编辑、撤销/重做、搜索替换、分屏、标签、宏、正则、UTF-8、传统语法高亮、
 文件类型/缩进、帮助文档、netrw，以及 LuaJIT、LPeg、Vimscript、作业/终端、RPC、LSP 客户端代码。
-不附带语言服务器，也不自动下载插件；未通过编译选项硬删 LSP。
+随包附带 Python、JS/TS、YAML、JSON、Shell 的语言服务器（见“随包语言服务器”），不自动下载插件或服务器；未通过编译选项硬删 LSP。
 
 ### 离线帮助与补全总开关
 
@@ -292,27 +293,82 @@ Biome 版本、源码及双架构二进制哈希固定在 `extras.json`，许可
   路径含空格、引号或转义时不保证完整识别，也不会按 Shell/JSON 等语法自动转义，需手动编辑。
   只列举当前一级目录；大型目录、慢速网络挂载仍可能影响响应。
 
-启动时检查 PATH，找到下列语言服务器便启用内置 LSP；未找到则安静跳过，保留路径和正文补全：
+#### 随包语言服务器
 
-| 文件类型 | 查找的服务器命令 |
-| --- | --- |
-| Nginx | `nginx-language-server` |
-| Shell | `bash-language-server start` |
-| Python | `pyright-langserver --stdio` |
-| Lua | `lua-language-server` |
-| JSON / JSONC | `vscode-json-language-server --stdio` |
-| YAML | `yaml-language-server --stdio` |
-| C / C++ | `clangd` |
+Python、JS/TS、YAML、JSON、Shell 的语言服务器**随包交付**，放在 `nvim/libexec/`。
+配置按 nvim 的实际位置定位，不依赖 PATH、系统 Python 或系统 Node。每种语言按下表顺序取第一个可用的命令；
+随包服务器不存在时（如在仓库里直接试用 `init-offline.lua`），再找 PATH 里的同类服务器；都没有就安静跳过，
+保留路径和正文补全。
 
-这些服务器及其 Python/Node 等依赖**不随包交付**，也不会自动安装；静态 Neovim 不代表
-外部服务器也静态。需在启动前部署好并加入 PATH，具体功能取决于服务器及项目配置。
-JSON schema 自动下载、YAML SchemaStore 自动查询关闭；外部服务器本身的其他联网行为
-仍需按其文档或通过目标环境断网约束，不承诺第三方程序完全不联网。
+| 文件类型 | 随包服务器 | 实现与链接方式 | PATH 回退 |
+| --- | --- | --- | --- |
+| Python | ty 0.0.95：`libexec/ty server` | Astral 官方 musl 发布版，Rust，static-pie | `pyright-langserver --stdio` |
+| JS / TS / JSX / TSX | TypeScript 7.0.2：`libexec/typescript/lib/tsc --lsp --stdio` | 微软官方发布版，Go 重写版，静态链接 | 无 |
+| YAML | yaml-language-server 2.0.0 | 由随包静态 Node 26.13.0 运行 | `yaml-language-server --stdio` |
+| JSON / JSONC | vscode-json-language-server（vscode-langservers-extracted 4.10.0） | 同上 | `vscode-json-language-server --stdio` |
+| Shell / Bash | bash-language-server 5.8.1 | 同上 | `bash-language-server start` |
+| Nginx / Lua / C、C++ | 不随包 | — | `nginx-language-server`、`lua-language-server`、`clangd` |
 
-有服务器时，非路径上下文的语义候选加入自动补全，支持内置诊断、`K` 悬浮说明、`gd` 跳转定义，
-以及 `Ctrl+x` 再 `Ctrl+o` 手动触发 LSP 补全。无 `.git` 的独立文件也允许启用。
-不配置保存时格式化、自动修复或自动写文件；主动确认 LSP 候选可能应用服务器提供的
-额外文本编辑（如补充 import），可用撤销检查。
+随包的 Node 是本仓库 `node-static/` 用 `configure --fully-static` 编出来的纯静态 ELF，发布在 fdoc 的
+`tools/node/`，构建时按 `extras.json` 中固定的 URL 和 SHA-256 下载。运行包里只放 `libexec/node/bin/node`，
+不带 npm。三个 Node 服务器在构建时用这个 Node 自带的 npm 执行 `npm ci`，按 `lsp-node/package-lock.json`
+逐个校验 integrity，安装到 `libexec/lsp-node/node_modules/`。
+它们全部是纯 JS 或 WebAssembly，安装后会检查没有 `.node` 原生扩展。静态 Node 不能加载 `.node`，这一点已实测确认。
+安装时用 `--ignore-scripts` 跳过了安装脚本：依赖里只有 core-js 有 postinstall，内容是打印赞助信息。
+`--no-bin-links` 不生成 `.bin` 软链接，配置直接用 node 执行各服务器的入口脚本。
+
+**能用的功能（已在 scratch 断网环境和 glibc 宿主机上实测）：**
+
+| 语言 | 补全 | 诊断 |
+| --- | --- | --- |
+| Python | 标准库成员（`os.pa` → `path`） | 类型错误（`count: int = "a"`） |
+| TypeScript / JS | 内置类型成员、同一项目内其他文件的导出、`.js` 文件 | 类型错误 |
+| YAML | 只在指定了本地 schema 时补全键名 | 不符合 schema 的值，以及 YAML 语法错误 |
+| JSON | 只在指定了本地 schema 时补全键名 | 不符合 schema 的值，以及 JSON 语法错误 |
+| Bash | 文件内定义的变量 | 未测试（需要 shellcheck，未随包） |
+
+另外支持 `K` 悬浮说明、`gd` 跳转定义，以及 `Ctrl+x` 再 `Ctrl+o` 手动触发 LSP 补全，但这些没有单独做自动测试。
+无 `.git` 的独立文件也允许启用。不配置保存时格式化、自动修复或自动写文件；格式化仍由上面的 conform 工具负责。
+主动确认 LSP 候选时，服务器可能附带额外的文本编辑（如补充 import），可以用撤销检查。
+
+**YAML、JSON 的补全依赖 schema。** 离线时 SchemaStore 查询和 schema 下载都已关闭，所以没有 schema 的文件
+只有语法诊断，不能补全键名。Compose、`daemon.json` 等常见文件的补全由下文的离线词库提供。
+需要按 schema 补全和校验时，在文件里指定本地 schema：
+
+```yaml
+# yaml-language-server: $schema=./schema.json
+```
+
+```json
+{ "$schema": "./schema.json" }
+```
+
+相对路径基于当前文件所在目录，也可以用绝对路径。本包不附带任何 schema 文件。
+
+**配置上的取舍：**
+
+- JSON：vscode-json-language-server 收到设置时会执行 `validateEnabled = !!json.validate.enable`，
+  所以必须显式传 `json.validate.enable = true`，否则连语法错误也不报。VS Code 会自动传这个设置，Neovim 不会。
+  `provideFormatter = false`，格式化仍用 jq / Biome。
+- TypeScript：关闭自动类型获取（ATA，`disableAutomaticTypeAcquisition`、
+  `tsserver.automaticTypeAcquisition.enabled = false`）。开启时它会调用 PATH 中的 `npm install @types/...`。
+  这两个设置名取自 TypeScript 7.0.2 源码，是否确实生效没有单独测试。Node 项目的补全依赖项目自己的
+  `node_modules` 里的类型，比如 Node API 需要项目安装 `@types/node`，本包不会替项目安装。
+- Python：ty 按 `pyproject.toml`、`setup.py`、`setup.cfg`、`requirements.txt`、`.git` 识别项目根目录。
+  第三方库的补全需要能找到对应的虚拟环境或 site-packages，没有时只能补全标准库和项目内代码。
+- Bash：bash-language-server 的 shellcheck 诊断需要 PATH 里有 `shellcheck`（未随包）；
+  悬浮显示命令说明会调用系统的 `bash`、`man`，scratch 测试里没有这些程序，只验证了补全。
+
+**已知问题：**
+
+- 退出 nvim 或停止客户端时，TypeScript 7 会在 shutdown 后输出 `context canceled` 并以退出码 1 结束，
+  nvim 会提示 `Client offline_typescript quit with exit code 1`。这只出现在退出阶段，不影响使用。
+- 运行包变大：x86_64 的 tar.gz 从约 53 MB 增加到约 150 MB，解压后约 475 MB。
+  其中 Node 122 MB，`lsp-node` 135 MB，ty 32 MB，TypeScript 7 27 MB。`lsp-node` 中有 64 MB 是
+  vscode-langservers-extracted 为 HTML/ESLint 等服务器引入的 TypeScript 4.9.5，JSON 服务器本身用不到；
+  为了保持和 lockfile 一致，没有手动删除。
+- 第三方服务器本身的联网行为：已关闭的只有上面列出的 schema 下载、SchemaStore 和 ATA。
+  测试都在断网环境中进行，不承诺这些程序在联网环境中绝不发起请求。
 
 `nginx.conf` 沿用 runtime 的文件类型识别。自定义名称的配置若未识别，可执行
 `:set filetype=nginx`；不把所有 `.conf` 强制识别为 Nginx，也不要求额外项目配置文件。
@@ -579,6 +635,17 @@ tmux 200×50、3000 行 Nginx 配置，每次移动由约 2.5 ms 降到约 0.1 m
 运行包内 `examples/init.lua` 与仓库一致，不含仓库测试文件。`dist/` 已更新，未发布；`dist/SHA256SUMS` 未更新。
 未在真实目标机 SSH 链路上实测卡顿改善。
 
+2026-11-03 随包语言服务器：新增 ty 0.0.95、TypeScript 7.0.2、静态 Node 26.13.0（来自本仓库 `node-static/`，
+发布在 fdoc `tools/node/`）和三个 Node 服务器。双架构都用默认 builder 原生构建：x86_64 在本机，aarch64 在
+`192.168.182.150`，没有用模拟器。构建内原有完整测试全部通过，新增的 `test/lsp-bundled-test.lua` 在
+`FROM scratch` 断网阶段运行（没有 shell、libc、Python、系统 Node），5 种服务器的补全和诊断全部通过。
+两台 Fedora 44 宿主机（glibc）上，把 tar 包解压到临时目录（移动过安装位置），用 `env -i` 清空环境变量，
+PATH 指向不存在的目录，再跑同一测试：全部通过。x86_64 宿主机测试用的是文档定稿前的那次构建，
+和最终产物只差 README/帮助文本。两个包中 nvim、ty、tsc、node、biome、ruff、jq 均为对应架构的 ELF，
+无 INTERP、无 NEEDED；没有软链接，没有 `.node` 文件，不含测试文件；`examples/init.lua`、`offline.txt` 与仓库一致。
+tar.gz：x86_64 约 150 MB，aarch64 约 144 MB。未验证：真实目标机、悬浮说明和跳转、带第三方依赖的
+Python 虚拟环境、带 `@types/node` 的 Node 项目、shellcheck 诊断。`dist/` 已更新，未发布。
+
 ## Reference Documentation
 
 - [本包使用的 nginxfmt.py](https://fdoc.epoint.com.cn:3366/tmp/.liuwenru/tools/nginxfmt.py)、[原项目](https://github.com/slomkowski/nginx-config-formatter)
@@ -602,6 +669,12 @@ tmux 200×50、3000 行 Nginx 配置，每次移动由约 2.5 ms 降到约 0.1 m
 - [MDN HTTP Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers)、[固定内容源码](https://github.com/mdn/content/tree/bd5271a96d814ed6876e974186c465f1b3959e07/files/en-us/web/http/reference/headers)
 - [内置 LSP 配置与补全](https://neovim.io/doc/user/lsp.html)
 - [Nginx 语言服务器接入参考](https://github.com/neovim/nvim-lspconfig/blob/master/lsp/nginx_language_server.lua)
+- [ty 0.0.95 发布页](https://github.com/astral-sh/ty/releases/tag/0.0.95)、[ty 文档](https://docs.astral.sh/ty/)
+- [TypeScript 7.0.2（typescript-go）发布页](https://github.com/microsoft/typescript-go/releases/tag/typescript%2Fv7.0.2)、[LSP 启动参数源码](https://github.com/microsoft/typescript-go/blob/typescript/v7.0.2/cmd/tsgo/lsp.go)、[ATA 设置源码](https://github.com/microsoft/typescript-go/blob/typescript/v7.0.2/internal/ls/lsutil/userpreferences.go)
+- [yaml-language-server 2.0.0](https://github.com/redhat-developer/yaml-language-server)（[modeline 指定 schema](https://github.com/redhat-developer/yaml-language-server#using-inlined-schema)）
+- [vscode-langservers-extracted 4.10.0](https://github.com/hrsh7th/vscode-langservers-extracted)、[JSON 服务器设置说明](https://github.com/microsoft/vscode/blob/main/extensions/json-language-features/server/README.md)
+- [bash-language-server 5.8.1](https://github.com/bash-lsp/bash-language-server)
+- [静态 Node 构建说明](../node-static/README.md)、[npm ci](https://docs.npmjs.com/cli/commands/npm-ci)
 - [nvim-tree 固定版本](https://github.com/nvim-tree/nvim-tree.lua/releases/tag/nvim-tree-v1.19.0)
 - [nvim-tree 文档](https://github.com/nvim-tree/nvim-tree.lua/blob/nvim-tree-v1.19.0/doc/nvim-tree-lua.txt)
 - [conform.nvim 文档](https://github.com/stevearc/conform.nvim/tree/v9.1.0)

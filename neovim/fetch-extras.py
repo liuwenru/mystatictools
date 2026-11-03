@@ -39,6 +39,20 @@ for item in json.loads(manifest.read_text()):
             with tar.extractfile(matches[0]) as src, (root / 'libexec' / name).open('wb') as dst:
                 shutil.copyfileobj(src, dst)
         (root / 'libexec' / name).chmod(0o755)
+    elif kind == 'package-tar':
+        # 可执行文件依赖同目录资源（如 TypeScript 的 lib.*.d.ts），整个包解压到 libexec/<name>/。
+        destination = root / 'libexec' / name
+        destination.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['tar', '-xf', str(archive), '--strip-components=1', '-C', str(destination)], check=True)
+    elif kind == 'node-dist':
+        # 完整 Node 只留在构建目录供 npm ci 使用；运行包只带 bin/node，不带 npm。
+        build_node = pathlib.Path('/build/node-dist')
+        build_node.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['tar', '-xf', str(archive), '--strip-components=1', '-C', str(build_node)], check=True)
+        (root / 'libexec/node/bin').mkdir(parents=True, exist_ok=True)
+        shutil.copy(build_node / 'bin/node', root / 'libexec/node/bin/node')
+        (root / 'libexec/node/bin/node').chmod(0o755)
+        shutil.copy(build_node / 'BUILD-INFO.txt', root / 'libexec/node/BUILD-INFO.txt')
     else:
         destination = (root / 'share/nvim/runtime/pack/offline/opt' / name
                        if kind == 'plugin' else pathlib.Path('/build') / name)
