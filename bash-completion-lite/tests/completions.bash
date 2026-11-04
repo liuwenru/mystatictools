@@ -211,6 +211,83 @@ _mini_ipset_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
 checks=$((checks + 1))
 unset TEST_IPSET_FAIL
+
+# LVM: help text in the 2.03 --longhelp layout; only read-only reports are allowed.
+lvm()
+{
+    case "$*" in
+        lvcreate\ --longhelp)
+            printf '  lvcreate - Create a logical volume\n\n'
+            printf '  lvcreate -L|--size Size[m|UNIT] VG\n\t[ --type linear ] (implied)\n\t[ -l|--extents Number[PERCENT] ]\n\t[ PV ... ]\n'
+            printf '  lvcreate --type thin-pool -L|--size Size[m|UNIT] VG\n'
+            printf '  lvcreate -L|--size Size[m|UNIT] -s|--snapshot LV\n'
+            printf '  lvcreate --thinpool LV_new -L|--size Size[m|UNIT] VG\n'
+            printf '  lvcreate --thinpool LV -V|--virtualsize Size[m|UNIT] VG\n'
+            printf '\t[ -a|--activate y|n|ay ]\n\t[ -n|--name String ]\n\t[ -r|--readahead auto|none|Number ]\n'
+            printf '\t[    --alloc contiguous|cling|normal ]\n\t[ -y|--yes ]\n' ;;
+        lvextend\ --longhelp)
+            printf '  lvextend -L|--size [+]Size[m|UNIT] LV\n  lvextend LV PV ...\n\t[ -r|--resizefs ]\n\t[ -l|--extents [+]Number[PERCENT] ]\n' ;;
+        lvs\ --longhelp)
+            printf '  lvs\n\t[ -a|--all ]\n\t[ -o|--options String ]\n\t[    --units r|R|h|H|b|B|s|S|k|K|m|M|g|G|t|T|p|P|e|E ]\n' ;;
+        vgchange\ --longhelp) printf '  vgchange -a|--activate y|n|ay\n\t[ -A|--autobackup y|n ]\n' ;;
+        vgcreate\ --longhelp) printf '  vgcreate VG_new PV ...\n\t[ -s|--physicalextentsize Size[m|UNIT] ]\n' ;;
+        vgcfgrestore\ --longhelp) printf '  vgcfgrestore -f|--file String VG\n' ;;
+        *\ --longhelp) printf '  %s\n\t[ -y|--yes ]\n' "${1}" ;;
+        'vgs --noheadings -o vg_name') printf '  vg0\n  backup\n' ;;
+        'lvs --noheadings -o vg_name,lv_name') printf '  vg0 root\n  vg0 data\n' ;;
+        'lvs --noheadings -o lv_name vg0') printf '  root\n  data\n' ;;
+        'pvs --noheadings -o pv_name') printf '  /dev/sdb\n' ;;
+        'lvs -o help') printf '    lv_name   - Name.\n    devices   - Devices.\n' >&2 ;;
+        *) printf 'UNEXPECTED_LVM_QUERY\n' ;;
+    esac
+}
+_mini_lvm_disks() { printf '%s\n' /dev/vdc; }
+for command in lvm lvcreate lvextend vgs pvcreate; do
+    complete -p "$command" >/dev/null
+done
+for command in $_MINI_LVM_TOOLS; do
+    checks=$((checks + 1))
+    [ "$(readlink "$root/completions/$command.bash")" = lvm.bash ] || { printf 'FAIL: missing link completions/%s.bash\n' "$command"; failures=$((failures + 1)); }
+done
+check lvcreate _mini_lvm_completion lvm lvcr
+check vgcreate _mini_lvm_completion lvm help vgc
+check vg0 _mini_lvm_completion lvcreate -L 10G ''
+check vg0 _mini_lvm_completion lvm lvcreate -L 10G -n data ''
+check vg0/root _mini_lvm_completion lvcreate -L 1G -s ''
+check /dev/sdb _mini_lvm_completion lvcreate -L 10G vg0 ''
+check thin-pool _mini_lvm_completion lvcreate --type th
+check vg0/data _mini_lvm_completion lvcreate --thinpool vg0/d
+check ay _mini_lvm_completion lvcreate -a a
+check cling _mini_lvm_completion lvcreate --alloc = cl
+check --readahead _mini_lvm_completion lvcreate --read
+check auto _mini_lvm_completion lvcreate -r ''
+check vg0/root _mini_lvm_completion lvextend -r -L +1G ''
+check /dev/sdb _mini_lvm_completion lvextend -l +100%FREE vg0/root ''
+check backup _mini_lvm_completion vgs b
+check ay _mini_lvm_completion vgchange -a ''
+check vg0 _mini_lvm_completion vgchange -a y ''
+check vg0 _mini_lvm_completion vgchange -ay ''
+check /dev/vdc _mini_lvm_completion vgextend vg0 ''
+check /dev/sdb _mini_lvm_completion vgreduce vg0 ''
+check /dev/vdc _mini_lvm_completion vgcreate -s 4M newvg ''
+check /dev/vdc _mini_lvm_completion pvcreate ''
+check /dev/sdb _mini_lvm_completion pvs ''
+check data _mini_lvm_completion lvrename vg0 d
+check vg0/root _mini_lvm_completion lvs vg0/r
+check lv_name,devices _mini_lvm_completion lvs -o lv_name,dev
+check +devices _mini_lvm_completion lvs -o +dev
+check G _mini_lvm_completion lvs --units G
+check vg0 _mini_lvm_completion lvs -a v
+for line in 'vgcreate ' 'vgrename vg0 ' 'lvcreate -n ' 'lvcreate -L ' 'lvcreate -L 1G -s vg0/root ' 'lvrename vg0/root '; do
+    read -r -a COMP_WORDS <<< "$line"
+    [[ "$line" != *' ' ]] || COMP_WORDS+=('')
+    COMP_CWORD=$((${#COMP_WORDS[@]} - 1))
+    _mini_lvm_completion || true
+    checks=$((checks + 1))
+    [ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: %s -> unexpected <%s>\n' "$line" "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+done
+unset -f lvm
+
 check ruleset _mini_nft_completion nft list ru
 check inet _mini_nft_completion nft add table in
 check filter _mini_nft_completion nft list table inet fi

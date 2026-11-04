@@ -33,6 +33,7 @@
 | `tar` | 常用选项、`-xzvf` / `xzvf` 组合、归档/输入文件路径、`-C` 目录、格式和引用风格 |
 | `git` | 系统自带 git 官方补全时直接使用官方补全；否则使用自带规则：子命令和别名、各子命令选项、分支/标签/远程分支、`A..B` 区间、远程名、`push`/`fetch`/`pull` 的远程分支、已修改/已暂存文件、stash、`remote`/`stash`/`worktree` 等二级子命令、配置项名 |
 | `tmux` | 子命令及别名、各子命令的选项，`-t`/`-s` 后的会话/窗口/窗格/客户端，缓冲区名、键表、选项名、hook 名、布局名，开关型选项的 `on`/`off`，目录、文件和命令名 |
+| `lvm` | `lvm` 子命令及 `pvs`/`vgs`/`lvs`、`lvcreate`/`lvextend`/`vgextend` 等 43 个 LVM 命令：本机 LVM 支持的选项、`y|n`、`--type`、`--alloc` 等可选值，PV/VG/LV 名称，`pvcreate`/`vgcreate`/`vgextend` 的空闲磁盘，`lvs -o` 字段名 |
 
 ### 依赖和边界
 
@@ -87,6 +88,28 @@
   `hash:ip` 等类型兼容 Bash 默认的冒号分词。新集合名、IP/端口等条目及数值
   参数手工输入；不补全集合成员、交互模式或任意缩写。添加参数为常用候选，
   不查询目标集合类型，`nomatch` 等需自行确认类型支持；类型/选项也受本机版本限制。
+- `lvm.bash` 注册 `lvm` 和 43 个 `pv*`/`vg*`/`lv*` 命令；`completions/` 中的 `lvcreate.bash`、
+  `vgs.bash` 等都是指向 `lvm.bash` 的软链接，按需加载器（自带的和官方 `bash-completion`）
+  按命令名找文件，所以每个命令都需要一个文件名。复制安装时用 `cp -R`（默认保留软链接）。
+  系统装有 `bash-completion` 时，用户目录中的这些文件优先于系统自带的 lvm 补全。
+- 选项名、哪些选项带参数、`y|n` / `--type` / `--alloc` / `--units` 等可选值，在按 Tab 时从
+  本机 `<命令> --longhelp`（失败时 `--help`）解析，跟随本机 LVM 版本；按 LVM 2.03 的帮助格式
+  编写，在 2.03.38 上实测，过旧版本（2.02.169 之前的帮助格式）只有很少的选项候选。
+  同一个短选项在不同命令中含义不同（如 `lvs -a` 不带参数、`lvcreate -a y`），因此按命令分别解析。
+- PV/VG/LV 名称来自 `pvs`/`vgs`/`lvs --noheadings -o ...`，`lvs -o` 字段名来自 `lvs -o help`，
+  都是只读报告命令，不激活、不修改卷；有 `timeout` 时限时 2 秒（额外 1 秒强制结束）。
+  通常需要 root：普通用户查询失败时没有名称候选，只有选项候选。LV 写成 `VG/LV`，
+  `lvrename VG` 之后补全该 VG 内的 LV 名。不列出 `-a` 才显示的内部 LV。
+- `pvcreate`、`vgcreate`、`vgextend`、`vgimportclone`、`--devices` 的磁盘候选读取 `/sys/class/block`，
+  排除：大小为 0 或只读的设备、`ram*`/`zram*`、已有分区的整盘、已被 device-mapper/LVM
+  占用（`holders` 非空）的设备、LVM 自己的 LV，以及 `/proc/mounts`、`/proc/swaps` 中的设备；
+  dm 设备显示为 `/dev/mapper/<名称>`。只是减少误选，不保证设备上没有数据：未挂载的文件系统、
+  RAID 成员、尚未加入 VG 的 PV 仍会列出，执行前请用 `lsblk -f` / `blkid` 确认。
+  输入含 `/` 的路径（如 `/dev/disk/by-id/`）时同时补全文件路径。
+- 位置参数类型按命令写在脚本里（如 `vgextend VG 磁盘`、`vgreduce VG PV`、`lvextend LV PV`、
+  `lvcreate -s` 后为源 LV、`-T` 后为 VG 或 `VG/thinpool`）；新卷名、大小、标签、`--select`
+  表达式、`lvmconfig` 配置项不补全。`-L10G`、`-ay` 这类参数紧贴选项的写法能正确跳过，
+  但不补全紧贴部分的值；命令行按空白分词。
 - `tar` 支持 `-f`、`--file=路径`、`-C`、`--directory=目录` 等参数补全。
   不读取归档内容、不执行压缩程序；解包/列出时的成员名不从归档中查询，
   而是提供本地路径。常用无横线组合支持以 `f` 结尾（如 `xzvf`），不完整解析
@@ -143,7 +166,8 @@ Docker 查询。动态命令使用桩函数，不访问真实服务、防火墙�
 `TMPDIR` 为可写临时目录。
 
 官方参考： [ipset 手册](https://ipset.netfilter.org/ipset.man.html)，
-[git 官方补全脚本 git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)。
+[git 官方补全脚本 git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)，
+[LVM 命令手册 lvm(8)](https://man7.org/linux/man-pages/man8/lvm.8.html)、[lvcreate(8)](https://man7.org/linux/man-pages/man8/lvcreate.8.html)、[lvs(8)](https://man7.org/linux/man-pages/man8/lvs.8.html)。
 
 ## 安装
 
