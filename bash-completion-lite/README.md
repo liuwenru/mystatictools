@@ -21,7 +21,7 @@
 | `rg` | 常用选项、颜色/引擎、从 `--type-list` 获取文件类型、路径 |
 | `nslookup` | 常用选项、`-type=` 等查询类型、`/etc/hosts` 中的主机名 |
 | `iptables` | 常用选项、表、内置链/用户链、协议、网卡、目标、连接状态 |
-| `ipset` | 常用子命令、已有集合名、集合类型、创建/添加参数、输出格式和文件路径 |
+| `ipset` | 常用子命令、已有集合名、本机支持的集合类型、按类型的创建参数、按目标集合实际选项的添加参数、`del`/`test` 的已有成员、输出格式和文件路径 |
 | `nft` | 常用操作、对象、协议族、已有表/链/集合、部分规则关键字 |
 | `scp` | 常用选项、SSH 配置中的 Host 别名、本地路径 |
 | `docker` | 常用子命令/选项、本机容器/镜像/网络/卷名，`cp` 两端的本地/容器路径，`load -i`/`--input=`、`save -o`/`--output=` 和 `<`、`>` 重定向后的本地文件，部分二级子命令 |
@@ -83,11 +83,25 @@
   自己解析，包括它所引用的其他文件。不自行解析 YAML，不做变量或命令替换。
   静态候选兼顾常见 Compose V1 / V2 standalone，旧版本未必支持所有选项或 profile 查询。
 - `nslookup` 不发起 DNS 查询；目前不补全交互式提示符中的命令。
-- `ipset` 仅通过 `ipset list -name` 查询集合名，失败时静默返回，不提权、不读取
-  集合成员、不修改集合。支持常用完整子命令及 `n` / `x` / `e` / `w` 别名，
-  `hash:ip` 等类型兼容 Bash 默认的冒号分词。新集合名、IP/端口等条目及数值
-  参数手工输入；不补全集合成员、交互模式或任意缩写。添加参数为常用候选，
-  不查询目标集合类型，`nomatch` 等需自行确认类型支持；类型/选项也受本机版本限制。
+- `ipset` 只执行只读查询，失败时静默返回，不提权、不修改集合；有 `timeout` 时每次限时 2 秒。
+  使用命令行中输入的同一个二进制（如 `./ipset`）。支持常用完整子命令及 `n` / `x` / `e` / `w` 别名。
+  - 集合名：`ipset list -name`。
+  - 集合类型：解析 `ipset help` 的 "Supported set types"，跟随本机 ipset 版本；
+    这是用户态工具支持的类型，内核缺少对应模块时 `create` 仍会失败。查询失败时用脚本内固定列表。
+  - `create` 参数：解析 `ipset help <类型>` 中 create 一节，`family` 补全 `inet`/`inet6`，
+    已写过的参数不再列出。查询失败时用脚本内固定的常用参数。
+  - `add` 参数：先用 `ipset list -t <集合>` 读取集合的类型和创建参数，再从 `ipset help <类型>`
+    取 add 一节。`timeout` / `packets`、`bytes` / `comment` / `skbmark` 等只在集合创建时带了
+    `timeout` / `counters` / `comment` / `skbinfo` 时列出，因为否则 `ipset add` 会报错；
+    `nomatch` 只给支持它的类型（如 `hash:net`）。`list:set` 的条目和 `before`/`after` 补全集合名。
+    `list -t` 失败（通常是非 root）时退回到不区分类型的常用参数。
+  - `del` / `test` 的条目：从 `ipset list <集合>` 的 Members 读取已有成员，按已输入前缀过滤，
+    最多列出 1000 个（`_MINI_IPSET_MAX_MEMBERS`）。内核仍会输出整个集合，几十万条的集合按 Tab
+    可能要等到 2 秒超时；`test` 常用于检查不在集合里的地址，这时只能手工输入。
+  - 冒号：`hash:ip`、`2001:db8::1` 等含冒号的词按实际命令行（`COMP_LINE`）处理，兼容 Bash 默认
+    在冒号处分词。
+  - 不补全：新集合名、`add` 的新条目、数值参数、`comment` 内容、交互模式（`ipset -`）和任意缩写。
+    `comment "含 空格"` 之后的位置可能按空格误判。
 - `lvm.bash` 注册 `lvm` 和 43 个 `pv*`/`vg*`/`lv*` 命令；`completions/` 中的 `lvcreate.bash`、
   `vgs.bash` 等都是指向 `lvm.bash` 的软链接，按需加载器（自带的和官方 `bash-completion`）
   按命令名找文件，所以每个命令都需要一个文件名。复制安装时用 `cp -R`（默认保留软链接）。

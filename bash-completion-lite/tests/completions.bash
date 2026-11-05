@@ -45,10 +45,36 @@ rg() { printf '%s\n' 'rust: *.rs' 'python: *.py'; }
 iptables() { printf '%s\n' '-P INPUT ACCEPT' '-N CUSTOM_CHAIN'; }
 ipset()
 {
-    # Any command other than this read-only name query is a test failure.
-    [ "$*" = 'list -name' ] || { printf 'UNEXPECTED_IPSET_QUERY\n'; return 1; }
+    # Only read-only queries are allowed; anything else is a test failure.
     [ "${TEST_IPSET_FAIL:-}" != yes ] || return 1
-    printf '%s\n' blocked trusted
+    [ "${TEST_IPSET_NOHELP:-}" != yes ] || [ "$1" != help ] || return 1
+    case "$*" in
+        'help hash:ip'|'help hash:net'|'help hash:mac'|'help bitmap:port'|'help list:set')
+            # Real `ipset help TYPE` prints the general usage first, in the same layout.
+            printf '%s\n' 'Usage: ipset [options] COMMAND' '' 'Commands:' 'create SETNAME TYPENAME [type-specific-options]' '        Create a new set' 'add SETNAME ENTRY' '        Add entry to the named set' ''
+            printf '%s type specific options:\n\n' "$2" ;;
+    esac
+    case "$*" in
+        'list -name') printf '%s\n' blocked trusted group ;;
+        'list -t blocked') printf '%s\n' 'Name: blocked' 'Type: hash:ip' 'Header: family inet hashsize 1024 maxelem 65536 timeout 0 comment bucketsize 12' ;;
+        'list -t trusted') printf '%s\n' 'Name: trusted' 'Type: hash:net' 'Header: family inet hashsize 1024 maxelem 65536 bucketsize 12' ;;
+        'list -t group') printf '%s\n' 'Name: group' 'Type: list:set' 'Header: size 8' ;;
+        'list blocked') printf '%s\n' 'Name: blocked' 'Type: hash:ip' 'Header: family inet timeout 0 comment' 'Members:' '192.0.2.1 timeout 30 comment "x"' '192.0.2.10 timeout 0' '2001:db8::1 timeout 0' ;;
+        'list trusted') printf '%s\n' 'Name: trusted' 'Type: hash:net' 'Members:' '10.0.0.0/8' ;;
+        help)
+            printf '%s\n' 'Usage: ipset [options] COMMAND' '' 'Supported set types:'
+            printf '    %s\t\t%s\n' hash:ip 6 hash:ip 5 hash:net 7 hash:mac 1 bitmap:port 3 list:set 3 hash:ip,port,net 8 ;;
+        'help hash:ip')
+            printf '%s\n' 'create SETNAME hash:ip ' '               [family inet|inet6]|[-4|-6]' '               [hashsize VALUE]' '               [netmask CIDR]' '               [timeout VALUE]' '               [counters]' '               [comment]' '               [skbinfo]'
+            printf '%s\n' 'add    SETNAME hash:ip IP' '               [timeout VALUE]' '               [packets VALUE]' '               [bytes VALUE]' '               [comment "string"]' '               [skbmark VALUE]' 'del    SETNAME hash:ip IP' 'test   SETNAME hash:ip IP' '' 'where depending on the INET family' ;;
+        'help hash:net')
+            printf '%s\n' 'create SETNAME hash:net ' '               [family inet|inet6]|[-4|-6]' '               [timeout VALUE]' 'add    SETNAME hash:net IP[/CIDR]' '               [timeout VALUE]' '               [nomatch]' '               [comment "string"]' 'del    SETNAME hash:net IP[/CIDR]' 'test   SETNAME hash:net IP[/CIDR]' '               [nomatch]' ;;
+        'help hash:mac') printf '%s\n' 'create SETNAME hash:mac ' '               [hashsize VALUE]' '               [timeout VALUE]' 'add    SETNAME hash:mac MAC' ;;
+        'help bitmap:port') printf '%s\n' 'create SETNAME bitmap:port range [PROTO:]FROM-TO' '               [timeout VALUE]' 'add    SETNAME bitmap:port [PROTO:]PORT|FROM-TO' ;;
+        'help list:set') printf '%s\n' 'create SETNAME list:set ' '               [size VALUE]' 'add    SETNAME list:set NAME [before|after NAME]' '               [timeout VALUE]' '               [before|after NAME]' 'del    SETNAME list:set NAME [before|after NAME]' ;;
+        help\ *) return 1 ;;
+        *) printf 'UNEXPECTED_IPSET_QUERY\n'; return 1 ;;
+    esac
 }
 nft()
 {
@@ -188,25 +214,55 @@ check blocked _mini_ipset_completion ipset -q list bl
 check trusted _mini_ipset_completion ipset swap blocked tr
 check trusted _mini_ipset_completion ipset -output save -file sets.txt swap blocked tr
 check hash:ip _mini_ipset_completion ipset create new hash:i
-check ip _mini_ipset_completion ipset create new hash : i
-check ip _mini_ipset_completion ipset create new hash :
+TEST_COMP_LINE='ipset create new hash:i' check ip _mini_ipset_completion ipset create new hash : i
+TEST_COMP_LINE='ipset create new hash:' check ip _mini_ipset_completion ipset create new hash :
 check list:set _mini_ipset_completion ipset help list:s
-check family _mini_ipset_completion ipset create new hash : ip fa
-check inet6 _mini_ipset_completion ipset create new hash : ip family in
+TEST_COMP_LINE='ipset create new hash:ip fa' check family _mini_ipset_completion ipset create new hash : ip fa
+TEST_COMP_LINE='ipset create new hash:ip family in' check inet6 _mini_ipset_completion ipset create new hash : ip family in
 check range _mini_ipset_completion ipset n new bitmap:port ra
 check timeout _mini_ipset_completion ipset add blocked 192.0.2.1 ti
 check json _mini_ipset_completion ipset list -output j
 check xml _mini_ipset_completion ipset -o x
+# Types and per-type parameters come from `ipset help`; add follows the set's header.
+check hash:ip,port,net _mini_ipset_completion ipset create new hash:ip,p
+check bitmap:port _mini_ipset_completion ipset help bit
+check netmask _mini_ipset_completion ipset create new hash:ip net
+check -6 _mini_ipset_completion ipset create new hash:ip -
+check timeout _mini_ipset_completion ipset create new hash:mac ''
+check size _mini_ipset_completion ipset create new list:set ''
+check comment _mini_ipset_completion ipset add blocked 192.0.2.5 ''
+check nomatch _mini_ipset_completion ipset add trusted 10.1.0.0/16 ''
+check nomatch _mini_ipset_completion ipset test trusted 10.0.0.0/8 ''
+check trusted _mini_ipset_completion ipset add group tr
+check after _mini_ipset_completion ipset add group trusted ''
+check blocked _mini_ipset_completion ipset add group trusted before ''
+check 192.0.2.10 _mini_ipset_completion ipset del blocked 192.0.2.1
+check 10.0.0.0/8 _mini_ipset_completion ipset -exist test trusted ''
+TEST_COMP_LINE='ipset del blocked 2001:db8::' check 1 _mini_ipset_completion ipset del blocked 2001 : db8 ::
+TEST_COMP_LINE='ipset del blocked 2001:d' check 'db8::1' _mini_ipset_completion ipset del blocked 2001 : d
+# Parameters not supported by the set, already used, or meant for other types.
+for line in 'add blocked 192.0.2.5 pa' 'add blocked 192.0.2.5 sk' 'add trusted 10.1.0.0/16 com' 'add blocked 192.0.2.5 timeout 30 ti' 'create new hash:ip timeout 1 ti' 'create new hash:mac fam' 'add blocked 1' 'del trusted 192' 'add blocked 192.0.2.5 en' 'create new hash:ip ty'; do
+    COMP_LINE="ipset $line"; COMP_POINT=${#COMP_LINE}
+    read -r -a COMP_WORDS <<< "$COMP_LINE"
+    COMP_CWORD=$((${#COMP_WORDS[@]} - 1))
+    _mini_ipset_completion || true
+    checks=$((checks + 1))
+    [ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: %s -> unexpected <%s>\n' "$COMP_LINE" "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+done
+# Without `ipset help` the fixed type list is used.
+TEST_IPSET_NOHELP=yes check hash:net,iface _mini_ipset_completion ipset create new hash:net,i
+TEST_IPSET_NOHELP=yes check family _mini_ipset_completion ipset create new hash:net fa
 for line in 'create ' 'rename blocked new' 'add blocked ' 'create new hash:ip timeout ' 'create new hash:mac family' ; do
     read -r -a COMP_WORDS <<< "ipset $line"
     [[ "$line" != *' ' ]] || COMP_WORDS+=('')
     COMP_CWORD=$((${#COMP_WORDS[@]} - 1))
+    COMP_LINE="ipset $line"; COMP_POINT=${#COMP_LINE}
     _mini_ipset_completion || true
     [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
     checks=$((checks + 1))
 done
 TEST_IPSET_FAIL=yes
-COMP_WORDS=(ipset list ''); COMP_CWORD=2
+COMP_WORDS=(ipset list ''); COMP_CWORD=2; COMP_LINE='ipset list '; COMP_POINT=${#COMP_LINE}
 _mini_ipset_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
 checks=$((checks + 1))
