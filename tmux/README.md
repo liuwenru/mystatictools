@@ -99,6 +99,20 @@ tmux 优先读取目标机的 terminfo；找不到对应定义时再使用内嵌
 set -g default-terminal tmux-256color
 ```
 
+目标机没有该定义时（如 CentOS 7），可用本仓库 `ncurses-terminfo` 包补装，做法见其 README 中的一键安装 snippet：
+
+```sh
+/usr/local/ncurses-terminfo/install.sh -o /usr/share/terminfo tmux-256color
+infocmp tmux-256color | head -n 2        # 能读到即可
+```
+
+- 要装到 `/usr/share/terminfo`，不要装到 `/etc/terminfo`。窗格里如果运行 `static_tools` 中的 iftop、nethogs、tcptrack，
+  它们只查 `/usr/share/terminfo`。
+- 修改 `default-terminal` 只对新建的窗格生效。已有窗格的 `TERM` 不变，需要新开窗格，
+  或执行 `tmux kill-server` 后重新启动（会结束所有会话）。
+- 改用 tmux-256color 后，斜体、`Smulx` 下划线样式、`Ss`/`Se` 光标形状等能力可以被窗格内程序识别；
+  定义没装好时，窗格里的程序会报 `unknown terminal` 或 `Error opening terminal`，这时改回 screen-256color 即可。
+
 **内嵌 terminfo 只供这个 tmux 使用**，不会为窗格里的 vim、less 等程序安装终端定义。
 不要仅为消除报错就把任意终端的 `TERM` 改成不匹配的类型。
 

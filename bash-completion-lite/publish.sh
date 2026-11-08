@@ -30,25 +30,36 @@ trap 'error "发布失败（命令所在行：${LINENO}）"' ERR
 info "项目目录：${SCRIPT_DIR}"
 info "发布目录：${PUBLISH_ROOT}"
 
-mkdir -p "$PUBLISH_ROOT"
+# 先在本机临时目录整理和打包，再复制到发布目录。
+# 不在 sshfs 上直接打包：刚写入的文件属性更新有延迟，tar 会报
+# "file changed as we read it" 并返回 1（文件内容其实已完整）。
+STAGE="$(mktemp -d)"
+trap 'rm -rf -- "$STAGE"' EXIT
+STAGE_SOURCE="${STAGE}/${PROJECT_NAME}"
 
-info "正在复制项目文件……"
-mkdir -p "$PUBLISH_SOURCE"
+info "正在整理项目文件……"
+mkdir -p "$STAGE_SOURCE"
 
-# 包含隐藏文件，保留修改时间和软链接；不会删除目标中的历史文件
-# 不保留权限/ACL：发布目录是 sshfs，不支持 ACL，cp -a 会报 Operation not supported
-cp -R --preserve=timestamps,links "${SCRIPT_DIR}/." "${PUBLISH_SOURCE}/"
+# 包含隐藏文件，保留修改时间和软链接
+cp -R --preserve=timestamps,links "${SCRIPT_DIR}/." "${STAGE_SOURCE}/"
 
-# 防止把发布脚本自身复制进发布包；如需保留可删除这一行
-rm -f "${PUBLISH_SOURCE}/publish.sh"
-
-# 测试脚本和桩数据不进入发布包；同时清掉旧版本发布时留下的 tests/
-rm -rf "${PUBLISH_SOURCE}/tests"
+# 发布脚本自身、测试脚本和桩数据不进入发布包
+rm -f "${STAGE_SOURCE}/publish.sh"
+rm -rf "${STAGE_SOURCE}/tests"
 
 info "正在生成发布包……"
-tar -C "$PUBLISH_ROOT" \
-    -zcf "$ARCHIVE" \
+tar -C "$STAGE" \
+    -zcf "${STAGE}/${PROJECT_NAME}.tar.gz" \
     "$PROJECT_NAME"
+
+info "正在复制到发布目录……"
+mkdir -p "$PUBLISH_SOURCE"
+
+# 不删除目标中的历史文件；清掉旧版本发布时留下的 tests/
+# 不保留权限/ACL：发布目录是 sshfs，不支持 ACL，cp -a 会报 Operation not supported
+rm -rf "${PUBLISH_SOURCE}/tests"
+cp -R --preserve=timestamps,links "${STAGE_SOURCE}/." "${PUBLISH_SOURCE}/"
+cp "${STAGE}/${PROJECT_NAME}.tar.gz" "$ARCHIVE"
 
 success "发布完成"
 printf '  源码目录：\033[1;36m%s\033[0m\n' "$PUBLISH_SOURCE"

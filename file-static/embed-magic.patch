@@ -1,0 +1,71 @@
+--- a/src/file.c
++++ b/src/file.c
+@@ -327,12 +327,21 @@
+ #endif
+ 			break;
+ 		case 'v':
+-			if (magicfile == NULL)
+-				magicfile = magic_getpath(magicfile, action);
+ 			(void)fprintf(stdout, "%s-%s\n", file_getprogname(),
+ 			    VERSION);
+-			(void)fprintf(stdout, "magic file from %s\n",
+-			    magicfile);
++#ifdef FILE_EMBED_MAGIC
++			if (magicfile == NULL && getenv("MAGIC") == NULL)
++				(void)fprintf(stdout, "magic file embedded "
++				    "(override with -m or MAGIC)\n");
++			else
++#endif
++			{
++				if (magicfile == NULL)
++					magicfile = magic_getpath(magicfile,
++					    action);
++				(void)fprintf(stdout, "magic file from %s\n",
++				    magicfile);
++			}
+ #ifdef HAVE_LIBSECCOMP
+ 			(void)fprintf(stdout, "seccomp support included\n");
+ #endif
+@@ -497,6 +506,23 @@
+ 	file_errx(EXIT_FAILURE, "Unknown param %s", p);
+ }
+ 
++#ifdef FILE_EMBED_MAGIC
++/*
++ * Static build: compiled magic database linked into the binary, used when
++ * neither -m nor $MAGIC is given. FILE_EMBED_MAGIC is the path of magic.mgc
++ * at build time.
++ */
++__asm__(".section .rodata\n"
++    ".balign 16\n"
++    ".global file_embedded_magic\n"
++    "file_embedded_magic:\n"
++    ".incbin \"" FILE_EMBED_MAGIC "\"\n"
++    ".global file_embedded_magic_end\n"
++    "file_embedded_magic_end:\n"
++    ".previous\n");
++extern const unsigned char file_embedded_magic[], file_embedded_magic_end[];
++#endif
++
+ file_private struct magic_set *
+ /*ARGSUSED*/
+ load(const char *magicfile, int flags)
+@@ -508,6 +534,18 @@
+ 		file_warn("Can't create magic");
+ 		return NULL;
+ 	}
++#ifdef FILE_EMBED_MAGIC
++	if (magicfile == NULL && getenv("MAGIC") == NULL) {
++		void *buf = CCAST(unsigned char *, file_embedded_magic);
++		size_t size = CAST(size_t,
++		    file_embedded_magic_end - file_embedded_magic);
++		if (magic_load_buffers(magic, &buf, &size, 1) == -1) {
++			file_warn("embedded magic: %s", magic_error(magic));
++			magic_close(magic);
++			return NULL;
++		}
++	} else
++#endif
+ 	if (magic_load(magic, magicfile) == -1) {
+ 		file_warn("%s", magic_error(magic));
+ 		magic_close(magic);

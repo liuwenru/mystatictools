@@ -33,6 +33,7 @@
 | `tar` | 常用选项、`-xzvf` / `xzvf` 组合、归档/输入文件路径、`-C` 目录、格式和引用风格 |
 | `git` | 系统自带 git 官方补全时直接使用官方补全；否则使用自带规则：子命令和别名、各子命令选项、分支/标签/远程分支、`A..B` 区间、远程名、`push`/`fetch`/`pull` 的远程分支、已修改/已暂存文件、stash、`remote`/`stash`/`worktree` 等二级子命令、配置项名 |
 | `tmux` | 子命令及别名、各子命令的选项，`-t`/`-s` 后的会话/窗口/窗格/客户端，缓冲区名、键表、选项名、hook 名、布局名，开关型选项的 `on`/`off`，目录、文件和命令名 |
+| `nmcli` | 由本机 `nmcli --complete-args` 给出候选：对象、子命令、全局选项及取值、连接名/设备名、`ipv4.method` 等属性名和属性值、`-f` 字段名；支持带空格/引号/冒号的连接名，需要文件的位置补全本地路径。nmcli 太旧（1.2）时使用系统官方补全或内置的简化规则 |
 | `lvm` | `lvm` 子命令及 `pvs`/`vgs`/`lvs`、`lvcreate`/`lvextend`/`vgextend` 等 43 个 LVM 命令：本机 LVM 支持的选项、`y|n`、`--type`、`--alloc` 等可选值，PV/VG/LV 名称，`pvcreate`/`vgcreate`/`vgextend` 的空闲磁盘，`lvs -o` 字段名 |
 
 ### 依赖和边界
@@ -124,6 +125,20 @@
   `lvcreate -s` 后为源 LV、`-T` 后为 VG 或 `VG/thinpool`）；新卷名、大小、标签、`--select`
   表达式、`lvmconfig` 配置项不补全。`-L10G`、`-ay` 这类参数紧贴选项的写法能正确跳过，
   但不补全紧贴部分的值；命令行按空白分词。
+- `nmcli` 的候选由 nmcli 自己计算：按 Tab 时执行 `nmcli --complete-args <已输入的词>`，与 NetworkManager
+  官方补全脚本使用同一接口，所以候选跟随本机 nmcli 版本，覆盖所有子命令、属性和枚举值。
+  官方脚本依赖 `bash-completion` 的 `_init_completion`，这里自己按引号、反斜杠分词（`ipv4.dns`、
+  `00:11:22:33:44:55`、`"Wired connection 1"` 都作为一个词传给 nmcli），再按当前引号方式转义候选，
+  冒号、等号后只替换 Bash 实际要替换的部分。不依赖 `bash-completion`。
+  - 连接名、设备名等需要 NetworkManager 服务在运行，nmcli 通过 D-Bus 只读查询；有 `timeout` 时限时 2 秒。
+    服务未运行时只有关键字候选；nmcli 1.18 此时对 `connection add`、`general logging` 等位置不返回候选。
+  - nmcli 返回退出码 65 时（如 `connection import ... file`）补全本地路径；1.18 不返回 65，
+    前一个词是 `file` 且没有候选时同样补全路径。
+  - `--complete-args` 在 NetworkManager 1.18（CentOS 7.9）上实测可用，1.2（Ubuntu 16.04）不支持。
+    不支持时：已加载 `bash-completion` 且系统有官方 nmcli 补全（`/usr/share/bash-completion/completions/nmcli`）
+    就交给它；否则用内置规则，只有对象、子命令、全局选项和取值，以及 `nmcli -t -f NAME connection show`、
+    `nmcli -t -f DEVICE device status` 的名称。设置 `MINI_NMCLI_OFFICIAL_COMPLETION=`（空值）可不使用系统脚本。
+  - 使用命令行中输入的同一个二进制（如 `./nmcli`）。双引号内的 `!` 不转义，交互式 Bash 开启历史扩展时需注意。
 - `tar` 支持 `-f`、`--file=路径`、`-C`、`--directory=目录` 等参数补全。
   不读取归档内容、不执行压缩程序；解包/列出时的成员名不从归档中查询，
   而是提供本地路径。常用无横线组合支持以 `f` 结尾（如 `xzvf`），不完整解析
@@ -181,6 +196,7 @@ Docker 查询。动态命令使用桩函数，不访问真实服务、防火墙�
 
 官方参考： [ipset 手册](https://ipset.netfilter.org/ipset.man.html)，
 [git 官方补全脚本 git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)，
+[nmcli(1)](https://networkmanager.dev/docs/api/latest/nmcli.html)、[NetworkManager 官方 nmcli 补全脚本](https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/blob/main/src/nmcli/nmcli-completion)，
 [LVM 命令手册 lvm(8)](https://man7.org/linux/man-pages/man8/lvm.8.html)、[lvcreate(8)](https://man7.org/linux/man-pages/man8/lvcreate.8.html)、[lvs(8)](https://man7.org/linux/man-pages/man8/lvs.8.html)。
 
 ## 安装

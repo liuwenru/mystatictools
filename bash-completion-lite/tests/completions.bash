@@ -180,7 +180,7 @@ git()
     esac
 }
 
-for command in find grep systemctl journalctl rg nslookup iptables ipset nft scp docker docker-compose lsof sed awk xargs tar tmux git; do
+for command in find grep systemctl journalctl rg nslookup iptables ipset nft scp docker docker-compose lsof sed awk xargs tar tmux git nmcli; do
     complete -p "$command" >/dev/null
 done
 check -name _mini_find_completion find -na
@@ -267,6 +267,88 @@ _mini_ipset_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
 checks=$((checks + 1))
 unset TEST_IPSET_FAIL
+
+# nmcli: --complete-args answers like nmcli 1.18+; TEST_NMCLI_OLD mimics
+# nmcli 1.2, which rejects the option. Only read-only queries are allowed.
+nmcli()
+{
+    local last previous= candidate
+    if [ "$1" = --complete-args ]; then
+        [ "${TEST_NMCLI_OLD:-}" != yes ] || { printf "Error: Option '-complete-args' is unknown\n" >&2; return 2; }
+        shift
+        last="${!#}"
+        (($# < 2)) || previous="${@: -2:1}"
+        [ "$previous" != file ] || return 65
+        {
+            if (($# == 1)); then
+                case "$last" in
+                    -*) printf '%s\n' --terse --pretty --mode --colors ;;
+                    *) printf '%s\n' general networking radio connection device agent monitor help ;;
+                esac
+            else
+                case "$previous" in
+                    id|up|mod) printf '%s\n' 'Wired connection 1' "it's mine" 'vpn:office' ;;
+                    cloned-mac-address) printf '%s\n' '00:11:22:33:44:55' ;;
+                    lo) printf '%s\n' ipv4.method ipv4.may-fail ;;
+                    con|connection) printf '%s\n' show up down modify ;;
+                    *) printf 'UNEXPECTED_NMCLI_QUERY\n' ;;
+                esac
+            fi
+        } | while IFS= read -r candidate; do [[ "$candidate" != "$last"* ]] || printf '%s\n' "$candidate"; done
+        return 0
+    fi
+    case "$*" in
+        '-t -f NAME connection show') printf '%s\n' 'Wired connection 1' 'vpn\:office' ;;
+        '-t -f DEVICE device status') printf '%s\n' eth0 wlan0 lo ;;
+        *) printf 'UNEXPECTED_NMCLI_QUERY\n'; return 1 ;;
+    esac
+}
+check connection _mini_nmcli_completion nmcli c
+check --terse _mini_nmcli_completion nmcli --te
+check ipv4.method _mini_nmcli_completion nmcli con mod lo ipv4.m
+check 'Wired\ connection\ 1' _mini_nmcli_completion nmcli con up id Wir
+# Quoted words reach nmcli unquoted; replies keep the open quote's escaping.
+TEST_COMP_LINE='nmcli con up id "Wired con' check 'Wired connection 1' _mini_nmcli_completion nmcli con up id '"Wired con'
+TEST_COMP_LINE="nmcli con up id 'it" check "it'\\''s mine" _mini_nmcli_completion nmcli con up id "'it"
+check "it\\'s\\ mine" _mini_nmcli_completion nmcli con up id it
+# Bash splits at ':', so only the part after the last colon is replaced.
+TEST_COMP_LINE='nmcli con mod x cloned-mac-address 00:11:' check '22:33:44:55' _mini_nmcli_completion nmcli con mod x cloned-mac-address 00 : 11 :
+TEST_COMP_LINE='nmcli con up id vpn:o' check office _mini_nmcli_completion nmcli con up id vpn : o
+for line in 'con import type openvpn file ' 'con up id zz'; do
+    read -r -a COMP_WORDS <<< "nmcli $line"
+    [[ "$line" != *' ' ]] || COMP_WORDS+=('')
+    COMP_CWORD=$((${#COMP_WORDS[@]} - 1))
+    COMP_LINE="nmcli $line"; COMP_POINT=${#COMP_LINE}
+    _mini_nmcli_completion 2>/dev/null || true
+    checks=$((checks + 1))
+    [ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: %s -> unexpected <%s>\n' "$COMP_LINE" "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+done
+# nmcli without --complete-args: built-in objects, subcommands, names and values.
+TEST_NMCLI_OLD=yes check connection _mini_nmcli_completion nmcli -t c
+TEST_NMCLI_OLD=yes check modify _mini_nmcli_completion nmcli connection mo
+TEST_NMCLI_OLD=yes check 'Wired\ connection\ 1' _mini_nmcli_completion nmcli con up Wi
+TEST_NMCLI_OLD=yes check uuid _mini_nmcli_completion nmcli con show uu
+TEST_NMCLI_OLD=yes TEST_COMP_LINE='nmcli con up vpn:' check office _mini_nmcli_completion nmcli con up vpn :
+TEST_NMCLI_OLD=yes check wlan0 _mini_nmcli_completion nmcli -m multiline device show wl
+TEST_NMCLI_OLD=yes check eth0 _mini_nmcli_completion nmcli con up ifname e
+TEST_NMCLI_OLD=yes check multiline _mini_nmcli_completion nmcli -m mu
+TEST_NMCLI_OLD=yes check --pretty _mini_nmcli_completion nmcli --pr
+TEST_NMCLI_OLD=yes check wifi _mini_nmcli_completion nmcli radio w
+# With bash-completion loaded and an old nmcli, the system script is used instead.
+printf '%s\n' '_nmcli() { COMPREPLY=(from-official); }' 'complete -F _nmcli nmcli' > "${TMPDIR:-/tmp/opencode}/mini-nmcli-official.$$"
+if (
+    _init_completion() { :; }
+    MINI_NMCLI_OFFICIAL_COMPLETION="${TMPDIR:-/tmp/opencode}/mini-nmcli-official.$$"
+    source "$root/completions/nmcli.bash"
+    complete -p nmcli | grep -q ' _mini_nmcli_completion nmcli$' || exit 1
+    TEST_NMCLI_OLD=yes; COMP_WORDS=(nmcli c); COMP_CWORD=1; COMP_LINE='nmcli c'; COMP_POINT=7
+    _mini_nmcli_completion; [ "${COMPREPLY[*]}" = from-official ] || exit 1
+    unset TEST_NMCLI_OLD; _mini_nmcli_completion; [ "${COMPREPLY[*]}" = connection ]
+); then :; else
+    printf 'FAIL: system nmcli completion fallback\n'; failures=$((failures + 1))
+fi
+rm -f "${TMPDIR:-/tmp/opencode}/mini-nmcli-official.$$"
+checks=$((checks + 1))
 
 # LVM: help text in the 2.03 --longhelp layout; only read-only reports are allowed.
 lvm()
