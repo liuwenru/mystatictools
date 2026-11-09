@@ -1,0 +1,158 @@
+#compdef ipset
+# Set types come from `ipset help`, create/add/del/test parameters from
+# `ipset help TYPE` of the typed binary. For add, `ipset list -t SET` gives the
+# set's real type and options, so only parameters the set accepts are offered;
+# del/test complete existing members from `ipset list SET`. All queries are
+# read-only (2s limit) and fall back to fixed lists when they fail.
+local bin=${(Q)words[1]} cur=$PREFIX prev= action= type= set= word help= header= line
+local keyword kind arg enum skip=no used=' '
+local -i position=0
+local -a tokens w fields
+local fallback_types='bitmap:ip bitmap:ip,mac bitmap:port hash:ip hash:mac hash:ip,mac hash:net hash:net,net hash:ip,port hash:net,port hash:ip,port,ip hash:ip,port,net hash:ip,mark hash:net,port,net hash:net,iface list:set'
+# Upper limit of members offered after del/test.
+local max_members=${MINI_IPSET_MAX_MEMBERS:-1000}
+[[ $bin == '~/'* ]] && bin=$HOME/${bin#'~/'}
+[[ -z $compstate[quote] ]] && cur=${(Q)PREFIX}
+
+# Parse one section (create/add/del/test) of `ipset help TYPE` into lines
+# "<keyword> <flag|value> <value-token> <enum values...>".
+local parse_type_help='
+function addkw(spec, arg,    n, k, i, e) {
+    n = split(spec, k, "|")
+    e = ""
+    if (arg ~ /^[a-z][a-z0-9]*(\|[a-z][a-z0-9]*)+$/) { e = arg; gsub(/\|/, " ", e) }
+    for (i = 1; i <= n; i++) {
+        if (k[i] !~ /^(-[46]|[a-z][a-z0-9-]*)$/ || (k[i] in seen)) continue
+        seen[k[i]] = 1
+        printf "%s %s %s %s\n", k[i], (arg == "" ? "flag" : "value"), (arg == "" ? "-" : arg), e
+    }
+}
+function parse(s,    g, w, n, i) {
+    while (match(s, /\[[^][]*\]/)) {
+        g = substr(s, RSTART + 1, RLENGTH - 2)
+        s = substr(s, 1, RSTART - 1) " " substr(s, RSTART + RLENGTH)
+        n = split(g, w, " ")
+        addkw(w[1], (n >= 2) ? w[2] : "")
+    }
+    # Required keywords outside brackets, e.g. "range IP/CIDR", "markmask VALUE".
+    n = split(s, w, " ")
+    for (i = 1; i < n; i++)
+        if (w[i] ~ /^[a-z][a-z0-9-]*$/) { addkw(w[i], w[i + 1]); i++ }
+}
+# The general usage printed before this line has the same layout; skip it.
+/type specific options:/ { started = 1; next }
+!started { next }
+/^[^ \t]/ {
+    insec = ($1 == want && $2 == "SETNAME")
+    if (insec) { line = $0; sub(/^[^ ]+ +SETNAME +[^ ]+/, "", line); parse(line) }
+    next
+}
+insec && /^[ \t]/ { parse($0) }'
+
+tokens=("${(@Q)words[2,CURRENT-1]}")
+(( $#tokens )) && prev=$tokens[-1]
+# Ignore global switches and their values when counting command arguments.
+for word in "${tokens[@]}"; do
+    if [[ $skip == yes ]]; then skip=no; continue; fi
+    case $word in
+        -o|-output|-f|-file) skip=yes; continue ;;
+        -[46]) [[ $action == create ]] && used+="$word "; continue ;;
+        -*) continue ;;
+    esac
+    if [[ -z $action ]]; then
+        case $word in n) action=create ;; x) action=destroy ;; e) action=rename ;; w) action=swap ;; *) action=$word ;; esac
+    else
+        (( position++ ))
+        (( position == 1 )) && set=$word
+        [[ $action == create ]] && (( position == 2 )) && type=$word
+        (( position >= 3 )) && used+="$word "
+    fi
+done
+
+case $prev in
+    -f|-file) _files; return ;;
+    -o|-output) w=(plain save xml json) ;;
+    *)
+        if [[ $cur == -* && $cur != -[46] ]] && ! [[ $action == create && $position -ge 2 ]]; then
+            w=(-exist -! -output -o -quiet -q -resolve -r -sorted -s -name -n -terse -t -file -f)
+        elif [[ -z $action ]]; then
+            w=(create add del test destroy list save restore flush rename swap help version)
+        else
+            # For add/del/test the type comes from the existing set.
+            if [[ -n $set && $action == (add|del|test) ]] && { (( position >= 2 )) || [[ $action == add ]] }; then
+                header=$(_mini_run $bin list -t $set 2>/dev/null)
+                type=$(awk '$1 == "Type:" {print $2; exit}' <<< $header)
+                header=" $(awk '$1 == "Header:" {$1 = ""; print; exit}' <<< $header) "
+            fi
+            if (( position >= 2 )) && [[ -n $type && $action == (create|add|del|test) ]]; then
+                help=$(_mini_run $bin help $type 2>/dev/null | awk -v want=$action $parse_type_help)
+            fi
+            case $action:$position in
+                add:0|del:0|test:0|destroy:0|list:0|save:0|flush:0|rename:0|swap:0|swap:1)
+                    w=(${(f)"$(_mini_run $bin list -name 2>/dev/null)"}) ;;
+                create:1|help:0)
+                    w=(${(f)"$(_mini_run $bin help 2>/dev/null | awk '/^Supported set types:/ {f = 1; next} f && NF && !seen[$1]++ {print $1}')"})
+                    (( $#w )) || w=(${=fallback_types}) ;;
+                del:1|test:1)
+                    # Existing members, filtered by the typed prefix in awk.
+                    w=(${(f)"$(_mini_run $bin list $set 2>/dev/null | awk -v cur=$cur -v max=$max_members '
+                        f && NF && index($1, cur) == 1 { print $1; if (++n >= max) exit }
+                        $1 == "Members:" { f = 1 }')"}) ;;
+                add:1) [[ $type == list:set ]] && w=(${(f)"$(_mini_run $bin list -name 2>/dev/null)"}) ;;
+                create:*|add:*|del:*|test:*)
+                    if [[ -n $help ]]; then
+                        line=$(awk -v k=$prev '$1 == k && $2 == "value"' <<< $help)
+                        if [[ -n $line ]] && (( position >= 3 )); then
+                            fields=(${=line})
+                            if [[ $fields[3] == NAME ]]; then
+                                w=(${(f)"$(_mini_run $bin list -name 2>/dev/null)"})
+                            else
+                                w=($fields[4,-1])
+                            fi
+                        else
+                            for line in ${(f)help}; do
+                                fields=(${=line})
+                                keyword=$fields[1]
+                                [[ -n $keyword ]] || continue
+                                [[ $used == *" $keyword "* ]] && continue
+                                # Options a set was not created with are rejected by add.
+                                if [[ $action == add && $header != '  ' ]]; then
+                                    case $keyword in
+                                        timeout) [[ $header == *' timeout '* ]] || continue ;;
+                                        packets|bytes) [[ $header == *' counters '* ]] || continue ;;
+                                        comment) [[ $header == *' comment '* ]] || continue ;;
+                                        skbmark|skbprio|skbqueue) [[ $header == *' skbinfo '* ]] || continue ;;
+                                    esac
+                                fi
+                                w+=($keyword)
+                            done
+                        fi
+                    elif [[ $action == create ]] && (( position >= 2 )); then
+                        # Fixed fallback when `ipset help TYPE` is unavailable.
+                        case $prev in
+                            family) w=(inet inet6) ;;
+                            range|netmask|bitmask|hashsize|maxelem|bucketsize|timeout|size|markmask) ;;
+                            *)
+                                w=(timeout counters comment skbinfo)
+                                case $type in
+                                    hash:*)
+                                        w+=(hashsize maxelem bucketsize forceadd)
+                                        [[ $type == hash:mac ]] || w+=(family)
+                                        case $type in
+                                            hash:ip|hash:ip,port|hash:net,net) w+=(netmask bitmask) ;;
+                                            hash:ip,mark) w+=(markmask) ;;
+                                        esac ;;
+                                    bitmap:*) w+=(range); [[ $type == bitmap:ip ]] && w+=(netmask) ;;
+                                    list:set) w+=(size) ;;
+                                esac ;;
+                        esac
+                    elif [[ $action == add ]] && (( position >= 2 )); then
+                        case $prev in
+                            timeout|packets|bytes|comment|skbmark|skbprio|skbqueue) ;;
+                            *) w=(timeout packets bytes comment skbmark skbprio skbqueue nomatch) ;;
+                        esac
+                    fi ;;
+            esac
+        fi ;;
+esac
+compadd -a w

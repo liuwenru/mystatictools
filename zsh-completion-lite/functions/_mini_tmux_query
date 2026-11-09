@@ -1,0 +1,5 @@
+#autoload
+# Query the running tmux server with $bin and $socket of _mini_tmux. Only
+# list/show commands are passed here; they report "no server running"
+# instead of starting a server.
+_mini_run $bin "${socket[@]}" "$@" 2>/dev/null

@@ -40,7 +40,7 @@ systemctl()
         *' list-units '*) printf '%s\n' 'sshd.service loaded active running SSH' ;;
     esac
 }
-journalctl() { printf '%s\n' '0 boot-id date range'; }
+journalctl() { printf '%s\n' 'IDX BOOT ID FIRST ENTRY LAST ENTRY' '0 boot-id date range'; }
 rg() { printf '%s\n' 'rust: *.rs' 'python: *.py'; }
 iptables() { printf '%s\n' '-P INPUT ACCEPT' '-N CUSTOM_CHAIN'; }
 ipset()
@@ -195,6 +195,11 @@ check service _mini_systemctl_completion systemctl -t ser
 check warning _mini_journalctl_completion journalctl -p war
 check sshd.service _mini_journalctl_completion journalctl -u ss
 check 0 _mini_journalctl_completion journalctl -b ''
+# The --list-boots header of newer systemd is not a boot offset.
+COMP_WORDS=(journalctl -b I); COMP_CWORD=2
+_mini_journalctl_completion || true
+[ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: journalctl -b I -> unexpected <%s>\n' "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+checks=$((checks + 1))
 check python _mini_rg_completion rg -t py
 check --hidden _mini_rg_completion rg --hi
 check -type= _mini_nslookup_completion nslookup -ty
@@ -488,6 +493,9 @@ check stopped-db _mini_docker_completion docker inspect sto
 check f6e5d4c3b2a1 _mini_docker_completion docker inspect example-container f6
 check f6e5d4c3b2a1 _mini_docker_completion docker container inspect f6
 check stopped-db _mini_docker_completion docker container inspect sto
+check alpine:latest _mini_docker_completion docker image rm al
+check alpine:latest _mini_docker_completion docker image inspect al
+check alpine:latest _mini_docker_completion docker image save al
 check TCP _mini_lsof_completion lsof -i T
 check LISTEN _mini_lsof_completion lsof -s TCP:L
 TEST_COMP_LINE='lsof -s TCP:L' check LISTEN _mini_lsof_completion lsof -s TCP : L

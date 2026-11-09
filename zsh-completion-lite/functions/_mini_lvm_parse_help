@@ -1,0 +1,41 @@
+#autoload
+# Parse --longhelp into lines: "<option> <flag|value> <type> <enum values...>".
+# A bracketed "[ -x|--opt Arg ]" line is authoritative; in usage lines an option
+# followed by VG/LV/PV/Tag takes a value only when another option follows,
+# because a trailing VG/LV/PV is the positional argument.
+awk -v cmd="$1" '
+function add(spec, kind, arg,    n, names, j, k, vals, v) {
+    n = split(spec, names, "|")
+    for (j = 1; j <= n; j++) {
+        if (names[j] !~ /^--?[A-Za-z]/) continue
+        if (!(names[j] in seen)) { seen[names[j]] = 1; order[++count] = names[j] }
+        if (kind == "value") { val[names[j]] = 1; if (!(names[j] in type) || type[names[j]] ~ /_new$/) type[names[j]] = arg }
+        if (arg ~ /\|/ || arg ~ /^[a-z][a-z0-9_-]*$/) {
+            k = split(arg, vals, "|")
+            for (v = 1; v <= k; v++)
+                if ((vals[v] ~ /^[a-z][a-z0-9_-]*$/ || vals[v] ~ /^[A-Za-z]$/) && index(" " enums[names[j]] " ", " " vals[v] " ") == 0)
+                    enums[names[j]] = enums[names[j]] " " vals[v]
+        }
+    }
+}
+{
+    bracket = ($0 ~ /^[ \t]*\[/)
+    usage = (index($0, "  " cmd " ") == 1)
+    if (!bracket && !usage) next
+    n = split($0, t, /[ \t]+/)
+    for (i = 1; i <= n; i++) {
+        if (t[i] !~ /^--?[A-Za-z]/) continue
+        arg = (i < n) ? t[i + 1] : ""
+        if (bracket) kind = (arg == "]" || arg == "") ? "flag" : "value"
+        else if (arg == "" || arg ~ /^-/) kind = "flag"
+        else if (arg ~ /^(VG|LV|PV|Tag)/) kind = (i + 2 <= n && t[i + 2] ~ /^-/) ? "value" : "flag"
+        else kind = "value"
+        add(t[i], kind, (kind == "value") ? arg : "")
+    }
+}
+END {
+    for (i = 1; i <= count; i++) {
+        o = order[i]
+        printf "%s %s %s%s\n", o, (o in val) ? "value" : "flag", (o in type) ? type[o] : "-", enums[o]
+    }
+}'

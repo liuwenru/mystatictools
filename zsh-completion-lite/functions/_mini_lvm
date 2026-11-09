@@ -1,0 +1,134 @@
+#compdef lvm lvchange lvconvert lvcreate lvdisplay lvextend lvmconfig lvmdevices lvmdiskscan lvreduce lvremove lvrename lvresize lvs lvscan pvchange pvck pvcreate pvdisplay pvmove pvremove pvresize pvs pvscan vgcfgbackup vgcfgrestore vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend vgimport vgimportclone vgimportdevices vgmerge vgmknodes vgreduce vgremove vgrename vgs vgscan vgsplit
+# Option names, value-taking options and enumerated values (y|n, --type ...)
+# are parsed from `<command> --longhelp` of the local LVM. PV/VG/LV names come
+# from the read-only reports pvs/vgs/lvs; candidate disks from /sys.
+local tool=${words[1]:t} lvm_bin= prev= option= word help line type= snapshot=no thin=no skip=no
+local -i start=2 i
+local -a tools w options value_options fields positionals
+tools=(lvchange lvconvert lvcreate lvdisplay lvextend lvmconfig lvmdevices lvmdiskscan lvreduce
+    lvremove lvrename lvresize lvs lvscan pvchange pvck pvcreate pvdisplay pvmove pvremove pvresize
+    pvs pvscan vgcfgbackup vgcfgrestore vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend
+    vgimport vgimportclone vgimportdevices vgmerge vgmknodes vgreduce vgremove vgrename vgs vgscan vgsplit)
+
+if [[ $tool == lvm ]]; then
+    lvm_bin=${(Q)words[1]}
+    [[ $lvm_bin == '~/'* ]] && lvm_bin=$HOME/${lvm_bin#'~/'}
+    if (( CURRENT == 2 )); then
+        compadd -a tools
+        compadd -- config devtypes dumpconfig formats fullreport help lastlog lvpoll segtypes systemid tags version
+        return
+    fi
+    tool=${(Q)words[2]}
+    start=3
+    if [[ $tool == help ]]; then
+        (( CURRENT == 3 )) && compadd -a tools
+        return
+    fi
+elif whence lvm >/dev/null; then
+    lvm_bin=lvm
+fi
+(( CURRENT > start )) && prev=${(Q)words[CURRENT-1]}
+
+help=$(_mini_lvm_run $tool --longhelp 2>/dev/null | _mini_lvm_parse_help $tool)
+[[ -n $help ]] || help=$(_mini_lvm_run $tool --help 2>/dev/null | _mini_lvm_parse_help $tool)
+for line in ${(f)help}; do
+    fields=(${=line})
+    options+=($fields[1])
+    [[ $fields[2] == value ]] && value_options+=($fields[1])
+done
+# Minimal fallback when the tool cannot print its help.
+(( $#options )) || options=(-h --help -v --verbose -y --yes -t --test --version)
+
+# Option value: "--opt value" or "--opt=value".
+if [[ $PREFIX == --*=* ]]; then
+    option=${PREFIX%%=*}
+    compset -P 1 '*='
+elif (( ${value_options[(Ie)$prev]} )); then
+    option=$prev
+fi
+if [[ -n $option ]]; then
+    fields=(${=${(M)${(f)help}:#$option *}})
+    local arg=$fields[3]
+    local -a enum=($fields[4,-1])
+    case $option in
+        -f|--file) _files; return ;;
+        -o|--options|-O|--sort)
+            if [[ $tool == (pvs|vgs|lvs|fullreport) ]]; then
+                # Field lists are comma separated; complete the last item, keep +/-.
+                compset -P '*,'
+                compset -P '[+-]'
+                w=(${(f)"$(_mini_lvm_run $tool -o help 2>&1 | awk '$2 == "-" {print $1}')"})
+                compadd -S '' -a w
+                return
+            fi ;;
+        --units) enum=(h H b B s S k K m M g G t T p P e E r R) ;;
+        --devices) arg=PV_disk ;;
+    esac
+    if (( $#enum )); then
+        w=($enum)
+    else
+        case $arg in
+            VG|VG\|*) w=(${(f)"$(_mini_lvm_names vg)"}) ;;
+            LV|LV\|*) w=(${(f)"$(_mini_lvm_names lv)"}) ;;
+            PV_disk) w=(${(f)"$(_mini_lvm_names pv; _mini_lvm_disks)"}) ;;
+            PV|PV\|*) w=(${(f)"$(_mini_lvm_names pv)"}) ;;
+        esac
+    fi
+    compadd -a w
+    return
+fi
+
+if [[ $PREFIX == -* ]]; then
+    compadd -a options
+    return
+fi
+
+# Positional arguments, skipping options and their values.
+for (( i = start; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    if [[ $skip == yes ]]; then skip=no; continue; fi
+    case $word in
+        -s|--snapshot) snapshot=yes ;;
+        -T|--thin) thin=yes ;;
+    esac
+    if [[ $word == -* ]]; then
+        (( ${value_options[(Ie)$word]} )) && skip=yes
+        continue
+    fi
+    positionals+=($word)
+done
+
+# Argument types by position (counted from 0).
+case $tool:$#positionals in
+    pvs:*|pvdisplay:*|pvchange:*|pvck:*|pvremove:*|pvresize:*|pvmove:*) type=pv ;;
+    pvcreate:*|vgimportclone:*) type=disk ;;
+    vgcreate:0|vgrename:1|vgsplit:1) type= ;;
+    vgcreate:*|vgextend:[1-9]*) type=disk ;;
+    vgreduce:[1-9]*|vgsplit:[2-9]*) type=pv ;;
+    vgcfgrestore:0|vgmerge:[01]|vgsplit:0|vgextend:0|vgreduce:0|vgrename:0) type=vg ;;
+    vgs:*|vgdisplay:*|vgchange:*|vgck:*|vgremove:*|vgexport:*|vgimport:*|vgcfgbackup:*|vgmknodes:*|vgconvert:*|vgimportdevices:*) type=vg ;;
+    lvs:*|lvdisplay:*) type=vglv ;;
+    lvchange:*|lvremove:*|lvconvert:0|lvextend:0|lvreduce:0|lvresize:0) type=lv ;;
+    lvconvert:*|lvextend:*|lvreduce:*|lvresize:*) type=pv ;;
+    lvrename:0) type=vglv ;;
+    lvrename:1) [[ $positionals[1] == */* ]] || type=lvinvg ;;
+    lvcreate:0)
+        if [[ $snapshot == yes ]]; then type=lv
+        elif [[ $thin == yes ]]; then type=vglv
+        else type=vg
+        fi ;;
+    lvcreate:*) [[ $snapshot == yes ]] || type=pv ;;
+esac
+case $type in
+    pv) w=(${(f)"$(_mini_lvm_names pv)"}) ;;
+    disk)
+        w=(${(f)"$(_mini_lvm_disks)"})
+        # Other paths, e.g. /dev/disk/by-id/...
+        [[ $PREFIX == */* ]] && _files ;;
+    vg) w=(${(f)"$(_mini_lvm_names vg)"}) ;;
+    lv) w=(${(f)"$(_mini_lvm_names lv)"}) ;;
+    vglv) w=(${(f)"$(_mini_lvm_names vg; _mini_lvm_names lv)"}) ;;
+    lvinvg) w=(${(f)"$(_mini_lvm_names lv $positionals[1])"}) ;;
+    *) return 1 ;;
+esac
+compadd -a w

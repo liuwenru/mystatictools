@@ -1,0 +1,33 @@
+#compdef journalctl
+local prev=${(Q)words[CURRENT-1]} word
+local -a scope w
+for word in "${(@Q)words[2,CURRENT-1]}"; do
+    case $word in
+        --user) scope=(--user) ;;
+        # Another machine's journal: do not query the local one.
+        -M|--machine|--machine=*) return 1 ;;
+    esac
+done
+case $prev in
+    -u|--unit|--user-unit)
+        [[ $prev == --user-unit ]] && scope=(--user)
+        w=(${(f)"$(systemctl $scope list-unit-files --no-legend --no-pager 2>/dev/null | awk '{print $1}')"}) ;;
+    -p|--priority) w=(emerg alert crit err warning notice info debug 0 1 2 3 4 5 6 7) ;;
+    -o|--output)
+        w=(short short-full short-iso short-iso-precise short-precise short-monotonic short-unix
+           verbose export json json-pretty json-sse cat) ;;
+    # Boot offsets only; newer systemd prints an "IDX BOOT ID ..." header line.
+    -b|--boot) w=(${(f)"$(journalctl --list-boots --no-pager 2>/dev/null | awk '$1 ~ /^-?[0-9]+$/ {print $1}')"}) ;;
+    -F|--field) w=(_SYSTEMD_UNIT _SYSTEMD_USER_UNIT _PID _UID _GID _COMM _EXE _HOSTNAME SYSLOG_IDENTIFIER PRIORITY) ;;
+    -D|--directory|--root) _path_files -/; return ;;
+    --file) _files; return ;;
+    -n|--lines|-S|--since|-U|--until|-g|--grep|-t|--identifier|--cursor|--after-cursor|--vacuum-size|--vacuum-time|--vacuum-files)
+        return 1 ;;
+    *)
+        w=(-u --unit --user-unit --user --system -f --follow -e --pager-end -n --lines -b --boot
+           -k --dmesg -p --priority -o --output -S --since -U --until -r --reverse -a --all
+           -q --quiet --no-pager --no-hostname --utc --list-boots --disk-usage --verify --rotate
+           --sync --vacuum-size --vacuum-time --vacuum-files -t --identifier -g --grep -F --field
+           -D --directory --file --help --version) ;;
+esac
+compadd -a w

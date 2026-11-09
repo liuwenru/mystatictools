@@ -1,0 +1,29 @@
+#autoload
+# Block devices that can become PVs: skip empty/read-only devices, ram/zram,
+# disks that have partitions, devices already used by dm/LVM (holders),
+# mounted or swap devices, and LVM's own LVs. Prints one device per line.
+local sysdir name uuid device source used=' '
+local -a holders parts
+for source in ${${(f)"$(cat /proc/mounts /proc/swaps 2>/dev/null)"}%%[[:space:]]*}; do
+    [[ $source == /dev/* ]] && used+="$source ${source:A} "
+done
+for sysdir in /sys/class/block/*(N); do
+    name=${sysdir:t}
+    [[ $name == (ram|zram)* ]] && continue
+    [[ $(cat $sysdir/size 2>/dev/null) != 0 ]] || continue
+    [[ $(cat $sysdir/ro 2>/dev/null) != 1 ]] || continue
+    holders=($sysdir/holders/*(N))
+    (( $#holders )) && continue
+    parts=($sysdir/$name*/partition(N))
+    (( $#parts )) && continue
+    if [[ -d $sysdir/dm ]]; then
+        uuid=$(cat $sysdir/dm/uuid 2>/dev/null)
+        [[ $uuid == LVM-* ]] && continue
+        [[ $used == *" /dev/$name "* ]] && continue
+        device=/dev/mapper/$(cat $sysdir/dm/name 2>/dev/null)
+    else
+        device=/dev/$name
+    fi
+    [[ $used == *" $device "* ]] && continue
+    print -r -- $device
+done

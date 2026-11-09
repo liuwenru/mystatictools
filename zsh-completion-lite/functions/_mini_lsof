@@ -1,0 +1,27 @@
+#compdef lsof
+local prev=${(Q)words[CURRENT-1]}
+local -a w inet=(4 6 TCP UDP TCP:22 TCP:80 TCP:443)
+local -a states=(TCP:LISTEN TCP:ESTABLISHED TCP:CLOSE_WAIT TCP:TIME_WAIT UDP:Idle)
+# Values written right after the option: -iTCP:443, -sTCP:LISTEN.
+case $PREFIX in
+    -i?*) compset -P '-i'; compadd -a inet; return ;;
+    -s?*) compset -P '-s'; compadd -a states; return ;;
+esac
+case $prev in
+    -p) w=(${${(f)"$(ps -e -o pid= 2>/dev/null)"}//[[:space:]]/}) ;;
+    -u) _users; return ;;
+    -i) w=($inet) ;;
+    -s) w=($states) ;;
+    -d) w=(cwd rtd txt mem DEL 0 1 2) ;;
+    -F) w=(p c u L f a l t D s o n T) ;;
+    -c|-g|-r|+r) return 1 ;;
+    +D|+d) _path_files -/; return ;;
+    *)
+        [[ $PREFIX == [-+]* ]] && w=(-a -b -c -d -D -F -g -h -i -l -n -N -o -O -p -P -r -R -s
+            -t -T -u -U -v -V -w -X +d +D +L1 +r) ;;
+esac
+if (( $#w )); then
+    compadd -a w
+else
+    _files
+fi

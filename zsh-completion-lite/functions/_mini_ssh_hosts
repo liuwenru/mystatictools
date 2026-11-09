@@ -1,0 +1,18 @@
+#autoload
+# Host aliases from ~/.ssh/config and /etc/ssh/ssh_config into $reply.
+# Patterns (*, ?, !) are skipped; Include and known_hosts are not read.
+local file line host
+local -a fields
+reply=()
+for file in $HOME/.ssh/config /etc/ssh/ssh_config; do
+    [[ -r $file ]] || continue
+    for line in ${(f)"$(<$file)"}; do
+        fields=(${=line})
+        [[ ${(L)fields[1]} == host ]] || continue
+        for host in $fields[2,-1]; do
+            [[ $host == '#'* ]] && break
+            [[ $host == *[*?!]* ]] && continue
+            reply+=($host)
+        done
+    done
+done

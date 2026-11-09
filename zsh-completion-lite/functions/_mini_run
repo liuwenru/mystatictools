@@ -1,0 +1,8 @@
+#autoload
+# Run a read-only query with a 2s limit (SIGKILL 1s later) when timeout(1)
+# exists, otherwise without a limit. Callers redirect stderr themselves.
+if whence timeout >/dev/null; then
+    timeout -k 1 2 "$@"
+else
+    "$@"
+fi

@@ -1,0 +1,26 @@
+#compdef scp
+local prev=${(Q)words[CURRENT-1]} ret=1
+local -a reply
+case $prev in
+    -P|-l|-J|-c) return 1 ;;
+    -o)
+        _mini_words BatchMode= Compression= ConnectTimeout= IdentityFile= IdentitiesOnly= \
+            ProxyJump= ProxyCommand= Port= StrictHostKeyChecking= UserKnownHostsFile=
+        return ;;
+    -i|-F|-S) _files; return ;;
+esac
+if [[ $PREFIX == -* ]]; then
+    compadd -- -3 -4 -6 -A -B -C -D -F -i -J -l -O -o -P -p -q -r -R -S -s -T -v
+    return
+fi
+# Never open an SSH connection to complete remote paths.
+[[ $PREFIX$SUFFIX == *:* ]] && return 1
+_mini_ssh_hosts
+if [[ $PREFIX == *@* ]]; then
+    compset -P '*@'
+    compadd -S : -a reply
+    return
+fi
+compadd -S : -a reply && ret=0
+_files && ret=0
+return ret

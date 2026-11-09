@@ -1,0 +1,29 @@
+#compdef xargs
+local prev=${(Q)words[CURRENT-1]} word command= expect= i
+# Find the command, skipping the values of xargs options.
+for (( i = 2; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    if [[ -n $expect ]]; then expect=; continue; fi
+    case $word in
+        -a|--arg-file|-d|--delimiter|-E|-I|-L|--max-lines|-n|--max-args|-P|--max-procs|-s|--max-chars|--process-slot-var)
+            expect=yes ;;
+        --)
+            if (( i + 1 < CURRENT )); then command=${(Q)words[i+1]}; else command=next; fi
+            break ;;
+        -*) ;;
+        *) command=$word; break ;;
+    esac
+done
+# Arguments of the command are completed as local paths, not with its own rules.
+if [[ -n $command && $command != next ]]; then
+    _files
+elif [[ -n $expect ]]; then
+    [[ $prev == (-a|--arg-file) ]] || return 1
+    _files
+elif [[ $PREFIX == -* && $command != next ]]; then
+    compadd -- -0 --null -a --arg-file -d --delimiter -E -I -L --max-lines -n --max-args -P \
+        --max-procs -s --max-chars -p --interactive -r --no-run-if-empty -t --verbose -x --exit \
+        --show-limits --process-slot-var --help --version
+else
+    _command_names -e
+fi

@@ -1,0 +1,13 @@
+#autoload
+# PV, VG or LV names from the read-only report commands. "lv" prints VG/LV;
+# "lv VG" prints the bare LV names of that VG.
+case $1 in
+    vg) _mini_lvm_run vgs --noheadings -o vg_name 2>/dev/null | awk 'NF {print $1}' ;;
+    pv) _mini_lvm_run pvs --noheadings -o pv_name 2>/dev/null | awk 'NF {print $1}' ;;
+    lv)
+        if [[ -n $2 ]]; then
+            _mini_lvm_run lvs --noheadings -o lv_name $2 2>/dev/null | awk 'NF {print $1}'
+        else
+            _mini_lvm_run lvs --noheadings -o vg_name,lv_name 2>/dev/null | awk 'NF == 2 {print $1 "/" $2}'
+        fi ;;
+esac

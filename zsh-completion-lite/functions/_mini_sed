@@ -1,0 +1,12 @@
+#compdef sed
+local prev=${(Q)words[CURRENT-1]}
+case $prev in
+    -e|--expression) return 1 ;;
+esac
+if [[ $PREFIX == -* && $prev != (-f|--file) ]]; then
+    compadd -- -n --quiet --silent -e --expression -f --file -i --in-place -E -r \
+        --regexp-extended -s --separate -u --unbuffered -z --null-data \
+        --follow-symlinks --posix --sandbox --debug --help --version
+else
+    _files
+fi

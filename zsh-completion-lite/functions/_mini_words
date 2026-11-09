@@ -1,0 +1,9 @@
+#autoload
+# Add the arguments as matches; words ending in '=' get no trailing space.
+local -a plain equal
+local ret=1
+equal=(${(M)@:#*=})
+plain=(${@:#*=})
+(( $#plain )) && compadd -a plain && ret=0
+(( $#equal )) && compadd -S '' -a equal && ret=0
+return ret

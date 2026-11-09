@@ -1,0 +1,100 @@
+#compdef sshfs
+# -o names are read from the typed sshfs's own `-h` output (2s limit), so they
+# follow the local version; a fixed list is used when that fails. Common
+# ssh_config options are added because sshfs passes unknown -o Name=value to
+# ssh. Never opens an SSH connection: nothing is completed after "host:".
+local bin=${(Q)words[1]} prev= skip= word key line name item re ret=1
+local -i positional=0 i
+local -a candidates equal reply
+local -a ssh_options=(BatchMode= Ciphers= Compression= ConnectTimeout= ControlMaster= ControlPath=
+    ControlPersist= HostKeyAlgorithms= HostName= IdentitiesOnly= IdentityFile= Port=
+    PreferredAuthentications= ProxyCommand= ProxyJump= PubkeyAcceptedAlgorithms=
+    ServerAliveCountMax= ServerAliveInterval= StrictHostKeyChecking= User= UserKnownHostsFile=)
+local -a static_options=(reconnect delay_connect sshfs_sync no_readahead sync_readdir dir_cache=
+    dcache_timeout= direct_io workaround= idmap= uidfile= gidfile= nomap= ssh_command= sftp_server=
+    directport= passive disable_hardlink transform_symlinks follow_symlinks no_check_root
+    password_stdin max_conns= port= compression= kernel_cache auto_cache noauto_cache umask= uid=
+    gid= entry_timeout= negative_timeout= attr_timeout= allow_other allow_root auto_unmount debug)
+[[ $bin == '~/'* ]] && bin=$HOME/${bin#'~/'}
+
+# Positional arguments before the cursor: [user@]host:[dir] mountpoint.
+for (( i = 2; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    if [[ -n $skip ]]; then skip=; continue; fi
+    case $word in
+        -o|-p|-F) skip=1 ;;
+        -*) ;;
+        *) (( positional++ )) ;;
+    esac
+done
+# The previous word is an option only when it takes the current word as value.
+[[ -n $skip ]] && prev=${(Q)words[CURRENT-1]}
+
+case $prev in
+    -p) return 1 ;;
+    -F) _files; return ;;
+esac
+
+# -o list (also written -oLIST): complete the item after the last comma.
+if [[ $prev == -o || $PREFIX == -o?* ]]; then
+    [[ $prev == -o ]] || compset -P '-o'
+    compset -P '*,'
+    if [[ $PREFIX == *=* ]]; then
+        key=${PREFIX%%=*}
+        compset -P 1 '*='
+        case $key in
+            dir_cache|cache|compression|transform_symlinks|rellinks|[Bb]atch[Mm]ode|[Cc]ompression|[Ii]dentities[Oo]nly)
+                compadd -- yes no ;;
+            idmap) compadd -- none user file ;;
+            nomap) compadd -- ignore error ;;
+            workaround)
+                # Colon-separated list.
+                compset -P '*:'
+                compadd -- none all rename norename renamexdev norenamexdev truncate notruncate \
+                    buflimit nobuflimit fstat nofstat createmode nocreatemode ;;
+            [Ss]trict[Hh]ost[Kk]ey[Cc]hecking) compadd -- yes no accept-new ask ;;
+            [Cc]ontrol[Mm]aster) compadd -- yes no auto ask autoask ;;
+            [Pp]roxy[Jj]ump|[Hh]ost[Nn]ame) _mini_ssh_hosts; compadd -a reply ;;
+            ssh_command) _command_names -e ;;
+            uidfile|gidfile|[Ii]dentity[Ff]ile|[Uu]ser[Kk]nown[Hh]osts[Ff]ile|[Cc]ontrol[Pp]ath) _files ;;
+            *) return 1 ;;
+        esac
+        return
+    fi
+    # Mount options from `sshfs -h`: "-o name", "-o name=VALUE", "-o [no]name",
+    # "-o prefix_{a,b}_suffix=N"; "opt,[opt...]" and "SSHOPT=VAL" are skipped.
+    re='^[[:space:]]*(-[A-Za-z][[:space:]]+)?-o[[:space:]]+([^[:space:]]+)'
+    for line in ${(f)"$(_mini_run $bin -h 2>&1)"}; do
+        [[ $line =~ $re ]] || continue
+        name=$match[2]
+        [[ $name == *'['*'...'* || $name == SSHOPT=* ]] && continue
+        [[ $name == *=* ]] && name=${name%%=*}=
+        if [[ $name == '[no]'* ]]; then
+            candidates+=(${name#'[no]'} no${name#'[no]'})
+        elif [[ $name =~ '^([^{]*)\{([^}]*)\}(.*)$' ]]; then
+            for item in ${(s:,:)match[2]}; do candidates+=($match[1]$item$match[3]); done
+        else
+            candidates+=($name)
+        fi
+    done
+    (( $#candidates )) || candidates=($static_options)
+    candidates+=(ro rw default_permissions $ssh_options)
+    _mini_words $candidates
+    return
+fi
+
+if [[ $PREFIX == -* ]]; then
+    compadd -- -o -p -C -F -f -s -d --debug -v --verbose -1 -h --help -V --version
+    return
+fi
+
+case $positional in
+    0)
+        # [user@]host: from the SSH config; nothing after the colon.
+        [[ $PREFIX$SUFFIX == *:* ]] && return 1
+        compset -P '*@'
+        _mini_ssh_hosts
+        compadd -S : -a reply ;;
+    1) _path_files -/ ;;   # mount point
+    *) return 1 ;;
+esac

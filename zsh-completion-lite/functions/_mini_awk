@@ -1,0 +1,10 @@
+#compdef awk
+local prev=${(Q)words[CURRENT-1]}
+case $prev in
+    -F|--field-separator|-v|--assign|-e|--source) return 1 ;;
+esac
+if [[ $PREFIX == -* && $prev != (-f|--file) ]]; then
+    compadd -- -F -v -f -W
+else
+    _files
+fi

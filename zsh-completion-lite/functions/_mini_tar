@@ -1,0 +1,68 @@
+#compdef tar
+local expect= literal= word flags char i j ret=1
+local -a w
+# Track option arguments; archives are never opened, compressors never run.
+for (( i = 2; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    if [[ -n $expect ]]; then expect=; continue; fi
+    [[ -n $literal ]] && continue
+    case $word in
+        --) literal=yes; continue ;;
+        --file|--directory|--files-from|--exclude-from|--listed-incremental|--format|--quoting-style|--warning|--use-compress-program|--to-command|--exclude|--transform|--strip-components|--owner|--group|--mode|--mtime|--checkpoint|--checkpoint-action|--blocking-factor|--record-size|--label|--starting-file)
+            expect=$word; continue ;;
+        --*) continue ;;
+        -*) flags=${word#-} ;;
+        *)
+            # Traditional option clusters without '-' are valid only as the first argument.
+            if (( i == 2 )) && [[ $word == [AcdrtuxabfhjklmopvwzBCGJLOPSUXZ]## ]]; then
+                flags=$word
+            else
+                continue
+            fi ;;
+    esac
+    for (( j = 1; j <= $#flags; j++ )); do
+        char=$flags[j]
+        case $char in
+            [fCTXgHIFKLNVb])
+                # Dashed clusters: the rest is an attached argument (-cfarchive.tar).
+                # Traditional clusters take arguments from the following words.
+                if [[ $word != -* ]] || (( j == $#flags )); then expect=-$char; fi
+                break ;;
+        esac
+    done
+done
+if [[ -z $literal && $PREFIX == --*=* ]]; then
+    expect=${PREFIX%%=*}
+    compset -P '*='
+fi
+case $expect in
+    -C|--directory) _path_files -/; return ;;
+    -f|--file|-T|--files-from|-X|--exclude-from|-g|--listed-incremental) _files; return ;;
+    -H|--format) w=(gnu oldgnu pax posix ustar v7) ;;
+    --quoting-style) w=(literal shell shell-always shell-escape shell-escape-always c c-maybe escape locale clocale) ;;
+    --warning) w=(all none filename-with-nuls file-changed file-ignored file-removed file-shrank unknown-keyword) ;;
+    -I|--use-compress-program) _command_names -e; return ;;
+    '')
+        if [[ -z $literal && $PREFIX == -* ]]; then
+            w=(-c -x -t -r -u -A -d -f -C -v -p -h -k -m -O -P -T -X -z -j -J -Z -a -I -g -H -b
+               -cf -cvf -czf -czvf -cjf -cJf -xf -xvf -xzf -xzvf -xjf -xJf -tf -tvf -tzf
+               --create --extract --list --append --update --concatenate --diff --file --directory
+               --verbose --gzip --bzip2 --xz --zstd --lzma --lzop --compress --auto-compress
+               --use-compress-program --files-from --exclude --exclude-from --exclude-vcs
+               --exclude-caches --wildcards --no-wildcards --null --no-recursion --one-file-system
+               --strip-components --transform --format --listed-incremental --numeric-owner
+               --same-owner --no-same-owner --same-permissions --no-same-permissions --acls
+               --xattrs --selinux --sparse --keep-old-files --skip-old-files --overwrite --touch
+               --to-stdout --to-command --absolute-names --warning --quoting-style --checkpoint
+               --checkpoint-action --owner --group --mode --mtime --blocking-factor --record-size
+               --label --starting-file --help --version)
+        else
+            if [[ -z $literal ]] && (( CURRENT == 2 )); then
+                compadd -- cf cvf czf czvf cjf cJf xf xvf xzf xzvf xjf xJf tf tvf tzf && ret=0
+            fi
+            _files && ret=0
+            return ret
+        fi ;;
+    *) return 1 ;;
+esac
+compadd -a w

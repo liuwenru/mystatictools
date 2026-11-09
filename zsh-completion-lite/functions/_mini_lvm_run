@@ -1,0 +1,6 @@
+#autoload
+# Run an LVM tool quietly through $lvm_bin (set by _mini_lvm: the typed lvm,
+# "lvm", or empty to run the tool name directly), with the 2s limit.
+local -a cmd=("$@")
+[[ -n $lvm_bin ]] && cmd=($lvm_bin "$@")
+LVM_SUPPRESS_FD_WARNINGS=1 _mini_run "${cmd[@]}"

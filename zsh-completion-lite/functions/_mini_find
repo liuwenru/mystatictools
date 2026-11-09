@@ -1,0 +1,23 @@
+#compdef find
+local prev=${(Q)words[CURRENT-1]}
+local -a w
+case $prev in
+    -exec|-execdir|-ok|-okdir) _command_names -e; return ;;
+    -type|-xtype) w=(b c d p f l s) ;;
+    -name|-iname|-path|-ipath|-regex|-iregex|-printf|-fprintf|-size|-mtime|-mmin|-atime|-amin|-ctime|-cmin|-maxdepth|-mindepth|-perm|-uid|-gid|-inum|-links)
+        return 1 ;;
+    -user) _users; return ;;
+    -group) _groups; return ;;
+    -newer|-anewer|-cnewer|-samefile|-fprint|-fprint0|-fls) ;;
+    *)
+        [[ $PREFIX == -* ]] && w=(-H -L -P -O -D -name -iname -path -ipath -regex -iregex
+            -type -xtype -size -mtime -mmin -atime -amin -ctime -cmin -newer -user -group
+            -uid -gid -perm -empty -executable -readable -writable -maxdepth -mindepth
+            -mount -xdev -depth -prune -print -print0 -printf -fprint -fprint0 -ls -delete
+            -exec -execdir -ok -okdir -quit -a -o -not) ;;
+esac
+if (( $#w )); then
+    compadd -a w
+else
+    _files
+fi

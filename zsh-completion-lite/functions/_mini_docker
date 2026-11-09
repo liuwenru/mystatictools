@@ -1,0 +1,123 @@
+#compdef docker
+# Object names come only from the local Unix socket, never from a remote
+# endpoint or context. Queries are limited to 2s (+1s before SIGKILL) when
+# timeout(1) exists.
+local prev=${(Q)words[CURRENT-1]} command= subcommand= word i option= listing
+local endpoint=${DOCKER_HOST:-unix:///var/run/docker.sock} local_daemon=yes
+local -a w limit
+[[ $endpoint == unix://* ]] || local_daemon=no
+[[ -n ${DOCKER_CONTEXT:-} ]] && local_daemon=no
+whence timeout >/dev/null && limit=(timeout -k 1 2)
+
+for (( i = 2; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    case $word in -H|--host|--host=*|--context|--context=*) local_daemon=no ;; esac
+    case $word in
+        -H|--host|--context|--config|--log-level|--name|-e|--env|--env-file|-p|--publish|-v|--volume|--mount|-w|--workdir|-u|--user|--entrypoint|--label|--format|--filter|--since|--until|--tail|--network|--net|--restart|--pull|--file|--tag|--build-arg|--target|--platform|--progress)
+            (( i++ )); continue ;;
+        -f|-t) [[ $command == (build|compose|buildx) ]] && { (( i++ )); continue } ;;
+    esac
+    if [[ -z $command ]]; then
+        case $word in
+            run|exec|ps|images|pull|push|build|buildx|compose|start|stop|restart|kill|rm|rmi|logs|inspect|stats|top|attach|cp|create|container|image|network|volume|context|info|version|login|logout|system|events|wait|port|rename|update|save|load|tag)
+                command=$word ;;
+        esac
+    elif [[ $command == container && -z $subcommand && $word == (exec|cp) ]]; then
+        command=$word
+    elif [[ -z $subcommand && $word != -* ]]; then
+        subcommand=$word
+    fi
+done
+
+if [[ $command == cp ]]; then
+    _mini_docker_cp $local_daemon $endpoint
+    return
+fi
+
+# Archive options of load/save take local files: -i FILE, --input=FILE.
+# Redirections (< FILE, > FILE) are completed by zsh itself.
+option=$prev
+[[ $PREFIX == --*=* ]] && option=${PREFIX%%=*}
+if [[ $command:$subcommand == (load:*|image:load) && $option == (-i|--input) ]] ||
+   [[ $command:$subcommand == (save:*|image:save) && $option == (-o|--output) ]]; then
+    [[ $PREFIX == --*=* ]] && compset -P '*='
+    _files
+    return
+fi
+
+case $prev in
+    --restart) w=(no on-failure always unless-stopped) ;;
+    --pull) w=(always missing never) ;;
+    --network|--net)
+        w=(bridge host none)
+        [[ $local_daemon == yes ]] &&
+            w+=(${(f)"$($limit docker --host $endpoint network ls --format '{{.Name}}' 2>/dev/null)"}) ;;
+    -f)
+        [[ $command == (build|compose|buildx) ]] || return 1
+        _files; return ;;
+    --file|--env-file|--config|--output) _files; return ;;
+    --name|-e|--env|-p|--publish|-v|--volume|--mount|-w|--workdir|-u|--user|--entrypoint|--label|--format|--filter|--since|--until|--tail|--context|-H|--host)
+        return 1 ;;
+    *)
+        if [[ $PREFIX == -* ]]; then
+            case $command in
+                run|create) w=(-d -i -t -it -e -p -P -v -w -u --detach --interactive --tty --rm --name
+                    --env --env-file --publish --publish-all --volume --mount --workdir --user --network
+                    --restart --entrypoint --privileged --read-only --cap-add --cap-drop --pull --help) ;;
+                exec) w=(-d -i -t -it -e -u -w --detach --interactive --tty --env --env-file --user
+                    --workdir --privileged --help) ;;
+                logs) w=(-f -t --follow --tail --since --until --timestamps --details --help) ;;
+                ps|images) w=(-a -q -f --all --quiet --filter --format --no-trunc --help) ;;
+                build) w=(-f -t --file --tag --build-arg --no-cache --pull --target --platform --progress --help) ;;
+                load) w=(-i -q --input --quiet --platform --help) ;;
+                save) w=(-o --output --platform --help) ;;
+                *) w=(--help --version --context --host --config --debug --log-level) ;;
+            esac
+        elif [[ -z $command ]]; then
+            w=(run exec ps images pull push build buildx compose start stop restart kill rm rmi logs
+               inspect stats top attach cp create container image network volume context info
+               version login logout system events wait port rename update save load tag)
+        else
+            case $command in
+                container)
+                    if [[ -z $subcommand ]]; then
+                        w=(ls run exec start stop restart kill rm logs inspect stats top attach cp
+                           create prune rename update wait port)
+                    else
+                        command=$subcommand
+                    fi ;;
+                image)
+                    if [[ -z $subcommand ]]; then
+                        w=(ls pull push rm inspect build prune tag save load history)
+                    else
+                        command=image-$subcommand
+                    fi ;;
+                network|volume|context) [[ -z $subcommand ]] && w=(ls inspect create rm prune) ;;
+                system) w=(df events info prune) ;;
+                compose) w=(up down start stop restart ps logs exec run build pull config version ls) ;;
+                buildx) w=(build ls inspect version bake du prune) ;;
+            esac
+            if (( ! $#w )) && [[ $local_daemon == yes ]]; then
+                case $command in
+                    exec)
+                        # Running container IDs; later words belong to the container's command.
+                        [[ -z $subcommand ]] &&
+                            w=(${(f)"$($limit docker --host $endpoint ps --format '{{.ID}}' 2>/dev/null)"}) ;;
+                    inspect)
+                        # IDs and names of all containers; Names may hold legacy comma-separated links.
+                        listing=$($limit docker --host $endpoint ps -a --format '{{.ID}} {{.Names}}' 2>/dev/null)
+                        w=(${=listing//,/ }) ;;
+                    start|stop|restart|kill|rm|logs|stats|top|attach|wait|port|rename|update)
+                        w=(${(f)"$($limit docker --host $endpoint ps -a --format '{{.Names}}' 2>/dev/null)"}) ;;
+                    run|create|rmi|save|tag)
+                        [[ -z $subcommand ]] &&
+                            w=(${(f)"$($limit docker --host $endpoint images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)"}) ;;
+                    image-rm|image-inspect|image-history|image-save|image-tag)
+                        w=(${(f)"$($limit docker --host $endpoint images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)"}) ;;
+                    network) w=(${(f)"$($limit docker --host $endpoint network ls --format '{{.Name}}' 2>/dev/null)"}) ;;
+                    volume) w=(${(f)"$($limit docker --host $endpoint volume ls --format '{{.Name}}' 2>/dev/null)"}) ;;
+                esac
+            fi
+        fi ;;
+esac
+compadd -a w

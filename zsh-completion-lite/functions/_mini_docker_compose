@@ -1,0 +1,117 @@
+#compdef docker-compose
+# Standalone docker-compose only. Services and profiles come from
+# `docker-compose [global options] config --services|--profiles` (2s limit);
+# no daemon query, no stdin or URL configuration, no YAML parsing here.
+local command= expect= option= mode= literal= query=yes positions=0 token i output
+local -a global_args w
+for (( i = 2; i < CURRENT; i++ )); do
+    token=${(Q)words[i]}
+    if [[ -n $expect ]]; then
+        [[ -z $command ]] && global_args+=("$expect" "$token")
+        [[ $expect:$token == (-f|--file):(-|*://*) ]] && query=no
+        expect=; continue
+    fi
+    if [[ -n $literal ]]; then (( positions++ )); continue; fi
+    case $token in
+        --) literal=yes; continue ;;
+        --file|--project-name|--project-directory|--env-file|--profile|--ansi|--progress|--parallel|--host|--context)
+            expect=$token; continue ;;
+        -f) [[ -z $command ]] && expect=-f; continue ;;
+        -p) if [[ -z $command ]]; then expect=-p; else expect=--publish; fi; continue ;;
+        -f?*|-p?*)
+            if [[ -z $command ]]; then
+                global_args+=("$token[1,2]" "$token[3,-1]")
+                [[ $token == -f(-|*://*) ]] && query=no
+            fi
+            continue ;;
+        --*=*)
+            [[ -z $command ]] && global_args+=("$token")
+            [[ $token == --file=(-|*://*) ]] && query=no
+            continue ;;
+        --compatibility|--verbose|--no-ansi|--dry-run|--tls|--tlsverify)
+            [[ -z $command ]] && global_args+=("$token")
+            continue ;;
+        --env|--user|--workdir|--index|--tail|--since|--until|--timeout|--scale|--exit-code-from|--attach|--no-attach|--pull|--policy|--format|--output|--env-from-file|--build-arg|--memory|--stop-signal|--detach-keys|--protocol|-e|-u|-w)
+            expect=$token; continue ;;
+        --name|--entrypoint|--volume|--wait-timeout|--rmi|--status|--filter|--signal)
+            expect=$token; continue ;;
+        -v) [[ $command == run ]] && expect=--volume; continue ;;
+        -t) [[ $command == (stop|restart|down|up) ]] && expect=--timeout; continue ;;
+        -*) continue ;;
+    esac
+    if [[ -z $command ]]; then command=$token; else (( positions++ )); fi
+done
+# Do not suggest services or options inside the container command.
+[[ $command == (exec|run) ]] && (( positions > 0 )) && return 1
+option=$expect
+if [[ -z $literal ]]; then
+    case $PREFIX in
+        --*=*) option=${PREFIX%%=*}; compset -P '*=' ;;
+        -f?*|-p?*) [[ -z $command ]] && { option=$PREFIX[1,2]; compset -P '-[fp]' } ;;
+    esac
+fi
+case $option in
+    -f|--file|--env-file|--env-from-file|--output) mode=files ;;
+    --project-directory) mode=directories ;;
+    --ansi) w=(auto never always); mode=words ;;
+    --progress) w=(auto tty plain json quiet); mode=words ;;
+    --pull) w=(always missing never); mode=words ;;
+    --policy) w=(always missing); mode=words ;;
+    --rmi) w=(all local); mode=words ;;
+    --profile) mode=profiles ;;
+    --exit-code-from|--attach|--no-attach) mode=services ;;
+    '')
+        if [[ -z $literal && $PREFIX == -* ]]; then
+            mode=words
+            case $command in
+                '') w=(-f --file -p --project-name --project-directory --env-file --profile --compatibility
+                       --ansi --progress --parallel --dry-run --verbose --no-ansi --help --version) ;;
+                up) w=(-d --detach --build --no-build --force-recreate --no-recreate --no-deps --remove-orphans
+                       --renew-anon-volumes --abort-on-container-exit --exit-code-from --scale --timeout --pull
+                       --wait --wait-timeout --attach --no-attach --help) ;;
+                down) w=(-v --volumes --remove-orphans --rmi --timeout --help) ;;
+                exec) w=(-d --detach -e --env --index --privileged -T --no-TTY -u --user -w --workdir --help) ;;
+                run) w=(-d --detach --rm --no-deps --build --pull --name --entrypoint -e --env --env-from-file
+                        -p --publish -P --service-ports -T --no-TTY -u --user -w --workdir --volume --use-aliases --help) ;;
+                logs) w=(-f --follow --tail --since --until -t --timestamps --no-color --no-log-prefix --help) ;;
+                ps) w=(-a --all -q --quiet --services --status --filter --format --no-trunc --help) ;;
+                build) w=(--no-cache --pull --build-arg --progress --parallel --force-rm --compress --memory --quiet --help) ;;
+                pull) w=(--ignore-pull-failures --include-deps --policy --quiet --help) ;;
+                config) w=(--services --profiles --volumes --images --resolve-image-digests --no-interpolate
+                           --quiet --format --output --help) ;;
+                stop|restart) w=(-t --timeout --help) ;;
+                rm) w=(-f --force -s --stop -v --volumes --help) ;;
+                *) w=(--help) ;;
+            esac
+        elif [[ -z $command ]]; then
+            w=(build config cp create down events exec help images kill logs ls pause port ps pull push
+               restart rm run start stop top unpause up version wait watch)
+            mode=words
+        else
+            case $command in
+                exec|run|port) (( positions == 0 )) || return 1; mode=services ;;
+                build|create|down|images|kill|logs|pause|ps|pull|push|restart|rm|start|stop|top|unpause|up|wait|watch)
+                    mode=services ;;
+                help)
+                    w=(build config cp create down events exec images kill logs pause port ps pull push
+                       restart rm run start stop top unpause up version)
+                    mode=words ;;
+                cp) mode=files ;;
+                *) return 1 ;;
+            esac
+        fi ;;
+    *) return 1 ;;
+esac
+case $mode in
+    files) _files ;;
+    directories) _path_files -/ ;;
+    words) compadd -a w ;;
+    services|profiles)
+        [[ $query == yes ]] || return 1
+        [[ ${COMPOSE_FILE:-} == (-|*://*) ]] && return 1
+        whence timeout >/dev/null || return 1
+        if [[ $mode == profiles ]]; then option=--profiles; else option=--services; fi
+        output=$(timeout -k 1 2 docker-compose "${global_args[@]}" config $option </dev/null 2>/dev/null) || return 1
+        w=(${(f)output})
+        compadd -a w ;;
+esac

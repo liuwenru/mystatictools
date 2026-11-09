@@ -1,0 +1,50 @@
+#autoload
+# docker cp: local paths and "container:" on either side; "container:/dir/"
+# lists the directory inside a running container with ls (BusyBox ls as a
+# fallback). Needs timeout(1); relative container paths start at '/'.
+local local_daemon=$1 endpoint=$2 token=$PREFIX container cpath dir listing rc line ret=1
+local -a w dirs files
+# The word as the shell will pass it (backslashes removed outside quotes).
+[[ -z $compstate[quote] ]] && token=${(Q)PREFIX}
+if [[ $token == -* ]]; then
+    compadd -- -a -L -q --archive --follow-link --quiet --help
+    return
+fi
+# A slash before ':' denotes a local path, e.g. ./file:with-colon.
+if [[ $token != *:* || ${token%%:*} == */* ]]; then
+    _files && ret=0
+    if [[ $local_daemon == yes ]] && whence timeout >/dev/null; then
+        # Stopped containers too: docker cp works on them, only listing needs exec.
+        listing=$(timeout -k 1 2 docker --host $endpoint ps -a --format '{{.ID}} {{.Names}}' 2>/dev/null)
+        w=(${=listing//,/ })
+        compadd -S : -a w && ret=0
+    fi
+    return ret
+fi
+[[ $local_daemon == yes ]] || return 1
+whence timeout >/dev/null || return 1
+container=${token%%:*} cpath=${token#*:}
+# Reject option-looking IDs; every value is a separate argv entry.
+[[ -n $container && $container != -* ]] || return 1
+compset -P 1 '*:'
+dir=
+if [[ $cpath == */* ]]; then
+    dir=${cpath%/*}/
+    compset -P '*/'
+fi
+listing=$(timeout -k 1 2 docker --host $endpoint exec --env LC_ALL=C --env QUOTING_STYLE=literal \
+    $container ls -1Ap -- /${dir#/} 2>/dev/null)
+rc=$?
+if (( rc )); then
+    # Do not retry an unresponsive daemon after a timeout.
+    (( rc == 124 || rc == 137 )) && return 1
+    listing=$(timeout -k 1 2 docker --host $endpoint exec --env LC_ALL=C --env QUOTING_STYLE=literal \
+        $container busybox ls -1Ap -- /${dir#/} 2>/dev/null) || return 1
+fi
+for line in ${(f)listing}; do
+    [[ -n $line ]] || continue
+    if [[ $line == */ ]]; then dirs+=(${line%/}); else files+=($line); fi
+done
+compadd -S / -a dirs && ret=0
+compadd -a files && ret=0
+return ret

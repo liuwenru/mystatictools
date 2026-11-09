@@ -1,0 +1,42 @@
+#compdef nft
+local prev=${(Q)words[CURRENT-1]} family= object= table= i
+local -a w
+case $prev in
+    -f|--file) _files; return ;;
+    -I|--includepath) _path_files -/; return ;;
+    -d|--debug) w=(scanner parser eval netlink mnl proto-ctx segtree all) ;;
+    list) w=(ruleset tables chains sets maps counters quotas table chain set map flowtable counter quota) ;;
+    flush) w=(ruleset table chain set map) ;;
+    add|create|delete|destroy|rename) w=(table chain rule set map element flowtable counter quota) ;;
+    insert|replace) w=(rule) ;;
+    reset) w=(counters quotas rules) ;;
+    monitor) w=(new destroy trace ruleset tables chains rules sets elements) ;;
+    table|chain|rule|set|map|element|flowtable|tables|chains|sets|maps) w=(inet ip ip6 arp bridge netdev) ;;
+    inet|ip|ip6|arp|bridge|netdev)
+        w=(${(f)"$(nft list tables $prev 2>/dev/null | awk '$1 == "table" {print $3}')"}) ;;
+    *)
+        if [[ $PREFIX == -* ]]; then
+            w=(-h --help -v --version -c --check -f --file -i --interactive -I --includepath
+               -n --numeric -a --handle -s --stateless -t --terse -j --json -e --echo -d --debug)
+        elif (( CURRENT == 2 )); then
+            w=(add create insert replace delete destroy list flush reset rename monitor describe import export)
+        else
+            for (( i = 2; i < CURRENT; i++ )); do
+                case ${(Q)words[i]} in
+                    chain|rule|set|map|element|flowtable)
+                        object=${(Q)words[i]} family=${(Q)words[i+1]} table=${(Q)words[i+2]}
+                        break ;;
+                esac
+            done
+            if [[ -n $object ]] && (( CURRENT == i + 3 )); then
+                # Chain/set names of the given table.
+                case $object in rule) object=chain ;; element) object=set ;; esac
+                w=(${(f)"$(nft list table $family $table 2>/dev/null | awk -v kind=$object '$1 == kind {print $2}')"})
+            else
+                w=(ruleset table chain rule set map element counter quota flowtable type hook
+                   priority policy accept drop reject return jump goto ip ip6 inet tcp udp icmp
+                   ct meta iifname oifname saddr daddr sport dport state established related new invalid)
+            fi
+        fi ;;
+esac
+compadd -a w

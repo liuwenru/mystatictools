@@ -189,8 +189,11 @@ _mini_docker_completion()
                             words="${words//,/ }" ;;
                         start|stop|restart|kill|rm|logs|stats|top|attach|wait|port|rename|update)
                             words="$($limit docker --host "$endpoint" ps -a --format '{{.Names}}' 2>/dev/null)" ;;
-                        run|create|rmi|image-rm|image-inspect|image-history|save|tag)
+                        run|create|rmi|save|tag)
                             [ -n "$subcommand" ] || words="$($limit docker --host "$endpoint" images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)" ;;
+                        # "image rm" etc.: the subcommand is set by "rm" itself, so do not check it.
+                        image-rm|image-inspect|image-history|image-save|image-tag)
+                            words="$($limit docker --host "$endpoint" images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null)" ;;
                         network) words="$($limit docker --host "$endpoint" network ls --format '{{.Name}}' 2>/dev/null)" ;;
                         volume) words="$($limit docker --host "$endpoint" volume ls --format '{{.Name}}' 2>/dev/null)" ;;
                     esac

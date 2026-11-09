@@ -1,0 +1,85 @@
+#compdef nmcli
+# Candidates come from `nmcli --complete-args`, the interface NetworkManager's
+# own completion uses, so objects, connection/device names, properties and
+# values follow the local nmcli. zsh does the quoting of the replies.
+# nmcli without --complete-args (1.2 and older): a small built-in list.
+local bin=${(Q)words[1]} cur=$PREFIX output rc
+local -a args w
+[[ $bin == '~/'* ]] && bin=$HOME/${bin#'~/'}
+[[ -z $compstate[quote] ]] && cur=${(Q)PREFIX}
+args=("${(@Q)words[2,CURRENT-1]}" "$cur")
+
+output=$(_mini_run $bin --complete-args "${args[@]}" 2>/dev/null)
+rc=$?
+case $rc in
+    0)
+        # nmcli 1.18 and older print nothing for a file argument.
+        if [[ -z $output ]] && (( $#args >= 2 )) && [[ $args[-2] == file ]]; then
+            _files
+            return
+        fi
+        w=(${(f)output})
+        compadd -a w
+        return ;;
+    65) _files; return ;;   # nmcli asks for a file name here
+    124|137) return 1 ;;    # timed out
+esac
+
+# Fallback for nmcli without --complete-args.
+local prev= word object= action= i
+(( $#args >= 2 )) && prev=$args[-2]
+case $prev in
+    -m|--mode) w=(tabular multiline) ;;
+    -c|--colors) w=(yes no auto) ;;
+    -e|--escape) w=(yes no) ;;
+    -f|--fields|-g|--get-values|-w|--wait) return 1 ;;
+    file) _files; return ;;
+esac
+if (( ! $#w )); then
+    # Words before the cursor, skipping global options and their values.
+    for (( i = 1; i < $#args; i++ )); do
+        word=$args[i]
+        if [[ -z $object ]]; then
+            case $word in
+                -m|--mode|-c|--colors|-f|--fields|-g|--get-values|-e|--escape|-w|--wait) (( i++ )); continue ;;
+                -*) continue ;;
+            esac
+            object=$word
+        elif [[ -z $action ]]; then
+            action=$word
+        fi
+    done
+    case $object in
+        '')
+            if [[ $cur == -* ]]; then
+                w=(-t --terse -p --pretty -m --mode -c --colors -f --fields -g --get-values -e --escape
+                   -a --ask -s --show-secrets -w --wait -v --version -h --help)
+            else
+                w=(general networking radio connection device agent monitor help)
+            fi ;;
+        g*) [[ -z $action ]] && w=(status hostname permissions logging) ;;
+        n*) [[ -z $action ]] && w=(on off connectivity) ;;
+        r*) if [[ -z $action ]]; then w=(all wifi wwan); else w=(on off); fi ;;
+        a*) [[ -z $action ]] && w=(secret polkit all) ;;
+        c*)
+            case $action in
+                '') w=(show up down add modify clone edit delete monitor reload load import export) ;;
+                s*|u*|do*|m*|c*|e*|de*)
+                    if [[ $prev == ifname ]]; then
+                        w=(${(f)"$(_mini_run $bin -t -f DEVICE device status 2>/dev/null)"})
+                    else
+                        # nmcli -t escapes ':' in names as '\:'.
+                        w=(id uuid path apath ${${(f)"$(_mini_run $bin -t -f NAME connection show 2>/dev/null)"}//\\:/:})
+                    fi ;;
+                i*) w=(type file) ;;
+                l*) _files; return ;;
+            esac ;;
+        d*)
+            case $action in
+                '') w=(status show set connect reapply modify disconnect delete monitor wifi lldp) ;;
+                w*|l*) ;;
+                *) w=(${(f)"$(_mini_run $bin -t -f DEVICE device status 2>/dev/null)"}) ;;
+            esac ;;
+    esac
+fi
+compadd -a w

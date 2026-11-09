@@ -1,0 +1,5 @@
+#compdef kill
+# Process IDs at every position (after options such as -9 too).
+local -a pids
+pids=(${${(f)"$(ps -e -o pid= 2>/dev/null)"}//[[:space:]]/})
+compadd -V pids -a pids

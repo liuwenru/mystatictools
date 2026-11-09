@@ -1,0 +1,21 @@
+#compdef nslookup
+local line
+local -a fields hosts
+# -type=AAAA: complete the value after '='.
+if [[ $PREFIX == -(type|query|querytype)=* ]]; then
+    compset -P '*='
+    compadd -- A AAAA ANY CNAME MX NS PTR SOA SRV TXT
+    return
+fi
+if [[ $PREFIX == -* ]]; then
+    _mini_words -type= -query= -querytype= -class= -timeout= -retry= -port= -debug -nodebug \
+        -recurse -norecurse -vc -novc -search -nosearch -domain= -version
+    return
+fi
+# Host names from /etc/hosts; no DNS query.
+[[ -r /etc/hosts ]] || return 1
+for line in ${(f)"$(</etc/hosts)"}; do
+    fields=(${=${line%%'#'*}})
+    (( $#fields > 1 )) && hosts+=($fields[2,-1])
+done
+compadd -a hosts

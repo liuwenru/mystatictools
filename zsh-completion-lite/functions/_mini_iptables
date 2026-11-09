@@ -1,0 +1,44 @@
+#compdef iptables
+local prev=${(Q)words[CURRENT-1]} table=filter i word
+local -a w chains
+for (( i = 2; i < CURRENT; i++ )); do
+    case ${(Q)words[i]} in -t|--table) table=${(Q)words[i+1]} ;; esac
+done
+case $prev in
+    -t|--table) w=(filter nat mangle raw security) ;;
+    -p|--protocol) w=(tcp udp udplite icmp icmpv6 esp ah sctp all) ;;
+    -j|--jump|-g|--goto)
+        # User-defined chains; waits at most 1s for the xtables lock.
+        chains=(${(f)"$(iptables -w 1 -t $table -S 2>/dev/null | awk '$1 == "-N" {print $2}')"})
+        w=(ACCEPT DROP RETURN REJECT LOG NFLOG QUEUE NFQUEUE MARK CONNMARK DNAT SNAT MASQUERADE REDIRECT $chains) ;;
+    -A|--append|-C|--check|-D|--delete|-I|--insert|-R|--replace|-L|--list|-S|--list-rules|-F|--flush|-Z|--zero|-X|--delete-chain|-P|--policy|-E|--rename-chain)
+        case $table in
+            filter|security) w=(INPUT FORWARD OUTPUT) ;;
+            nat) w=(PREROUTING INPUT OUTPUT POSTROUTING) ;;
+            mangle) w=(PREROUTING INPUT FORWARD OUTPUT POSTROUTING) ;;
+            raw) w=(PREROUTING OUTPUT) ;;
+        esac
+        chains=(${(f)"$(iptables -w 1 -t $table -S 2>/dev/null | awk '$1 == "-N" {print $2}')"})
+        w+=($chains) ;;
+    -i|--in-interface|-o|--out-interface) w=(/sys/class/net/*(N:t)) ;;
+    -m|--match)
+        w=(tcp udp icmp conntrack state multiport comment limit hashlimit addrtype owner set mark
+           connmark statistic recent iprange) ;;
+    --ctstate|--state) w=(NEW ESTABLISHED RELATED INVALID UNTRACKED) ;;
+    --reject-with)
+        w=(icmp-port-unreachable icmp-host-unreachable icmp-net-unreachable icmp-admin-prohibited tcp-reset) ;;
+    -s|--source|-d|--destination|--sport|--source-port|--dport|--destination-port|--sports|--dports|--comment|--to-source|--to-destination|-N|--new-chain|--set-mark|--log-prefix|-w|--wait|-W|--wait-interval)
+        return 1 ;;
+    *)
+        if (( CURRENT >= 3 )) && [[ ${(Q)words[CURRENT-2]} == (-P|--policy) ]]; then
+            w=(ACCEPT DROP)
+        else
+            w=(-t --table -A --append -C --check -D --delete -I --insert -R --replace -L --list
+               -S --list-rules -F --flush -Z --zero -N --new-chain -X --delete-chain -P --policy
+               -E --rename-chain -p --protocol -s --source -d --destination -i --in-interface
+               -o --out-interface -j --jump -g --goto -m --match -n --numeric -v --verbose
+               -x --exact --line-numbers -w --wait --sport --dport --sports --dports --ctstate
+               --state --comment --reject-with --to-source --to-destination --log-prefix --help --version)
+        fi ;;
+esac
+compadd -a w

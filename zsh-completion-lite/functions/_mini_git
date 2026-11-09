@@ -1,0 +1,240 @@
+#compdef git
+# Local read-only queries only (for-each-ref, remote, ls-files, diff --cached,
+# stash list, config, --git-completion-helper); never ls-remote or fetch.
+local bin=${(Q)words[1]} prev command= subcommand= mode= dashdash= remote= staged= eq= word line i ret=1
+local -a git_args args w parts files dirs suffixless
+[[ $bin == '~/'* ]] && bin=$HOME/${bin#'~/'}
+
+local commands_list='add am apply archive bisect blame branch bundle checkout cherry-pick clean clone commit config describe diff fetch format-patch fsck gc grep help init log ls-files ls-remote ls-tree merge mergetool mv notes prune pull push range-diff rebase reflog remote repack reset restore revert rev-parse rm shortlog show show-branch sparse-checkout stash status submodule switch tag worktree'
+# Builtins whose `--git-completion-helper` (git >= 2.18) only prints options
+# and exits; older versions reject the unknown option first. Former shell
+# scripts (pull, stash, bisect, submodule) are left out.
+local helper=' add am apply blame branch checkout cherry-pick clean clone commit config describe diff fetch format-patch gc grep init log merge mv notes push rebase remote reset restore revert rm show sparse-checkout status switch tag worktree '
+# Fallback options and subcommands for git versions without the helper.
+local fallback='
+add|--all --update --patch --interactive --force --dry-run --verbose --intent-to-add --ignore-errors
+branch|--all --remotes --list --delete --move --copy --force --verbose --track --no-track --set-upstream-to= --unset-upstream --contains --merged --no-merged --show-current
+checkout|--force --quiet --merge --patch --track --no-track --orphan --detach --ours --theirs
+cherry-pick|--continue --abort --quit --skip --edit --no-commit --signoff --mainline= -x
+clean|--dry-run --force --interactive --quiet --exclude= -d -x -X
+clone|--bare --mirror --branch= --depth= --single-branch --no-checkout --origin= --recurse-submodules --shallow-submodules --quiet --progress
+commit|--all --amend --message= --file= --author= --date= --no-edit --no-verify --signoff --fixup= --squash= --reuse-message= --reedit-message= --allow-empty --verbose --quiet
+config|--global --system --local --file= --list --get --get-all --get-regexp --unset --unset-all --add --replace-all --edit --show-origin --name-only
+describe|--all --tags --long --always --abbrev= --contains --exact-match --dirty --match=
+diff|--cached --staged --stat --name-only --name-status --numstat --shortstat --patch --word-diff --color --no-color --ignore-all-space --ignore-space-change --check --no-index
+fetch|--all --prune --prune-tags --tags --no-tags --depth= --unshallow --force --dry-run --quiet --verbose --multiple
+format-patch|--stdout --output-directory= --numbered --cover-letter --signoff --subject-prefix=
+grep|--cached --untracked --ignore-case --word-regexp --invert-match --line-number --files-with-matches --count --extended-regexp --fixed-strings --perl-regexp
+init|--bare --quiet --shared --template= --separate-git-dir=
+log|--oneline --graph --decorate --all --stat --name-only --name-status --patch --follow --since= --until= --author= --grep= --format= --pretty= --abbrev-commit --first-parent --no-merges --reverse --max-count=
+merge|--no-ff --ff-only --squash --no-commit --edit --no-edit --abort --continue --quit --message= --strategy= --strategy-option= --allow-unrelated-histories
+mv|--force --dry-run --verbose
+pull|--rebase --no-rebase --ff-only --no-ff --squash --all --prune --tags --depth= --quiet --verbose --autostash
+push|--all --tags --follow-tags --delete --dry-run --force --force-with-lease --set-upstream --no-verify --prune --mirror --quiet --verbose --push-option=
+rebase|--continue --abort --skip --quit --edit-todo --interactive --onto= --autosquash --autostash --exec= --root --rebase-merges --keep-empty
+reset|--soft --mixed --hard --merge --keep --quiet --patch
+restore|--source= --staged --worktree --patch --ours --theirs --merge --quiet
+revert|--continue --abort --quit --skip --edit --no-edit --no-commit --mainline=
+rm|--cached --force --dry-run --quiet --ignore-unmatch -r
+show|--stat --name-only --name-status --oneline --format= --pretty= --no-patch --abbrev-commit
+status|--short --branch --porcelain --long --untracked-files= --ignored --ignore-submodules
+switch|--create= --force-create= --detach --guess --no-guess --discard-changes --merge --orphan --track --no-track
+tag|--list --delete --verify --annotate --message= --file= --sign --force --contains --merged --no-merged --sort= --points-at=
+bisect|start bad good new old skip reset visualize view log replay run terms help
+notes|list add copy append edit show merge remove prune get-ref
+remote|add rename remove set-head set-branches get-url set-url show prune update --verbose
+sparse-checkout|list init set add reapply disable
+stash|list show drop pop apply branch push save clear create store
+submodule|add status init deinit update set-branch set-url summary foreach sync absorbgitdirs
+worktree|add list lock move prune remove repair unlock
+'
+
+parts=("${(@Q)words[1,CURRENT-1]}")
+prev=$parts[-1]
+for (( i = 2; i <= $#parts; i++ )); do
+    word=$parts[i]
+    if [[ -z $command ]]; then
+        case $word in
+            # Queries follow the repository selected on the command line.
+            -C|--git-dir|--work-tree)
+                line=$parts[i+1]
+                [[ $line == '~/'* ]] && line=$HOME/${line#'~/'}
+                git_args+=($word $line)
+                (( i++ )) ;;
+            --git-dir=*|--work-tree=*) git_args+=($word) ;;
+            -c|--namespace|--config-env|--super-prefix) (( i++ )) ;;
+            -*) ;;
+            *) command=$word ;;
+        esac
+        continue
+    fi
+    [[ -n $dashdash ]] && continue
+    case "$command $word" in
+        *' --') dashdash=yes ;;
+        # Options whose value is the next word; skip it when counting arguments.
+        'commit -m'|'commit -F'|'commit -c'|'commit -C'|'commit --author'|'commit --date'|'commit --fixup'|'commit --squash'|'commit -t'|\
+        'tag -m'|'tag -F'|'tag -u'|'merge -m'|'merge -F'|'merge -s'|'merge -X'|'pull -s'|'pull -X'|\
+        'rebase -s'|'rebase -X'|'rebase -x'|'rebase --onto'|'rebase --exec'|'clone -b'|'clone -o'|'clone --depth'|'clone --branch'|\
+        'checkout -b'|'checkout -B'|'checkout --orphan'|'switch -c'|'switch -C'|'switch --orphan'|'branch -u'|\
+        'fetch --depth'|'pull --depth'|'push -o'|'push --push-option'|'restore -s'|'restore --source'|\
+        'log -n'|'stash -m'|'remote -t'|'remote -m'|'worktree -b'|'worktree -B'|'grep -e'|'grep -f'|'config -f'|'config --file'|'format-patch -o')
+            (( i++ )) ;;
+        'restore --staged'|'restore -S') staged=yes ;;
+        *' -'*) ;;
+        *) args+=($word) ;;
+    esac
+done
+subcommand=$args[1]
+
+# --option=value: complete the value with the option's rules.
+if [[ $PREFIX == --*=* ]]; then
+    prev=${PREFIX%%=*}
+    eq=yes
+    compset -P 1 '*='
+fi
+
+if [[ -z $command ]]; then
+    case $prev in
+        -C|--git-dir|--work-tree) mode=directory ;;
+        -c|--namespace|--config-env) return 1 ;;
+        *)
+            if [[ $PREFIX == -* ]]; then
+                w=(-C -c -p -P --paginate --no-pager --git-dir= --work-tree= --namespace= --bare --exec-path
+                   --html-path --man-path --info-path --no-replace-objects --literal-pathspecs --version --help)
+            else
+                w=(${=commands_list} ${${${(f)"$(_mini_git_query config --get-regexp '^alias\.')"}%% *}#alias.})
+            fi ;;
+    esac
+elif [[ $PREFIX == -* && -z $dashdash && -z $eq ]]; then
+    # The helper misses some options (e.g. diff --cached); add the fallback list too.
+    [[ $helper == *" $command "* ]] && w=(${=$(_mini_git_query $command --git-completion-helper)})
+    w+=(${=${${(M)${(f)fallback}:#$command\|*}#*\|}})
+else
+    case "$command $prev" in
+        *' --output-directory'|*' --separate-git-dir'|*' --template'|'format-patch -o') mode=directory ;;
+        *' -F'|*' --file'|'grep -f'|'config -f'|*' --pathspec-from-file') mode=path ;;
+        'commit -c'|'commit -C'|'restore -s'|*' --source'|*' --onto'|*' --fixup'|*' --squash'|*' --reuse-message'|*' --reedit-message'|\
+        *' --contains'|*' --no-contains'|*' --merged'|*' --no-merged'|*' --points-at') mode=ref ;;
+        'branch -u'|'branch --set-upstream-to') mode=remote-branch ;;
+        'merge -s'|'pull -s'|'rebase -s'|*' --strategy') w=(ort recursive resolve octopus ours subtree) ;;
+        'merge -X'|'pull -X'|'rebase -X'|'cherry-pick -X'|'revert -X'|*' --strategy-option')
+            w=(ours theirs patience diff-algorithm= ignore-space-change ignore-all-space renormalize no-renames subtree=) ;;
+        *' --cleanup') w=(strip whitespace verbatim scissors default) ;;
+        *' --untracked-files') w=(no normal all) ;;
+        # Free text, numbers or new names: nothing to suggest.
+        'commit -m'|'tag -m'|'merge -m'|'stash -m'|'remote -m'|*' --message'|'commit -t'|'tag -u'|'remote -t'|\
+        'checkout -b'|'checkout -B'|'switch -c'|'switch -C'|'worktree -b'|'worktree -B'|'clone -b'|'clone -o'|*' --orphan'|*' --branch'|\
+        'push -o'|*' --push-option'|'log -n'|*' --max-count'|*' --depth'|*' --date'|*' --author'|*' --since'|*' --until'|\
+        *' --grep'|*' --format'|*' --pretty'|*' --trailer'|*' --sort'|*' --match'|*' --abbrev'|*' --unified'|'grep -e'|'rebase -x'|*' --exec')
+            return 1 ;;
+        *)
+            # Unknown --option=value: nothing to suggest.
+            [[ -n $eq ]] && return 1 ;;
+    esac
+    if [[ -z $mode && $#w -eq 0 ]]; then
+        case $command in
+            help) w=(${=commands_list}) ;;
+            add) mode=changed ;;
+            restore) if [[ -n $staged ]]; then mode=staged; else mode=modified; fi ;;
+            checkout) if [[ -n $dashdash ]]; then mode=modified; else mode=ref-guess; fi ;;
+            switch) mode=ref-guess ;;
+            branch)
+                if (( ${parts[(I)(-d|-D|--delete|-m|-M|--move|-c|--copy)]} )); then mode=branch
+                elif (( ${parts[(I)(-r|--remotes)]} )); then mode=remote-branch
+                else mode=ref
+                fi ;;
+            tag)
+                if (( ${parts[(I)(-d|--delete|-v|--verify)]} )); then mode=tag
+                elif (( $#args )); then mode=ref
+                fi ;;
+            reset) if [[ -n $dashdash ]]; then mode=staged; else mode=ref; fi ;;
+            log|show|diff|shortlog|whatchanged|range-diff|format-patch|cherry-pick|revert|merge|rebase|describe|cherry|reflog|show-branch|rev-parse|rev-list|archive|ls-tree)
+                if [[ -n $dashdash ]]; then mode=path; else mode=ref; fi ;;
+            push|fetch|pull|ls-remote)
+                if (( ! $#args )); then
+                    mode=remote
+                elif [[ $command == push && $PREFIX != *:* ]]; then
+                    mode=branch
+                else
+                    # push src:dst completes dst from the remote's tracked branches.
+                    remote=$args[1] mode=remote-of
+                fi ;;
+            remote)
+                case $#args:$subcommand in
+                    0:) w=(${=${${(M)${(f)fallback}:#remote\|*}#*\|}}) ;;
+                    1:rename|1:remove|1:rm|1:set-head|1:set-branches|1:get-url|1:set-url|1:show|1:prune|*:update) mode=remote ;;
+                esac ;;
+            stash)
+                case $#args:$subcommand in
+                    0:) w=(list show drop pop apply branch push save clear create store) ;;
+                    1:show|1:drop|1:pop|1:apply|2:branch) mode=stash ;;
+                    *:push|*:save) [[ -n $dashdash ]] && mode=changed ;;
+                esac ;;
+            bisect|notes|sparse-checkout|submodule|worktree)
+                if (( ! $#args )); then
+                    w=(${=${${(M)${(f)fallback}:#$command\|*}#*\|}})
+                else
+                    case "$command $subcommand" in
+                        'bisect start'|'bisect bad'|'bisect good'|'bisect new'|'bisect old'|'bisect skip'|'bisect reset') mode=ref ;;
+                        'worktree add') if (( $#args == 1 )); then mode=directory; else mode=ref; fi ;;
+                        'worktree '*|'submodule '*) mode=path ;;
+                    esac
+                fi ;;
+            config)
+                # The first name, or the name after get/set/unset/--get/--unset...
+                case $prev in
+                    config|get|set|unset|--get|--get-all|--get-regexp|--unset|--unset-all|--replace-all|--add) mode=config-key ;;
+                    -*) (( $#args )) || mode=config-key ;;
+                esac ;;
+        esac
+    fi
+fi
+
+case $mode in
+    ref|ref-guess)
+        # A..B and A...B complete the part after the dots.
+        [[ $PREFIX == *..* ]] && compset -P '*..'
+        w=(HEAD ${(f)"$(_mini_git_query for-each-ref --format='%(refname:short)' refs/heads refs/tags refs/remotes)"})
+        # checkout/switch create a local branch from a unique remote branch name.
+        [[ $mode == ref-guess ]] &&
+            w+=(${${(f)"$(_mini_git_query for-each-ref --format='%(refname:strip=3)' refs/remotes)"}:#HEAD}) ;;
+    branch) w=(${(f)"$(_mini_git_query for-each-ref --format='%(refname:short)' refs/heads)"}) ;;
+    tag) w=(${(f)"$(_mini_git_query for-each-ref --format='%(refname:short)' refs/tags)"}) ;;
+    remote-branch) w=(${(f)"$(_mini_git_query for-each-ref --format='%(refname:short)' refs/remotes)"}) ;;
+    remote) w=(${(f)"$(_mini_git_query remote)"}) ;;
+    remote-of)
+        # Branch names from local remote-tracking refs; the remote is not contacted.
+        [[ $PREFIX == *:* ]] && compset -P 1 '*:'
+        compset -P '+'
+        w=(${${${(f)"$(_mini_git_query for-each-ref --format='%(refname)' refs/remotes/$remote)"}#refs/remotes/$remote/}:#HEAD}) ;;
+    stash) w=(${(f)"$(_mini_git_query stash list --format=%gd)"}) ;;
+    config-key)
+        w=(user.name user.email core.editor core.autocrlf core.filemode core.quotepath init.defaultBranch
+           pull.rebase push.default credential.helper http.proxy https.proxy http.sslVerify color.ui
+           merge.tool diff.tool alias. ${(f)"$(_mini_git_query config --name-only --list)"}) ;;
+    changed|modified|staged)
+        # Files git reports as changed (NUL separated), relative to the current directory.
+        case $mode in
+            staged) files=(${(0)"$(_mini_git_query diff --cached --name-only --relative -z)"}) ;;
+            modified) files=(${(0)"$(_mini_git_query ls-files -z --modified --deleted)"}) ;;
+            changed) files=(${(0)"$(_mini_git_query ls-files -z --exclude-standard --modified --others --deleted --directory --no-empty-directory)"}) ;;
+        esac
+        dirs=(${(M)files:#*/})
+        files=(${files:#*/})
+        compadd -a files && ret=0
+        compadd -S '' -a dirs && ret=0
+        # Outside a repository, or nothing matches: local paths.
+        (( ret == 0 )) && return 0
+        mode=path ;;
+esac
+case $mode in
+    directory) _path_files -/; return ;;
+    path) _files; return ;;
+esac
+
+# Options such as --format= and names such as alias. expect more text.
+suffixless=(${(M)w:#*[=.]})
+w=(${w:#*[=.]})
+compadd -a w && ret=0
+compadd -S '' -a suffixless && ret=0
+return ret

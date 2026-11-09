@@ -1,0 +1,33 @@
+#compdef grep
+local prev=${(Q)words[CURRENT-1]}
+local -a w
+local value=
+# --color=au: complete the value, keep the option in front.
+if [[ $PREFIX == --*=* ]]; then
+    prev=${PREFIX%%=*}
+    value=yes
+    compset -P '*='
+fi
+case $prev in
+    --color|--colour) w=(always auto never) ;;
+    -d|--directories) w=(read recurse skip) ;;
+    -D|--devices) w=(read skip) ;;
+    --binary-files) w=(binary text without-match) ;;
+    -e|--regexp|-m|--max-count|-A|--after-context|-B|--before-context|-C|--context|--include|--exclude|--exclude-dir|--label)
+        return 1 ;;
+    -f|--file|--exclude-from) ;;
+    *)
+        if [[ -z $value && $PREFIX == -* ]]; then
+            _mini_words -E -F -G -P -e -f -i -v -w -x -z -c -l -L -n -H -h -o -q -s -r -R -a -I \
+                -b -m -A -B -C --recursive --dereference-recursive --help --version --color= \
+                --colour= --include --exclude --exclude-dir --exclude-from --binary-files \
+                --line-buffered --null --directories --devices
+            return
+        fi
+        [[ -n $value ]] && return 1 ;;
+esac
+if (( $#w )); then
+    compadd -a w
+else
+    _files
+fi

@@ -12,7 +12,8 @@ _mini_journalctl_completion()
             words="$(systemctl "${scope[@]}" list-unit-files --no-legend --no-pager 2>/dev/null | awk '{print $1}')" ;;
         -p|--priority) words='emerg alert crit err warning notice info debug 0 1 2 3 4 5 6 7' ;;
         -o|--output) words='short short-full short-iso short-iso-precise short-precise short-monotonic short-unix verbose export json json-pretty json-sse cat' ;;
-        -b|--boot) words="$(journalctl --list-boots --no-pager 2>/dev/null | awk '{print $1}')" ;;
+        # Boot offsets only; newer systemd prints an "IDX BOOT ID ..." header line.
+        -b|--boot) words="$(journalctl --list-boots --no-pager 2>/dev/null | awk '$1 ~ /^-?[0-9]+$/ {print $1}')" ;;
         -F|--field) words='_SYSTEMD_UNIT _SYSTEMD_USER_UNIT _PID _UID _GID _COMM _EXE _HOSTNAME SYSLOG_IDENTIFIER PRIORITY' ;;
         -D|--directory|--root)
             while IFS= read -r candidate; do COMPREPLY+=("$candidate"); done < <(compgen -d -- "$current")

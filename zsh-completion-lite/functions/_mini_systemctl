@@ -1,0 +1,37 @@
+#compdef systemctl
+local prev=${(Q)words[CURRENT-1]} word command= i
+local -a scope w
+local -a commands_list=(start stop restart reload reload-or-restart try-restart status show cat
+    enable disable reenable is-active is-enabled is-failed mask unmask preset edit reset-failed
+    list-units list-unit-files list-timers list-sockets list-dependencies daemon-reload
+    daemon-reexec set-default get-default isolate reboot poweroff halt suspend)
+for word in "${(@Q)words[2,CURRENT-1]}"; do
+    case $word in
+        --user) scope=(--user) ;;
+        --system) scope=(--system) ;;
+        # Remote host or container: do not query the local manager.
+        -H|--host|-M|--machine|--host=*|--machine=*) return 1 ;;
+    esac
+done
+case $prev in
+    -t|--type) w=(service socket target timer mount automount swap path slice scope device) ;;
+    --state) w=(active inactive failed activating deactivating enabled disabled masked static running exited dead) ;;
+    -p|--property|-n|--lines|-H|--host|-M|--machine|--root|--image|--job-mode) return 1 ;;
+    *)
+        if [[ $PREFIX == -* ]]; then
+            w=(--user --system --all --failed --full --no-pager --no-legend --plain --quiet --now
+               --force --runtime --no-block --no-reload --type --state --property --lines --help --version)
+        else
+            for word in "${(@Q)words[2,CURRENT-1]}"; do
+                if (( ${commands_list[(Ie)$word]} )); then command=$word; break; fi
+            done
+            case $command in
+                '') w=($commands_list) ;;
+                daemon-*|get-default|reboot|poweroff|halt|suspend) return 1 ;;
+                *)
+                    w=(${(f)"$(systemctl $scope list-unit-files --no-legend --no-pager 2>/dev/null | awk '{print $1}'
+                              systemctl $scope list-units --all --plain --no-legend --no-pager 2>/dev/null | awk '{print $1}')"}) ;;
+            esac
+        fi ;;
+esac
+compadd -a w
