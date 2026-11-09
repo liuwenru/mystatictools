@@ -24,6 +24,7 @@
 | `ipset` | 常用子命令、已有集合名、本机支持的集合类型、按类型的创建参数、按目标集合实际选项的添加参数、`del`/`test` 的已有成员、输出格式和文件路径 |
 | `nft` | 常用操作、对象、协议族、已有表/链/集合、部分规则关键字 |
 | `scp` | 常用选项、SSH 配置中的 Host 别名、本地路径 |
+| `sshfs` | 选项、`-o` 挂载选项名（从本机 `sshfs -h` 读取）及部分取值、常用 SSH 选项、SSH 配置中的 Host 别名（`[user@]host:`）、挂载点目录、`-F` 配置文件 |
 | `docker` | 常用子命令/选项、本机容器/镜像/网络/卷名，`cp` 两端的本地/容器路径，`load -i`/`--input=`、`save -o`/`--output=` 和 `<`、`>` 重定向后的本地文件，部分二级子命令 |
 | `docker-compose` | 独立命令的常用子命令/选项、Compose/环境文件路径、项目目录、服务名和 profile |
 | `lsof` | 常用选项、PID、用户、协议/端口示例、TCP 状态、路径 |
@@ -71,6 +72,19 @@
   不支持含换行的文件名，不判断指向目录的符号链接，超大目录仍可能产生较多输出。
 - `scp` 不查询远程路径，不解析 SSH `Include`、通配 Host 或哈希 known_hosts。
   SSH 别名来自 `~/.ssh/config` 和 `/etc/ssh/ssh_config`。
+- `sshfs` 同样**不连接远程主机**：输入 `host:` 之后不补全远程路径，需要手写。
+  - 第一个位置参数补全 SSH 配置中的 Host 别名（带 `:`，支持 `user@`），规则与 `scp` 相同；第二个补全本地目录作为挂载点。
+  - `-o` 的选项名在按 Tab 时从命令行中输入的同一个二进制（如 `./sshfs`）的 `sshfs -h` 输出解析，
+    跟随本机版本（sshfs 2.x 和 3.x 的选项不同，如 3.x 的 `dir_cache=`、2.x 的 `cache=`）；有 `timeout` 时限时 2 秒。
+    `-h` 不连接、不挂载。在 sshfs 3.7.3、3.7.6 上实测；2.x 只按其帮助格式（`-d   -o debug`、`[no]` 前缀）用桩数据测试过。查询失败时使用脚本内固定的 3.x 常用选项。另外固定加上 `ro`、`rw`、`default_permissions`
+    和 `ServerAliveInterval=`、`IdentityFile=`、`StrictHostKeyChecking=` 等常用 SSH 选项（sshfs 把不认识的
+    `-o 名称=值` 交给 ssh），这些不保证本机 ssh 都支持。
+  - 支持逗号分隔的多个选项（`-o reconnect,allow_other`）和 `-oreconnect` 紧贴写法，补全最后一个逗号之后的部分。
+  - 取值只补全有固定可选值或路径的选项：`dir_cache`/`cache` 等的 `yes`/`no`、`idmap`、`nomap`、
+    `workaround`（冒号分隔）、`StrictHostKeyChecking`、`ControlMaster`；`uidfile`、`gidfile`、`IdentityFile`
+    等补全本地文件，`ProxyJump`、`HostName` 补全 Host 别名，`ssh_command` 补全命令名。
+    数值类选项（`uid=`、`umask=`、各种 timeout）不补全。
+  - 不补全 `fusermount -u`、`umount` 和 fstab 写法。
 - `docker-compose.bash` 仅注册带横线的独立命令 `docker-compose`，不改动
   `docker compose` 或其他 Docker 补全。服务名通过
   `docker-compose [已有全局参数] config --services` 获取，profile 通过
@@ -196,6 +210,7 @@ Docker 查询。动态命令使用桩函数，不访问真实服务、防火墙�
 
 官方参考： [ipset 手册](https://ipset.netfilter.org/ipset.man.html)，
 [git 官方补全脚本 git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)，
+[sshfs(1)](https://github.com/libfuse/sshfs/blob/master/sshfs.rst)，
 [nmcli(1)](https://networkmanager.dev/docs/api/latest/nmcli.html)、[NetworkManager 官方 nmcli 补全脚本](https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/blob/main/src/nmcli/nmcli-completion)，
 [LVM 命令手册 lvm(8)](https://man7.org/linux/man-pages/man8/lvm.8.html)、[lvcreate(8)](https://man7.org/linux/man-pages/man8/lvcreate.8.html)、[lvs(8)](https://man7.org/linux/man-pages/man8/lvs.8.html)。
 

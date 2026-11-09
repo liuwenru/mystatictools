@@ -180,7 +180,7 @@ git()
     esac
 }
 
-for command in find grep systemctl journalctl rg nslookup iptables ipset nft scp docker docker-compose lsof sed awk xargs tar tmux git nmcli; do
+for command in find grep systemctl journalctl rg nslookup iptables ipset nft scp docker docker-compose lsof sed awk xargs tar tmux git nmcli sshfs; do
     complete -p "$command" >/dev/null
 done
 check -name _mini_find_completion find -na
@@ -287,7 +287,7 @@ nmcli()
                 esac
             else
                 case "$previous" in
-                    id|up|mod) printf '%s\n' 'Wired connection 1' "it's mine" 'vpn:office' ;;
+                    id|up|mod) printf '%s\n' 'Wired connection 1' "it's mine" 'vpn:office' 'ops@site' ;;
                     cloned-mac-address) printf '%s\n' '00:11:22:33:44:55' ;;
                     lo) printf '%s\n' ipv4.method ipv4.may-fail ;;
                     con|connection) printf '%s\n' show up down modify ;;
@@ -314,6 +314,7 @@ check "it\\'s\\ mine" _mini_nmcli_completion nmcli con up id it
 # Bash splits at ':', so only the part after the last colon is replaced.
 TEST_COMP_LINE='nmcli con mod x cloned-mac-address 00:11:' check '22:33:44:55' _mini_nmcli_completion nmcli con mod x cloned-mac-address 00 : 11 :
 TEST_COMP_LINE='nmcli con up id vpn:o' check office _mini_nmcli_completion nmcli con up id vpn : o
+TEST_COMP_LINE='nmcli con up id ops@s' check @site _mini_nmcli_completion nmcli con up id ops @ s
 for line in 'con import type openvpn file ' 'con up id zz'; do
     read -r -a COMP_WORDS <<< "nmcli $line"
     [[ "$line" != *' ' ]] || COMP_WORDS+=('')
@@ -348,6 +349,42 @@ if (
     printf 'FAIL: system nmcli completion fallback\n'; failures=$((failures + 1))
 fi
 rm -f "${TMPDIR:-/tmp/opencode}/mini-nmcli-official.$$"
+
+# sshfs: -o names come from `sshfs -h` (sshfs 3.x lines plus a 2.x-style
+# "-d   -o debug"); TEST_SSHFS_FAIL makes it fail so the fixed list is used.
+sshfs()
+{
+    [ "$1" = -h ] || { printf 'UNEXPECTED_SSHFS_CALL\n'; return 1; }
+    [ "${TEST_SSHFS_FAIL:-}" != yes ] || return 1
+    printf '%s\n' 'usage: sshfs [user@]host:[dir] mountpoint [options]' \
+        '    -o opt,[opt...]        mount options' '    -o reconnect           reconnect to server' \
+        '    -o dir_cache=BOOL      enable caching' '    -o dcache_{stat,link,dir}_timeout=N' \
+        '    -o workaround=LIST     colon separated list of workarounds' '    -o idmap=TYPE          user/group ID mapping' \
+        '    -o SSHOPT=VAL          ssh options' '    -o [no]auto_cache      enable caching' \
+        '    -o allow_other         allow access by all users' '    -d   -o debug          enable debug output'
+}
+check --verbose _mini_sshfs_completion sshfs --verb
+check reconnect _mini_sshfs_completion sshfs -o rec
+check reconnect,allow_other _mini_sshfs_completion sshfs -o reconnect,allow_o
+check -oreconnect _mini_sshfs_completion sshfs -oreco
+check dcache_link_timeout= _mini_sshfs_completion sshfs -o dcache_l
+check noauto_cache _mini_sshfs_completion sshfs -o noauto
+check debug _mini_sshfs_completion sshfs -o deb
+check ServerAliveInterval= _mini_sshfs_completion sshfs -o ServerAliveI
+check default_permissions _mini_sshfs_completion sshfs host: /mnt -o default_
+TEST_SSHFS_FAIL=yes check sshfs_sync _mini_sshfs_completion sshfs -o sshfs_s
+# Bash splits at '=' and ':', so only the part after them is replaced.
+TEST_COMP_LINE='sshfs -o reconnect,dir_cache=y' check yes _mini_sshfs_completion sshfs -o reconnect,dir_cache = y
+TEST_COMP_LINE='sshfs -o idmap=u' check user _mini_sshfs_completion sshfs -o idmap = u
+TEST_COMP_LINE='sshfs -o workaround=rename:renamex' check renamexdev _mini_sshfs_completion sshfs -o workaround = rename : renamex
+TEST_COMP_LINE='sshfs -o StrictHostKeyChecking=acc' check accept-new _mini_sshfs_completion sshfs -o StrictHostKeyChecking = acc
+# Remote paths and -p values are never completed.
+for line in 'srv:/d' 'srv:' '-p 2'; do
+    COMP_WORDS=(sshfs); COMP_CWORD=1; COMP_LINE="sshfs $line"; COMP_POINT=${#COMP_LINE}
+    _mini_sshfs_completion || true
+    checks=$((checks + 1))
+    [ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: sshfs %s -> unexpected <%s>\n' "$line" "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+done
 checks=$((checks + 1))
 
 # LVM: help text in the 2.03 --longhelp layout; only read-only reports are allowed.
@@ -708,5 +745,12 @@ checks=$((checks + 1))
 printf 'Host production test-*\n' > "$temporary/home/.ssh/config"
 HOME="$temporary/home" check production: _mini_scp_completion scp prod
 HOME="$temporary/home" check admin@production: _mini_scp_completion scp admin@prod
+HOME="$temporary/home" check production: _mini_sshfs_completion sshfs prod
+HOME="$temporary/home" TEST_COMP_LINE='sshfs -o reconnect admin@prod' check @production: _mini_sshfs_completion sshfs -o reconnect admin @ prod
+HOME="$temporary/home" TEST_COMP_LINE='sshfs -o ProxyJump=pro' check production _mini_sshfs_completion sshfs -o ProxyJump = pro
+check "$temporary/home" _mini_sshfs_completion sshfs -p 2222 srv:/data "$temporary/ho"
+check "$temporary/home" _mini_sshfs_completion sshfs -o reconnect srv: "$temporary/ho"
+check "$temporary/file with spaces" _mini_sshfs_completion sshfs -F "$temporary/file"
+TEST_COMP_LINE="sshfs -o IdentityFile=$temporary/file" check "$temporary/file with spaces" _mini_sshfs_completion sshfs -o IdentityFile = "$temporary/file"
 printf '%s checks, %s failures\n' "$checks" "$failures"
 [ "$failures" -eq 0 ]

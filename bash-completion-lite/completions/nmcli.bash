@@ -64,7 +64,10 @@ _mini_nmcli_split()
                 word+="${line:i:1}" inword=1 ;;
             *)
                 word+="$c" inword=1
-                case "${COMP_WORDBREAKS-}" in *"$c"*) _mini_nmcli_keep=${#word} ;; esac ;;
+                # Readline keeps '@' and '$' in the replaced text.
+                case "${COMP_WORDBREAKS-}" in
+                    *"$c"*) _mini_nmcli_keep=${#word}; [[ "$c" != [@\$] ]] || _mini_nmcli_keep=$((_mini_nmcli_keep - 1)) ;;
+                esac ;;
         esac
     done
     _mini_nmcli_words+=("$word")
@@ -147,7 +150,11 @@ _mini_nmcli_add()
     [ "${candidate:0:${#2}}" = "$2" ] || return 0
     candidate="${candidate:_mini_nmcli_keep}"
     case "$_mini_nmcli_quote" in
-        \') reply="${candidate//\'/\'\\\'\'}" ;;
+        \')
+            # Replacement in a variable: Bash 4.2 keeps the backslashes of a
+            # literal replacement inside double quotes.
+            c="'\\''"
+            reply="${candidate//\'/$c}" ;;
         \")
             reply="${candidate//\\/\\\\}"
             reply="${reply//\"/\\\"}"
