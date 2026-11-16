@@ -207,6 +207,26 @@ nmcli()
         *) print UNEXPECTED_NMCLI_QUERY; return 1 ;;
     esac
 }
+# scp remote listing: only `ssh -V` and the BatchMode ls query are allowed. The arguments
+# are written to $ZCL_SSH_ARGS for the option-forwarding checks.
+ssh()
+{
+    if [[ $* == -V ]]; then print -u2 "OpenSSH_${TEST_SSH_VERSION:-9.9}p1, OpenSSL 3.0.0"; return; fi
+    [[ "$1 $2 $3 $4" == '-o BatchMode=yes -a -x' ]] || { print UNEXPECTED_SSH_CALL; return 1; }
+    print -r -- "$*" > $ZCL_SSH_ARGS
+    [[ ${TEST_SSH:-} != fail ]] || return 255
+    case ${@[-1]} in
+        "ls -1ApL -- '/'") print -l etc/ opt/ 'dir with spaces/' ;;
+        "ls -1ApL -- '/etc/'") print -l hosts hostname ssh/ ;;
+        "ls -1ApL -- '/dir with spaces/'") print -l 'a b.txt' ;;
+        'ls -1ApL -- .') print -l notes.txt work/ ;;
+        "ls -1ApL -- ~/''") print -l notes.txt work/ ;;
+        "ls -1ApL -- ~/'work/'") print -l job.log ;;
+        # ls lists the directory and fails for a dangling symlink in it.
+        "ls -1ApL -- '/broken/'") print -l kept.txt; return 1 ;;
+        *) return 2 ;;
+    esac
+}
 # sshfs 3.x help lines plus a 2.x-style "-d   -o debug".
 sshfs()
 {

@@ -100,7 +100,7 @@ none()
 # trap would otherwise remove $tmp when the session ends.
 zpty -b t "exec env HOME=$tmp/home TERM=dumb zsh -f -i"
 run "PS1='ZCLPROMPT> '; unsetopt promptcr; cd $data"
-run "export ZCL_OUT=$out; source $install_dir/init.zsh; source $root/test/mocks.zsh"
+run "export ZCL_OUT=$out ZCL_SSH_ARGS=$tmp/ssh-args; source $install_dir/init.zsh; source $root/test/mocks.zsh"
 run "_zcl_mark() { print TAB >> \$ZCL_OUT; return 1 }; zstyle ':completion:*' completer _zcl_mark _complete"
 
 # Registration: every #compdef command uses our function.
@@ -274,7 +274,53 @@ check input 'nft list chain inet filter in'
 check -P 'scp -P'
 check production: 'scp prod'
 check admin@production: 'scp admin@prod'
+check production:/etc/ 'scp production:/et'
+check production:/etc/ 'scp ./local production:/et'
+check admin@production:/etc/hosts 'scp admin@production:/etc/hosts'
+check production:/etc/ssh/ 'scp production:/etc/s'
+check production:work/ 'scp production:wo'
+check production:notes.txt 'scp production:'
+check 'production:~/work/' 'scp production:~/wo'
+check 'production:~/work/job.log' 'scp production:~/work/jo'
+check 'production:/dir with spaces/a b.txt' 'scp production:/dir\ with\ spaces/a'
+check 'production:/dir with spaces/a b.txt' 'scp "production:/dir with spaces/a'
+check production:/broken/kept.txt 'scp production:/broken/ke'
+none 'scp production:/missing/x'
+# A slash before the colon is a local path: no connection.
+run ": > $tmp/ssh-args"
+none 'scp ./no-such-dir/name:/et'
+(( ++checks ))
+[[ ! -s $tmp/ssh-args ]] || { print -r -- "FAIL: scp local path queried ssh: $(<$tmp/ssh-args)"; (( ++failures )) }
+# scp connection options are passed to ssh.
+check production:/etc/ 'scp -P 2222 -i key -o ProxyJump=jump -r -4 production:/et'
+(( ++checks ))
+[[ $(<$tmp/ssh-args) == "-o BatchMode=yes -a -x -p 2222 -i key -o ProxyJump=jump -4 -- production ls -1ApL -- '/'" ]] ||
+    { print -r -- "FAIL: scp ssh arguments: $(<$tmp/ssh-args)"; (( ++failures )) }
+# Legacy protocol (-O, OpenSSH < 9.0, or the override): remote names are
+# quoted for the remote shell and again for this one.
+check 'production:/dir\ with\ spaces/' 'scp -O production:/di'
+check 'production:/dir\ with\ spaces/a\ b.txt' 'scp -O production:/dir\\\ with\\\ spaces/a'
+check 'production:/dir\ with\ spaces/a\ b.txt' 'scp -O "production:/dir\ with\ spaces/a'
+check production:/etc/hosts 'scp -O production:/etc/hosts'
+check 'production:/dir\ with\ spaces/a\ b.txt' 'scp -O "production:/dir\ with\ spaces/a\ b'
+check 'production:/dir\ with\ spaces/a\ b.txt' "scp -O 'production:/dir\ with\ spaces/a"
+run 'export TEST_SSH_VERSION=7.4'
+check 'production:/dir\ with\ spaces/' 'scp production:/di'
+check 'production:/dir with spaces/' 'scp -s production:/di'
+run 'export MINI_SCP_LEGACY_PROTOCOL=no'
+check 'production:/dir with spaces/' 'scp production:/di'
+run 'unset TEST_SSH_VERSION; export MINI_SCP_LEGACY_PROTOCOL=yes'
+check 'production:/dir\ with\ spaces/' 'scp production:/di'
+run 'unset MINI_SCP_LEGACY_PROTOCOL'
+check 'production:/dir with spaces/' 'scp production:/di'
+# Legacy: command substitution in the typed path is never run remotely.
+run ": > $tmp/ssh-args"
+none 'scp -O production:/\$\(id\)/x'
+(( ++checks ))
+[[ $(<$tmp/ssh-args) == *" ls -1ApL -- '/\$(id)/'" ]] || { print -r -- "FAIL: scp legacy quoting: $(<$tmp/ssh-args)"; (( ++failures )) }
+run 'export TEST_SSH=fail'
 none 'scp production:/et'
+run 'unset TEST_SSH'
 
 check --restart 'docker run --rest'
 check -it 'docker exec -i'
@@ -486,11 +532,14 @@ check "$data" "tar -C ${data:h}/da"
 check "--directory=$data" "tar --directory=${data:h}/da"
 none "tar -C $data/fi"
 
-# Without timeout(1): no container queries for docker cp, no Compose queries.
+# Without timeout(1): no container queries for docker cp, no Compose queries,
+# no remote listing for scp.
 run "unfunction timeout; path=($tmp/no-timeout); rehash"
 none 'docker cp a1b2c3d4e5f6:/ro'
 check "$data/file with spaces" "docker cp $data/fi"
 none 'docker-compose up '
+none 'scp production:/et'
+check production: 'scp prod'
 run "path=(/usr/bin /bin); source $root/test/mocks.zsh"
 
 zpty -d t

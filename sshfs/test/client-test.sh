@@ -82,6 +82,41 @@ if [ "$mode" = root ]; then
     test "$(cat /mnt/a/server.txt)" = hello-from-server
     umount_fuse /mnt/a
 
+    # 3.7.6 默认 contain_symlinks：绝对路径或含 .. 的链接 readlink 返回 EPERM
+    step "符号链接：默认 contain_symlinks"
+    sshfs -o "$ssh_opts,IdentityFile=$key" "$remote" /mnt/a
+    s=/mnt/a/sl
+    test "$(readlink $s/rel)" = ok.txt && test "$(cat $s/rel)" = ok
+    for l in dotdot abs inbase; do
+        test -L "$s/$l"   # 链接本身仍可见
+        ! readlink "$s/$l" 2>/dev/null
+        cat "$s/$l" 2>&1 | grep -q 'Operation not permitted'
+    done
+    umount_fuse /mnt/a
+
+    step "符号链接：no_contain_symlinks（目标原样交给本地解析）"
+    sshfs -o "$ssh_opts,IdentityFile=$key,no_contain_symlinks" "$remote" /mnt/a
+    test "$(readlink $s/dotdot)" = ../server.txt && test "$(cat $s/dotdot)" = hello-from-server
+    test "$(readlink $s/abs)" = /etc/passwd
+    grep -q '^tuser:' $s/abs   # 绝对链接读到的是本地 /etc/passwd，不是远端
+    umount_fuse /mnt/a
+
+    step "符号链接：follow_symlinks（由服务端解析）"
+    sshfs -o "$ssh_opts,IdentityFile=$key,follow_symlinks" "$remote" /mnt/a
+    test ! -L $s/abs && grep -q '^test:x:2000:' $s/abs   # 远端 /etc/passwd
+    test "$(cat $s/dotdot)" = hello-from-server
+    umount_fuse /mnt/a
+
+    step "符号链接：transform_symlinks 与 contain 冲突"
+    sshfs -o "$ssh_opts,IdentityFile=$key,transform_symlinks" "$remote" /mnt/a 2>/tmp/sshfs.err
+    grep -q no_contain_symlinks /tmp/sshfs.err   # 启动时提示加 no_contain_symlinks
+    cat $s/inbase 2>&1 | grep -q 'Operation not permitted'   # 改写成 ../server.txt 后被拒绝
+    umount_fuse /mnt/a
+    sshfs -o "$ssh_opts,IdentityFile=$key,transform_symlinks,no_contain_symlinks" "$remote" /mnt/a
+    test "$(readlink $s/inbase)" = ../server.txt && test "$(cat $s/inbase)" = hello-from-server
+    umount_fuse /mnt/a
+    rm /tmp/sshfs.err
+
     step "ssh-keyscan"
     ssh-keyscan -t ed25519 server 2>/dev/null | grep -q ssh-ed25519
 

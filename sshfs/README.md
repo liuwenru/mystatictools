@@ -76,6 +76,25 @@ Ed25519/ECDSA/RSA）和 zlib（`ssh -C` / `sshfs -C` 压缩）。以下功能不
 `Bad configuration option` 并直接退出（已在 Fedora 宿主复现）。`~/.ssh/config` 照常读取。
 需要全局配置时写到 `/usr/local/etc/ssh/ssh_config`，全局 known_hosts 为 `/usr/local/etc/ssh/ssh_known_hosts`。
 
+**符号链接：3.7.6 起默认拒绝绝对路径和含 `..` 的链接（`contain_symlinks`）。** 这是上游修复
+CVE-2026-47187 引入的新默认值，不是本构建的取舍。符号链接目标在本地解析，恶意服务端可以用
+`x -> /etc/shadow`、`x -> ../../root/.ssh/authorized_keys` 让本地程序读写本机文件。表现：
+
+- 链接本身仍可见（`ls -l` 能列出），`readlink`/访问返回 `EPERM`（Operation not permitted），
+  `cp -a`、`rsync` 遇到这类链接会报错；`a -> b/c` 这类不含 `..` 的相对链接不受影响。
+- 只要出现 `..` 就拒绝，不做路径化简（中间目录由服务端控制，化简不可信）。
+- **`transform_symlinks` 与默认值冲突**：改写结果多为 `../xxx`，会被拒绝，启动时 sshfs 打印提示。
+  3.7.5 及以前用 `transform_symlinks` 的挂载，升级后要加 `no_contain_symlinks` 才能保持原行为。
+
+| 选项 | 行为 | 适用 |
+| --- | --- | --- |
+| 默认（`contain_symlinks`） | 绝对/含 `..` 的链接 EPERM | 不完全信任的服务器 |
+| `no_contain_symlinks` | 链接目标原样交给本地解析，与 3.7.5 及以前一致；绝对链接指向**本机**同名路径 | 可信服务器，需要旧行为或配合 `transform_symlinks` |
+| `follow_symlinks` | 服务端解析，链接显示为普通文件/目录，读到的是远端内容 | 只需要读取链接指向的内容 |
+
+`no_contain_symlinks` 是 3.7.6 新增选项，3.7.5 及以前的 sshfs 不认识，会报
+`fuse: unknown option(s)`；用它之前先确认 `sshfs --version`。
+
 ## 运行依赖（纯静态不等于没有运行时依赖）
 
 - **内核 FUSE**：`/dev/fuse` 存在（`modprobe fuse`）。容器中需 `--device /dev/fuse --cap-add SYS_ADMIN`。
@@ -132,7 +151,9 @@ test/run-test.sh dist/aarch64    # 在 ARM 主机
 
 用例：密钥认证挂载后的读写、mkdir、rename、symlink、chmod、truncate、16 MiB 文件校验、df；
 `-C` + reconnect + max_conns=4 + idmap=user + allow_other；password_stdin；ssh-agent/ssh-add；
-`mount.sshfs` 和 `mount.fuse3 'sshfs#...'`；ssh-keyscan；非 root 通过 setuid fusermount3 挂载/卸载；
+`mount.sshfs` 和 `mount.fuse3 'sshfs#...'`；符号链接在默认 contain、`no_contain_symlinks`、
+`follow_symlinks`、`transform_symlinks`（单独用被拒绝并打印提示，加 `no_contain_symlinks` 后正常）下的表现，
+其中绝对链接 `-> /etc/passwd` 分别确认读到本地和远端文件；ssh-keyscan；非 root 通过 setuid fusermount3 挂载/卸载；
 非 root allow_other（验证读取 `/etc/fuse.conf`）；auto_unmount（kill -9 sshfs 后自动卸载）。
 Dockerfile 的 check 阶段另外在无共享库的根文件系统中检查版本、算法列表、三种密钥生成，以及不读取
 `/etc/ssh/ssh_config`。
@@ -144,7 +165,7 @@ Dockerfile 的 check 阶段另外在无共享库的根文件系统中检查版�
 | 构建主机 | 本机 Fedora 44，原生 | 192.168.182.150，原生 |
 | ELF 架构、无 INTERP/NEEDED（readelf） | 通过 | 通过 |
 | Dockerfile 无共享库检查 | 通过 | 通过 |
-| `test/run-test.sh` 全部用例 | 通过 | 通过 |
+| `test/run-test.sh` 全部用例（含符号链接用例，2026-11-16） | 通过 | 通过 |
 
 另外在 Fedora 宿主上直接运行 x86_64 产物（宿主带 crypto-policies 的 ssh/openssl 配置），只读挂载
 ARM 主机目录，读取的文件哈希与本地一致。全部为原生测试，未使用模拟器。

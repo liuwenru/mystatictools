@@ -109,6 +109,27 @@ docker()
         *' volume ls '*) printf '%s\n' example-volume ;;
     esac
 }
+# scp remote listing: only `ssh -V` and the BatchMode ls query are allowed. The
+# arguments are kept in $ssh_arguments_file for the option-forwarding checks.
+ssh()
+{
+    if [ "$*" = -V ]; then printf 'OpenSSH_%sp1, OpenSSL 3.0.0\n' "${TEST_SSH_VERSION:-9.9}" >&2; return; fi
+    [ "$1 $2 $3 $4" = '-o BatchMode=yes -a -x' ] || { printf 'UNEXPECTED_SSH_CALL\n'; return 1; }
+    printf '%s\n' "$*" > "$ssh_arguments_file"
+    [ "${TEST_SSH:-}" != fail ] || return 255
+    case "${!#}" in
+        "ls -1ApL -- '/'") printf '%s\n' etc/ opt/ 'dir with spaces/' ;;
+        "ls -1ApL -- '/etc/'") printf '%s\n' hosts hostname ssh/ ;;
+        "ls -1ApL -- '/dir with spaces/'") printf '%s\n' 'a b.txt' ;;
+        'ls -1ApL -- .') printf '%s\n' notes.txt work/ ;;
+        "ls -1ApL -- ~/''") printf '%s\n' notes.txt work/ ;;
+        "ls -1ApL -- ~/'work/'") printf '%s\n' job.log ;;
+        "ls -1ApL -- '/it'\''s/'") printf '%s\n' file ;;
+        # ls lists the directory and fails for a dangling symlink in it.
+        "ls -1ApL -- '/broken/'") printf '%s\n' kept.txt; return 1 ;;
+        *) return 2 ;;
+    esac
+}
 timeout()
 {
     # Invoke the docker function without an external daemon, checking the deadline.
@@ -473,6 +494,55 @@ check inet _mini_nft_completion nft add table in
 check filter _mini_nft_completion nft list table inet fi
 check input _mini_nft_completion nft list chain inet filter in
 check -P _mini_scp_completion scp -P
+ssh_arguments_file="$(mktemp "${TMPDIR:-/tmp/opencode}/mini-completion-ssh.XXXXXXXX")"
+TEST_COMP_LINE='scp production:/et' check /etc/ _mini_scp_completion scp production : /et
+TEST_COMP_LINE='scp ./local production:/et' check /etc/ _mini_scp_completion scp ./local production : /et
+TEST_COMP_LINE='scp admin@production:/etc/hosts' check /etc/hosts _mini_scp_completion scp admin@production : /etc/hosts
+TEST_COMP_LINE='scp production:/etc/s' check /etc/ssh/ _mini_scp_completion scp production : /etc/s
+TEST_COMP_LINE='scp production:wo' check work/ _mini_scp_completion scp production : wo
+TEST_COMP_LINE='scp production:' check notes.txt _mini_scp_completion scp production :
+TEST_COMP_LINE='scp production:~/wo' check '~/work/' _mini_scp_completion scp production : '~/wo'
+TEST_COMP_LINE='scp production:~/work/jo' check '~/work/job.log' _mini_scp_completion scp production : '~/work/jo'
+TEST_COMP_LINE='scp production:/dir\ with\ spaces/a' check '/dir with spaces/a b.txt' _mini_scp_completion scp production : '/dir\ with\ spaces/a'
+TEST_COMP_LINE='scp "production:/dir with spaces/a' check 'production:/dir with spaces/a b.txt' _mini_scp_completion scp '"production:/dir with spaces/a'
+TEST_COMP_LINE="scp production:/it\\'s/fi" check "/it's/file" _mini_scp_completion scp production : "/it\\'s/fi"
+TEST_COMP_LINE='scp production:/broken/ke' check /broken/kept.txt _mini_scp_completion scp production : /broken/ke
+# scp connection options are passed to ssh.
+TEST_COMP_LINE='scp -P 2222 -i key -o ProxyJump=jump -r -4 production:/et' check /etc/ _mini_scp_completion scp -P 2222 -i key -o ProxyJump = jump -r -4 production : /et
+checks=$((checks + 1))
+[ "$(cat "$ssh_arguments_file")" = "-o BatchMode=yes -a -x -p 2222 -i key -o ProxyJump=jump -4 -- production ls -1ApL -- '/'" ] ||
+    { printf 'FAIL: scp ssh arguments: %s\n' "$(cat "$ssh_arguments_file")"; failures=$((failures + 1)); }
+# Legacy protocol (-O, OpenSSH < 9.0, or the override): remote names are
+# quoted for the remote shell; Readline quotes them again for this one.
+TEST_COMP_LINE='scp -O production:/di' check '/dir\ with\ spaces/' _mini_scp_completion scp -O production : /di
+TEST_COMP_LINE='scp -O production:/dir\\\ with\\\ spaces/a' check '/dir\ with\ spaces/a\ b.txt' _mini_scp_completion scp -O production : '/dir\\\ with\\\ spaces/a'
+TEST_COMP_LINE='scp -O "production:/dir\ with\ spaces/a\ b' check 'production:/dir\ with\ spaces/a\ b.txt' _mini_scp_completion scp -O '"production:/dir\ with\ spaces/a\ b'
+TEST_COMP_LINE='scp -O production:/etc/hosts' check /etc/hosts _mini_scp_completion scp -O production : /etc/hosts
+TEST_SSH_VERSION=7.4 TEST_COMP_LINE='scp production:/di' check '/dir\ with\ spaces/' _mini_scp_completion scp production : /di
+TEST_SSH_VERSION=7.4 TEST_COMP_LINE='scp -s production:/di' check '/dir with spaces/' _mini_scp_completion scp -s production : /di
+TEST_SSH_VERSION=7.4 MINI_SCP_LEGACY_PROTOCOL=no TEST_COMP_LINE='scp production:/di' check '/dir with spaces/' _mini_scp_completion scp production : /di
+MINI_SCP_LEGACY_PROTOCOL=yes TEST_COMP_LINE='scp production:/di' check '/dir\ with\ spaces/' _mini_scp_completion scp production : /di
+TEST_COMP_LINE='scp production:/di' check '/dir with spaces/' _mini_scp_completion scp production : /di
+# No candidates and no connection: unknown directory, failed ssh, a local path
+# with a colon; legacy command substitution is passed to ls as a literal name.
+scp_none()
+{
+    COMP_LINE="$1"; COMP_POINT=${#COMP_LINE}; shift
+    COMP_WORDS=("$@"); COMP_CWORD=$((${#COMP_WORDS[@]} - 1))
+    _mini_scp_completion || true
+    checks=$((checks + 1))
+    [ "${#COMPREPLY[@]}" -eq 0 ] || { printf 'FAIL: %s -> unexpected <%s>\n' "$COMP_LINE" "${COMPREPLY[*]}"; failures=$((failures + 1)); }
+}
+scp_none 'scp production:/missing/x' scp production : /missing/x
+TEST_SSH=fail scp_none 'scp production:/et' scp production : /et
+scp_none 'scp -O production:/\$\(id\)/x' scp -O production : '/\$\(id\)/x'
+checks=$((checks + 1))
+[[ "$(cat "$ssh_arguments_file")" == *" ls -1ApL -- '/\$(id)/'" ]] ||
+    { printf 'FAIL: scp legacy quoting: %s\n' "$(cat "$ssh_arguments_file")"; failures=$((failures + 1)); }
+: > "$ssh_arguments_file"
+scp_none 'scp ./no-such-dir/name:/et' scp ./no-such-dir/name : /et
+checks=$((checks + 1))
+[ ! -s "$ssh_arguments_file" ] || { printf 'FAIL: scp local path queried ssh\n'; failures=$((failures + 1)); }
 check --restart _mini_docker_completion docker run --rest
 check -it _mini_docker_completion docker exec -i
 # -i of exec is --interactive, so the next word is still a container.
@@ -665,6 +735,12 @@ _mini_docker_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
 checks=$((checks + 1))
 check completions/docker.bash _mini_docker_completion docker cp completions/dock
+COMP_WORDS=(scp production : /et); COMP_CWORD=3
+COMP_LINE='scp production:/et'; COMP_POINT=${#COMP_LINE}
+_mini_scp_completion || true
+[ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))
+checks=$((checks + 1))
+rm -f "$ssh_arguments_file"
 COMP_LINE='docker-compose up '; COMP_POINT=${#COMP_LINE}
 _mini_docker_compose_completion || true
 [ "${#COMPREPLY[@]}" -eq 0 ] || failures=$((failures + 1))

@@ -1,6 +1,16 @@
 #compdef scp
-local prev=${(Q)words[CURRENT-1]} ret=1
-local -a reply
+# Options, SSH config Host aliases, local paths, and after "[user@]host:" the
+# remote directory, listed with `ssh host ls`. The listing runs with
+# BatchMode=yes (no password or passphrase prompt) under a 2s limit and needs
+# timeout(1); nothing is offered when it fails. Relative remote paths start at
+# the remote home directory.
+# With the legacy scp protocol the remote shell parses the path, so it needs a
+# second level of quoting; with SFTP it is taken as typed. Legacy is assumed
+# for -O, and without -s for OpenSSH before 9.0 (`ssh -V`);
+# MINI_SCP_LEGACY_PROTOCOL=yes|no overrides the version test.
+local prev=${(Q)words[CURRENT-1]} token=$PREFIX host rpath dir rdir listing line word legacy= ret=1
+local -i i
+local -a reply dirs files ssh_args
 case $prev in
     -P|-l|-J|-c) return 1 ;;
     -o)
@@ -9,18 +19,73 @@ case $prev in
         return ;;
     -i|-F|-S) _files; return ;;
 esac
-if [[ $PREFIX == -* ]]; then
+# The word as the shell will pass it. Inside double quotes PREFIX keeps the
+# backslashes of \\ \$ \` \"; inside single quotes it is already literal.
+case $compstate[quote] in
+    '') token=${(Q)PREFIX} ;;
+    '"') token=${(Q)${:-\"$PREFIX\"}} ;;
+esac
+if [[ $token == -* ]]; then
     compadd -- -3 -4 -6 -A -B -C -D -F -i -J -l -O -o -P -p -q -r -R -S -s -T -v
     return
 fi
-# Never open an SSH connection to complete remote paths.
-[[ $PREFIX$SUFFIX == *:* ]] && return 1
-_mini_ssh_hosts
-if [[ $PREFIX == *@* ]]; then
-    compset -P '*@'
-    compadd -S : -a reply
-    return
+# A slash before ':' denotes a local path, e.g. ./file:with-colon.
+if [[ $token != *:* || ${token%%:*} == */* ]]; then
+    _mini_ssh_hosts
+    if [[ $PREFIX == *@* ]]; then
+        compset -P '*@'
+        compadd -S : -a reply
+        return
+    fi
+    compadd -S : -a reply && ret=0
+    _files && ret=0
+    return ret
 fi
-compadd -S : -a reply && ret=0
-_files && ret=0
+
+whence timeout >/dev/null || return 1
+host=${token%%:*} rpath=${token#*:}
+[[ -n $host && $host != -* ]] || return 1
+# Connection options already typed for scp are passed on to ssh.
+for (( i = 2; i < CURRENT; i++ )); do
+    word=${(Q)words[i]}
+    case $word in
+        -P) ssh_args+=(-p ${(Q)words[i+1]}); (( i++ )) ;;
+        -i|-F|-J|-o) ssh_args+=($word ${(Q)words[i+1]}); (( i++ )) ;;
+        -[46]) ssh_args+=($word) ;;
+        -O) legacy=yes ;;
+        -s) legacy=no ;;
+    esac
+done
+if [[ -z $legacy ]]; then
+    legacy=${MINI_SCP_LEGACY_PROTOCOL:-}
+    [[ -z $legacy && $(ssh -V 2>&1) =~ 'OpenSSH_([0-9]+)' ]] && (( match[1] < 9 )) && legacy=yes
+fi
+compset -P 1 '*:'
+dir=
+if [[ $rpath == */* ]]; then
+    dir=${rpath%/*}/
+    compset -P '*/'
+fi
+# Legacy: the typed directory is in remote shell syntax; remove that quoting
+# (never evaluate it) to get the real name.
+[[ $legacy == yes ]] && dir=${(Q)dir}
+# The remote shell parses the ls command line: quote the directory, but leave
+# a leading ~/ unquoted so that it expands there.
+case $dir in
+    '') rdir=. ;;
+    '~/'*) rdir='~/'${(qq)dir#'~/'} ;;
+    *) rdir=${(qq)dir} ;;
+esac
+# -L: a symlink to a directory is listed as a directory. ls also fails for a
+# dangling symlink in the directory, so its output is used whatever it returns.
+listing=$(timeout -k 1 2 ssh -o BatchMode=yes -a -x $ssh_args -- $host "ls -1ApL -- $rdir" 2>/dev/null)
+for line in ${(f)listing}; do
+    [[ -n $line ]] || continue
+    if [[ $line == */ ]]; then dirs+=(${line%/}); else files+=($line); fi
+done
+# Legacy: quote the names for the remote shell; compadd quotes them again for
+# this shell.
+[[ $legacy == yes ]] && dirs=(${(q)dirs}) files=(${(q)files})
+compadd -S / -a dirs && ret=0
+compadd -a files && ret=0
 return ret

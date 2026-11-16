@@ -59,7 +59,7 @@ source ~/.local/share/zsh-completion-lite/init.zsh
 | `systemctl`、`journalctl` | 子命令、选项取值、本机单元名（支持 `--user`）、启动编号 |
 | `nslookup` | 选项、`-type=` 查询类型、`/etc/hosts` 主机名 |
 | `iptables`、`ipset`、`nft` | 表/链/集合、集合类型和参数、已有成员，只读查询 |
-| `scp`、`sshfs` | Host 别名（`[user@]host:`）、本地路径、`-o` 选项及取值；不连远程 |
+| `scp`、`sshfs` | Host 别名（`[user@]host:`）、本地路径、`-o` 选项及取值；`scp` 在 `host:` 之后补全远程路径，`sshfs` 不连远程 |
 | `docker`、`docker-compose` | 子命令、本机容器/镜像/网络/卷、`docker cp` 容器内路径、Compose 服务和 profile |
 | `lsof` | 选项、PID、用户、`-iTCP:443` / `-sTCP:LISTEN` |
 | `git` | 子命令和别名、选项、分支/标签/远程分支、`A..B`、`push src:dst`、改动文件、stash、配置项名 |
@@ -78,8 +78,9 @@ source ~/.local/share/zsh-completion-lite/init.zsh
 - **git**：bash 版找到系统的 git-completion.bash 就改用它；这里按“默认用自带规则”替换 zsh 的 `_git`，
   行为与 bash 版自带规则一致。zsh `_git` 覆盖的子命令和选项更全（它也只查询本地仓库），
   需要时设 `MINI_ZSH_OFFICIAL_COMPLETION=git`。
-- **scp**：zsh 自带的 `_ssh` 在 `host:` 之后通过 SSH 连接补全远程路径（`_remote_files`），
-  可能卡住或触发认证；这里不连接远程。
+- **scp**：远程路径补全的规则（免密、2 秒超时、选项传递、新旧协议的转义和
+  `MINI_SCP_LEGACY_PROTOCOL`）与 bash 版相同，见 bash 版 README。zsh 自带的 `_ssh`（`_remote_files`）
+  不限时，也不区分新旧协议；想用它时设 `MINI_ZSH_OFFICIAL_COMPLETION=scp`。
 - **tar**：zsh 自带的 `_tar` 解包/列出时对归档执行 `tar t` 列出成员，大的压缩包会等待；这里不打开归档。
 - **nmcli**：nmcli 不支持 `--complete-args` 时使用内置简化规则；zsh 自带的 `_networkmanager`
   可用 `MINI_ZSH_OFFICIAL_COMPLETION=nmcli` 启用。
@@ -98,8 +99,8 @@ source ~/.local/share/zsh-completion-lite/init.zsh
   `_sudo` 等，发行版 zsh 包自带，位于 `/usr/share/zsh/<版本>/functions`）。只有 zsh 单文件、没有函数库时
   `init.zsh` 提示 `compinit not found` 并退出，不注册任何补全。
 - 外部命令与 bash 版相同：`awk`、`ps`、`cat`；动态候选需要对应命令存在和读取权限；
-  `timeout`（支持 `-k`）可选，没有时查询不限时，`docker cp` 容器查询和 Compose 查询跳过。
-- 不需要 Python、网络或其他补全框架。
+  `timeout`（支持 `-k`）可选，没有时查询不限时，`docker cp` 容器查询、Compose 查询和 `scp` 远程路径跳过。
+- 不需要 Python 或其他补全框架；除 `scp` 远程路径（需要 `ssh`）外不访问网络。
 - 已知限制：
   - `fpath` 中的目录被 `compinit` 检查（compaudit）时要求不可被组/其他用户写入。
     `cp -R` 在 umask 022 下得到 755/644；从带 ACL 的源码仓库 `cp -a` 会保留组可写，

@@ -34,6 +34,13 @@ docker run -d --name "${name}-server" --network "$name" --network-alias server \
         install -d -m 700 -o test -g test /home/test/.ssh /data
         install -m 600 -o test -g test /key.pub /home/test/.ssh/authorized_keys
         echo hello-from-server > /data/server.txt && chown test:test /data/server.txt
+        # 符号链接限制用例：相对、带 ..、绝对（/etc/passwd 两端内容不同）、指向挂载目录内的绝对路径
+        mkdir /data/sl && echo ok > /data/sl/ok.txt
+        ln -s ok.txt /data/sl/rel
+        ln -s ../server.txt /data/sl/dotdot
+        ln -s /etc/passwd /data/sl/abs
+        ln -s /data/server.txt /data/sl/inbase
+        chown -hR test:test /data/sl
         printf "PasswordAuthentication yes\nKbdInteractiveAuthentication yes\n" \
             > /etc/ssh/sshd_config.d/test.conf
         touch /ready
