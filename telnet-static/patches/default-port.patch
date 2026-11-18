@@ -1,0 +1,11 @@
+--- a/telnet/commands.c
++++ b/telnet/commands.c
+@@ -2478,7 +2478,7 @@
+ 
+   if (!portp)
+     {
+-      portp = "telnet";
++      portp = getservbyname ("telnet", "tcp") ? "telnet" : "23";
+       telnetport = 1;
+     }
+   else

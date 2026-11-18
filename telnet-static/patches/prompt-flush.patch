@@ -1,0 +1,26 @@
+--- a/telnet/commands.c
++++ b/telnet/commands.c
+@@ -1518,6 +1518,7 @@
+   else
+     {
+       printf ("new escape character: ");
++      fflush (stdout);
+       if (fgets (buf, sizeof (buf), stdin) == NULL)
+ 	{
+ 	  buf[0] = '\0';
+@@ -2400,6 +2401,7 @@
+     {
+       strcpy (line, "open ");
+       printf ("(to) ");
++      fflush (stdout);
+       if (fgets (&line[strlen (line)], sizeof (line) - strlen (line), stdin))
+ 	{
+ 	  makeargv ();
+@@ -2922,6 +2924,7 @@
+ 	getline:
+ 	  if (rlogin != _POSIX_VDISABLE)
+ 	    printf ("%s> ", prompt);
++	  fflush (stdout);
+ 	  if (fgets (line, sizeof (line), stdin) == NULL)
+ 	    {
+ 	      if (feof (stdin) || ferror (stdin))
