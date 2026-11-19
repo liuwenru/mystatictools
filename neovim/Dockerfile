@@ -127,6 +127,7 @@ ENV HOME=/test XDG_CONFIG_HOME=/test/config XDG_DATA_HOME=/test/data \
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "-l", "/tests/smoke-test.lua"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "+lua if vim.fn.filereadable('/test/headless.ok') ~= 1 then vim.cmd('cquit 1') end", "+qa!"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "/nvim/examples/init.lua", "-i", "NONE", "-c", "lua local ok, err = pcall(dofile, '/tests/completion-test.lua'); if not ok then print(err); vim.cmd('cquit 1') end"]
+RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "/nvim/examples/init.lua", "-i", "NONE", "-l", "/tests/toml-format-test.lua"]
 # 随包语言服务器：scratch 中没有 shell、libc、Python、系统 Node，且断网。
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "/nvim/examples/init.lua", "-i", "NONE", "-c", "lua local ok, err = pcall(dofile, '/tests/lsp-bundled-test.lua'); if not ok then print(err); vim.cmd('cquit 1') end"]
 RUN --network=none ["/nvim/bin/nvim", "--headless", "-u", "NONE", "-i", "NONE", "+lua if vim.fn.filereadable('/test/lsp-bundled.ok') ~= 1 then vim.cmd('cquit 1') end", "+qa!"]

@@ -190,6 +190,7 @@ ANSI 模式关闭。线条只是显示辅助，不改变实际空白。
 | JSON | jq 1.8.2 | 两空格排版，不主动排序；不支持 JSONC 注释 |
 | JSONC | Biome 2.6.2 | 两空格缩进，保留注释和键顺序；接受并去掉尾逗号，不执行 lint/assist |
 | YAML | yamlfmt 0.21.0 | 两空格缩进，可能调整布局，需检查差异 |
+| TOML | Tombi 1.11.3 | `format --offline`，不联网下载 schema，不启动 LSP |
 | Python | Ruff 0.17.1 | `ruff format`，无需 Python；不执行 lint 自动修复 |
 | XML | xmllint / libxml2 2.15.4 | 两空格排版，不加载网络 DTD、不展开外部实体 |
 | Nginx | nginxfmt.py 1.3.0 | 两空格缩进，需要系统 `python3`；不能替代 `nginx -t` |
@@ -224,6 +225,10 @@ Biome 只运行 `format`，通过 stdin/stdout 处理正文，不使用 `--write
 但不代替配置语义检查。输入有语法错误时不覆盖正文；注释内容保留，排版和位置可能调整。
 stdin 模式不能依赖 Biome 文件扫描的默认大小限制；大文件仍会占用内存，沿用 10 秒格式化超时。
 Biome 版本、源码及双架构二进制哈希固定在 `extras.json`，许可证为 MIT / Apache-2.0，随包保留。
+
+**TOML**：`.toml` 文件自动识别，按 `\f` 或执行 `:OfflineFormat`。Tombi 使用随包的双架构 musl 静态程序，
+通过 stdin/stdout 处理未保存的正文，不启动 LSP，也不直接写文件。`--offline` 禁止下载远程 schema，
+但仍可使用本地配置和缓存；项目配置从当前工作目录向上查找。语法错误时保留正文。
 
 `mini.align 0.18.0` 用于手动列对齐：选中简单键值行，按 `gA` 开始预览，按 `s`，
 输入 `=` 后回车设置分隔符，再按回车接受；按 Esc 取消。可用 `t` 修整列边缘空白。
@@ -515,7 +520,7 @@ Nginx 自动模式支持 `add_header`、`add_trailer`、`proxy_set_header`、`pr
 - 不支持直接添加第三方 Tree-sitter `.so`；若需更多语言的 Tree-sitter，需要扩展静态构建并重新验证。
   其他语言仍可使用随附的传统 syntax/indent。
 - Python/Node/Ruby/Perl provider、git、rg、fd、diff、shell 等不是静态二进制的一部分。
-  上述六种静态格式化工具和 Nginx Python 脚本随目录分发，并未编译进 nvim ELF；
+  上述静态格式化工具和 Nginx Python 脚本随目录分发，并未编译进 nvim ELF；
   Nginx 依赖系统 `python3`，其他外部程序仍需另行提供。
   依赖它们的插件需另行部署；netrw 的远程/压缩文件操作也可能调用外部命令。
 - 内置 `:terminal` 和 job 功能要求目标机有可执行 shell/命令、Linux PTY（`/dev/pts`），
@@ -743,6 +748,12 @@ json 服务器会联网下载（本机联网时下载成功，未暴露），改
 构建内全部测试通过，ELF/INTERP/NEEDED 检查正常，包内 `offline.txt` 与仓库一致；已发布到 fdoc `tools/neovim/`，
 与 `dist/` 逐字节一致，旧包备份为 `.pre-release-2026-11-03-16-04-56`。
 
+2026-11-18 接入 Tombi 1.11.3。双架构官方 musl 包通过 SHA-256 和 ELF 架构检查，无 INTERP/NEEDED。
+x86_64 本机、aarch64 在 `192.168.182.150` 使用默认 builder 原生构建，双架构均通过构建内的 PTY/tmux、
+断网 scratch 和 TOML 格式化测试（不保存文件、撤销、幂等及无效输入保留）。运行包均已检查 ELF 和随包配置，
+x86_64 另在断网、空 PATH 的宿主机环境解包复测通过；aarch64 宿主机解包后的运行复测尚未执行。
+`dist/` 的运行包和源码包已更新，未发布。
+
 ## Reference Documentation
 
 - [本包使用的 nginxfmt.py](https://fdoc.epoint.com.cn:3366/tmp/.liuwenru/tools/nginxfmt.py)、[原项目](https://github.com/slomkowski/nginx-config-formatter)
@@ -781,6 +792,7 @@ json 服务器会联网下载（本机联网时下载成功，未暴露），改
 - [shfmt](https://github.com/mvdan/sh/releases/tag/v3.14.1)、[yamlfmt](https://github.com/google/yamlfmt/releases/tag/v0.21.0)
 - [jq](https://github.com/jqlang/jq/releases/tag/jq-1.8.2)、[Ruff](https://github.com/astral-sh/ruff/releases/tag/0.17.1)
 - [Biome 2.6.2 固定发布](https://github.com/biomejs/biome/releases/tag/%40biomejs/biome%402.6.2)、[独立 musl 程序](https://biomejs.dev/installation/install-biome/#standalone-executable)、[format 参数](https://biomejs.dev/reference/cli/#biome-format)
+- [Tombi 1.11.3 官方发布](https://github.com/tombi-toml/tombi/releases/tag/v1.11.3)、[format 命令源码](https://github.com/tombi-toml/tombi/blob/v1.11.3/rust/tombi-cli/src/app/command/format.rs)
 - [libxml2 源码](https://download.gnome.org/sources/libxml2/2.15/)、[xmllint 手册](https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html)
 
 分发包保留 Neovim LICENSE 和依赖顶层许可文件；同时导出匹配版本的源码包，

@@ -558,6 +558,7 @@ require("conform").setup({
 		json = { "offline_jq" },
 		jsonc = { "offline_biome_jsonc" },
 		yaml = { "offline_yamlfmt" },
+		toml = { "offline_tombi" },
 		python = { "offline_ruff" },
 		xml = { "offline_xmllint" },
 		nginx = { "offline_nginxfmt" },
@@ -577,6 +578,11 @@ require("conform").setup({
 		offline_shfmt = { command = tools .. "shfmt", args = { "-i", "2", "-filename", "$FILENAME" }, stdin = true },
 		offline_jq = { command = tools .. "jq", args = { "--indent", "2", "." }, stdin = true },
 		offline_yamlfmt = { command = tools .. "yamlfmt", args = { "-formatter", "indent=2", "-" }, stdin = true },
+		offline_tombi = {
+			command = tools .. "tombi",
+			args = { "format", "--offline", "--stdin-filename", "$FILENAME", "-" },
+			stdin = true,
+		},
 		offline_ruff = {
 			command = tools .. "ruff",
 			args = { "format", "--isolated", "--no-cache", "--stdin-filename", "$FILENAME", "-" },
@@ -621,7 +627,8 @@ vim.api.nvim_create_user_command("OfflineHelp", function(opts)
 		elseif context == "http-headers" then topic = "headers"
 		elseif context then topic = "completion"
 		elseif ft == "NvimTree" then topic = "tree"
-		elseif vim.tbl_contains({ "sh", "json", "jsonc", "yaml", "python", "xml", "jproperties" }, ft) then topic = "format"
+		elseif vim.tbl_contains({ "sh", "json", "jsonc", "yaml", "toml", "python", "xml", "jproperties" }, ft) then
+			topic = "format"
 		else topic = "" end
 	end
 	vim.cmd.help(topic == "" and "offline" or "offline-" .. topic)

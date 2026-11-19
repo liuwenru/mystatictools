@@ -13,11 +13,11 @@ esac
 
 output_dir="$project_dir/dist/$output_arch"
 mkdir -p "$output_dir"
-# SSHFS 上 buildx 的 local 导出器无法设置部分符号链接元数据；tar 解包不恢复属主即可。
-export_tar="$project_dir/dist/.export-$output_arch.tar"
+# SSHFS 无法恢复部分符号链接元数据；tar 解包跳过属主和时间戳。
+export_tar="$project_dir/dist/.export-$output_arch-$$.tar"
 docker buildx build --builder default --platform "linux/$arch" \
   --target artifact --output "type=tar,dest=$export_tar" "$@" "$project_dir"
-tar --no-same-owner -xf "$export_tar" -C "$output_dir"
+tar --no-same-owner -m -xf "$export_tar" -C "$output_dir"
 rm -f "$export_tar"
 chmod 0755 "$output_dir/lrz" "$output_dir/lsz"
 (cd "$output_dir" && sha256sum -c SHA256SUMS)

@@ -192,13 +192,15 @@ auto 在指令名位置提示 proxy_pass 等，在上述五种指令的头名称
     json        jq，严格 JSON，不支持注释
     jsonc       Biome，支持注释，保留键顺序，格式化会去掉尾逗号
     yaml        yamlfmt
+    toml        Tombi format --offline，不联网下载 schema，不启动 LSP
     python      Ruff format，不需要 Python，不运行 lint 自动修复
     xml         xmllint --nonet --format，不展开外部实体
     nginx       nginxfmt.py，需要系统 python3
     properties  不自动改写；简单键值可用 mini.align 手动对齐
 
 带注释但名称是 .json/.conf 的文件可 :set filetype=jsonc 后再格式化。
-只用随包工具及配置，不使用 LSP 格式化，不启用保存时格式化。
+Tombi 会查找本地配置，可使用已缓存的 schema，但不下载远程 schema。
+使用随包格式化工具，不使用 LSP 格式化，不启用保存时格式化。
 失败保留正文，成功可用 u 撤销；重要配置仍需检查差异并由目标工具验证。
 XML 混合内容空白、JSON 重复键/数值等可能受格式化影响。
 
